@@ -1,0 +1,14 @@
+{
+  "name": "Book Builder",
+  "id": "book-builder-local",
+  "api": "1.0.0",
+  "main": "code.js",
+  "ui": "ui.html",
+  "editorType": ["figma"],
+  "documentAccess": "dynamic-page",
+  "networkAccess": {
+    "allowedDomains": ["http://localhost:8765"],
+    "devAllowedDomains": ["http://localhost:8765"],
+    "reasoning": "Fetches the generated book design spec from the Book Builder app running on this computer."
+  }
+}

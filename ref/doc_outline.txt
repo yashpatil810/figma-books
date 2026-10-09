@@ -1,0 +1,500 @@
+Heading1	[IMG]
+Heading1	                                                 CHAPTER: ELECTRICITY
+P	                                                  GRADE 7 
+P	                                   Prepared by : Er.Aman Khan
+P	[IMG]
+Heading1	 KEY IDEAS
+P	After completing this chapter, you should be able to:
+P	• Discuss the nature of electric charges and electroscopes
+P	• Understand electric circuits and symbols used in them
+P	• Define cell and its types—Voltaic Cell, Leclanché cell,
+P	  Dry cell, Bichromate cell
+P	• Study household distribution of electrical energy
+P	• Learn about heating effect of electricity
+P	• Understand magnetic effects of electric current
+P	                                                                      TABLE OF CONTENTS
+P	Synopsis No.
+P	Title
+P	Main Topics Covered
+P	SYNOPSIS-1
+P	Conductors and Insulators
+P	Conductors and Insulators
+P	SYNOPSIS-2
+P	Lightning and Lightning Conductor
+P	Lightning, Lightning Conductor
+P	Test your concepts
+P	HINTS AND SOLUTIONS
+P	Mind Map
+P	SYNOPSIS 1 - Conductors and Insulators
+P	[IMG]Conductors and Insulators
+Heading2	Introduction
+P	Electric charge can move from one body to another under suitable conditions. However, all materials do not allow the movement of electric charges with equal ease. Based on their ability to permit the flow of electric charge, materials are broadly classified into:
+P•	Conductors
+P•	Insulators
+P	This classification forms the basis of electrical technology and circuit design.
+Heading2	Conductors
+Heading3	Definition
+P	Materials that allow electric charges to flow through them easily are called conductors.
+P	In conductors, some electrons are loosely bound to atoms and can move freely within the material. These free electrons are responsible for electrical conduction.
+Heading2	Scientific Principle
+P	Metals contain a large number of free electrons. When a potential difference is applied across a conductor, these electrons move in a particular direction, resulting in the flow of electric current.
+P	Thus, electrical conduction in conductors occurs due to the movement of free electrons.
+Heading2	Examples of Conductors
+Heading3	Metals
+P•	Copper
+P•	Aluminium
+P•	Silver
+P•	Gold
+P•	Iron
+Heading3	Other Conducting Materials
+P•	Graphite
+P•	Human body
+P•	Tap water
+P•	Acidic solutions
+P•	Salt solutions
+P	Among common metals, silver is the best conductor of electricity, although copper is more widely used because of its lower cost and high conductivity.
+Heading2	Applications of Conductors
+Heading3	Electrical Wiring
+P	Copper and aluminium are used in household wiring because they allow current to pass easily with low energy loss.
+Heading3	Electrical Appliances
+P	Internal components of electrical devices are generally made of conducting materials.
+Heading3	Earthing
+P	The metallic body of electrical appliances is connected to earth using conducting wires to ensure safety.
+Heading3	Transmission Lines
+P	Aluminium cables reinforced with steel are commonly used for long-distance transmission of electricity.
+Heading2	Insulators
+Heading3	Definition
+P	Materials that do not allow electric charges to flow through them easily are called insulators.
+P	Insulators do not contain free electrons in sufficient quantity. Therefore, charges cannot move freely through them.
+Heading2	Scientific Principle
+P	In insulators, electrons are tightly bound to their atoms. Since these electrons cannot move freely, electric current cannot pass through the material under ordinary conditions.
+Heading2	Examples of Insulators
+P•	Rubber
+P•	Plastic
+P•	Glass
+P•	Wood
+P•	Dry air
+P•	Porcelain
+P•	Mica
+P•	Ebonite
+Heading2	Applications of Insulators
+Heading3	Covering of Electrical Wires
+P	Electric wires are covered with plastic or rubber to prevent electric shocks.
+Heading3	Switches and Plug Tops
+P	The outer bodies of switches and plugs are made of insulating materials for user safety.
+Heading3	Insulating Supports
+P	Transmission wires are mounted on porcelain insulators to prevent leakage of current to the ground.
+Heading3	Electrical Tools
+P	Handles of screwdrivers, pliers, and testers are made of insulating materials.
+Heading2	Conductors and Insulators in Daily Life
+P	Application
+P	Conducting Part
+P	Insulating Part
+P	Electric wire
+P	Copper core
+P	Plastic covering
+P	Electric iron
+P	Metal body and coil
+P	Plastic handle
+P	Screwdriver
+P	Metal rod
+P	Plastic handle
+P	Plug
+P	Metal pins
+P	Plastic casing
+Heading2	Classification Based on Electrical Conductivity
+Heading3	Good Conductors
+P	Materials through which electric current passes very easily.
+P	Examples:
+P•	Silver
+P•	Copper
+P•	Aluminium
+Heading3	Poor Conductors
+P	Materials that allow only a very small amount of current to pass.
+P	Examples:
+P•	Distilled water
+P•	Wood
+P•	Human skin (dry)
+Heading2	Special Case: Water
+Heading3	Pure Water
+P	Pure or distilled water is a poor conductor of electricity because it contains very few ions.
+Heading3	Tap Water
+P	Tap water contains dissolved salts and minerals that produce ions, making it a conductor of electricity.
+P	This is why handling electrical appliances with wet hands is dangerous.
+Heading2	Important Observations
+P•	Metals are generally good conductors.
+P•	Most non-metals are insulators.
+P•	Graphite is an exception among non-metals because it conducts electricity.
+P•	Conductivity depends upon the availability of free electrons or ions.
+Heading2	Conceptual Insight
+P	Electrical conduction in solids mainly depends on:
+P•	Availability of free electrons
+P•	Atomic structure of the material
+P•	Temperature of the material
+P	In metals:
+P•	Resistance generally increases with temperature.
+P	In some non-metals:
+P•	Conductivity may increase with temperature.
+Heading2	Common Misconceptions
+Heading3	Misconception 1
+P	“All liquids conduct electricity.”
+Heading3	Correct Concept
+P	Only liquids containing ions conduct electricity effectively.
+Heading3	Misconception 2
+P	“All non-metals are insulators.”
+Heading3	Correct Concept
+P	Graphite is a non-metal that conducts electricity.
+Heading3	Misconception 3
+P	“Plastic stops electricity because it is thick.”
+Heading3	Correct Concept
+P	Plastic is an insulator because it lacks free electrons.
+Heading2	IIT Foundation Understanding
+P	Students should clearly understand:
+P•	Conductors contain free electrons.
+P•	Insulators resist electron movement.
+P•	Current in metals is due to electron flow.
+P•	Conductivity and insulation are relative properties.
+P•	Practical electrical safety depends heavily on insulating materials.
+Heading2	Did You Know?
+P•	Silver is the best electrical conductor among common metals.
+P•	Copper is preferred in electrical wiring because it offers high conductivity at comparatively low cost.
+P•	Birds sitting on high-voltage transmission lines usually do not get electric shock because current does not pass through their bodies to the ground.
+Heading2	Summary Points
+P•	Materials are classified as conductors and insulators based on electrical conductivity.
+P•	Conductors allow free movement of electric charges.
+P•	Metals are generally good conductors due to the presence of free electrons.
+P•	Insulators resist the flow of electric charges because electrons are tightly bound.
+P•	Copper and aluminium are widely used in electrical wiring.
+P•	Rubber and plastic are commonly used as insulating materials.
+P•	Pure water is a poor conductor, whereas tap water conducts electricity due to dissolved salts.
+P•	Graphite is a conducting non-metal.
+Heading3	‘
+Heading3	SYNOPSIS-2
+P	Lightning and Lightning Conductor
+P	Lightning – A Large-Scale Electrical Discharge in the Atmosphere
+P	[IMG]
+P	Lightning is a natural electrical phenomenon produced by the accumulation and sudden discharge of electric charges inside clouds or between clouds and the Earth. It is one of the largest natural examples of static electricity.
+P	During thunderstorms, strong air currents continuously move water droplets, ice crystals, and hail particles inside clouds. Frequent collisions and friction between these particles produce electric charges.
+P	As a result:• The upper part of the cloud generally becomes positively charged.• The lower part becomes negatively charged.• Sometimes a small positively charged region forms near the bottom of the cloud.
+P	The negatively charged lower region of the cloud induces positive charges on the Earth’s surface directly below it due to electrical induction.
+P	Normally, air acts as an insulator and prevents the movement of charges. However, when the amount of charge becomes extremely large, the potential difference between oppositely charged regions increases enormously. At this stage, the insulating property of air breaks down. The air becomes ionised and suddenly allows electric current to pass through it.
+P	This sudden and rapid discharge of electricity produces a bright flash called lightning.
+P	The electric discharge heats the surrounding air to extremely high temperatures, sometimes close to 30,000°C. The heated air expands very rapidly and produces shock waves. These shock waves are heard as thunder.
+P	Types of Lightning
+P•	Intra-cloud LightningElectrical discharge occurring within the same cloud.
+P•	Cloud-to-Cloud LightningElectrical discharge occurring between two different clouds.
+P•	Cloud-to-Ground LightningElectrical discharge occurring between a cloud and the Earth. This type can cause serious damage to life and property.
+P	Why Thunder is Heard After Lightning
+P	Light travels much faster than sound.
+P	• Speed of light = 3 × 10⁸ m/s• Speed of sound in air ≈ 340 m/s
+P	Therefore, the flash of lightning is seen almost immediately, while the sound of thunder reaches us after a short delay.
+P	Estimating the Distance of Lightning
+P	The approximate distance of lightning from an observer can be estimated using the time interval between the flash and the thunder.
+P	Distance = Speed of sound × Time interval
+P	Example:
+P	If thunder is heard 4 seconds after the flash,
+P	Distance = 340 × 4= 1360 m
+P	Thus, the lightning occurred approximately 1.36 km away.
+P	Safety Precautions During Lightning
+P	• Avoid standing under isolated trees during thunderstorms.• Stay away from open fields and water bodies.• Do not touch electrical appliances or metal objects during severe lightning storms.• Remain inside a building or a closed vehicle whenever possible.
+P	Scientific Significance of Lightning
+P	• Lightning helps convert atmospheric nitrogen into nitrogen compounds useful for plants.• The study of lightning contributed significantly to the development of electrical science.• Atmospheric electrical discharges help scientists understand charge separation and high-voltage phenomena.
+P	Concept Insight
+P	Lightning is essentially a giant electric spark produced when accumulated charges discharge through ionised air. The same principles of charging by friction, induction, attraction, and repulsion observed in laboratory experiments operate in thunderstorms on a much larger scale.
+P	Did You Know?
+P	A single lightning strike may involve millions of volts of potential difference and currents of several thousand amperes.
+P	Lightning Conductor
+P	[IMG]
+P	A lightning conductor is a protective device used to safeguard buildings and tall structures from the damaging effects of lightning. It was developed by Benjamin Franklin after he demonstrated that lightning is an electrical discharge.
+P	A lightning conductor consists of:• A long, thick metal rod, usually made of copper or aluminium• A pointed upper end fixed at the highest point of the building• A thick metal strip connected to the rod and extending down the side of the building• A metal plate buried deep inside the ground
+P	The metal rod and strip provide a low-resistance conducting path between the atmosphere and the Earth.
+P	Working Principle of a Lightning Conductor
+P	During a thunderstorm, a large potential difference develops between the charged clouds and the Earth. If lightning strikes the building, the electric charge passes through the metal conductor directly into the ground instead of flowing through the building structure.
+P	Thus, the lightning conductor safely transfers the enormous electric charge to the Earth and protects the building from:• Fire hazards• Structural damage• Electrical damage• Risk to human life
+P	The pointed upper end of the conductor helps the charges leak gradually into the air, reducing the possibility of a violent discharge.
+P	ApplicationsLightning conductors are installed on:• Tall buildings• Towers• Factories• Monuments• Airports• Power stations
+P	Safety Precautions During Thunderstorms• Do not stand under isolated tall trees.• Avoid open fields during lightning storms.• Stay away from metal poles, electric wires, and water bodies.• Avoid using wired electrical appliances during severe thunderstorms.
+P	Scientific Principle
+P	A lightning conductor works on the principles of:• Electrical conduction• Earthing• Electric discharge through a low-resistance path
+P	Since metals are good conductors of electricity, the charge prefers to flow through the conductor rather than through the building materials.
+P	Concept Insight
+P	Lightning always follows the path of least electrical resistance. A lightning conductor provides a safe conducting path from the cloud to the Earth, thereby preventing damage to structures.
+P	Did You Know?
+P	Benjamin Franklin demonstrated the electrical nature of lightning through his famous kite experiment in 1752. His work laid the foundation for the invention of the lightning conductor.
+P	TEST YOUR CONCEPTS
+P	Very Short Answer Type Questions
+P	Directions for questions 1 to 7: Fill in the blanks with the most appropriate word or term.
+P•	Like charges ________ each other while unlike charges ________ each other.
+P•	The process of charging a body by rubbing it with another body is called charging by ________.
+P•	An ________ is a device used to detect the presence and nature of charge on a body.
+P•	Materials that do not allow electric charges to pass through them are called ________ while materials that allow charges to flow easily are called ________.
+P•	Lightning is a natural phenomenon caused by the sudden ________ of huge electric charge accumulated in the clouds.
+P•	A lightning ________ is used to safely carry the charge from lightning into the ground and protect buildings.
+P•	The combination of two or more cells joined together is called a ________.
+P	Directions for questions 8 to 13: For each of the questions, four choices have been provided. Select the correct alternative.
+P•	Materials like wood, plastic and rubber are (A) good conductors of electricity (B) good insulators of electricity (C) good conductors of heat only (D) used to make heating elements
+P•	Lightning is a natural phenomenon caused due to (A) heating effect of current (B) sudden discharge of huge electric charge accumulated in clouds (C) chemical effect of current (D) magnetic effect of current
+P•	A lightning conductor protects buildings by (A) producing electric charge (B) safely carrying the lightning charge into the ground (C) increasing the strength of lightning (D) storing the electric charge
+P•	The safety device that automatically turns off when current exceeds the safe limit is (A) electric fuse (B) miniature circuit breaker (MCB) (C) electroscope (D) lightning conductor
+P•	The working of an electric iron and electric heater is based on (A) magnetic effect of current (B) chemical effect of current (C) heating effect of current (D) electroplating
+P•	Electric generators in power plants convert (A) electrical energy into mechanical energy (B) mechanical energy into electrical energy (C) chemical energy into electrical energy (D) heat energy into electrical energy
+P	14. Match the materials/devices given in Column I with their correct category or function given in Column II.
+P	Column I
+P	Column II
+P	(a) Copper
+P	(i) Insulator
+P	(b) Plastic
+P	(ii) Good conductor of electricity
+P	(c) Lightning conductor
+P	(iii) Protects buildings from lightning damage
+P	(d) Fuse / MCB
+P	(iv) Safety device to prevent excess current
+P	(e) Dry cell
+P	(v) Source of electric current
+P	Very Short Answer Type Questions
+P	(Questions 15 to 27)
+P	Directions: Answer the following questions in one word or one sentence only.
+P•	What is the SI unit of electric charge?
+P•	State the rule: “Like charges ________ and unlike charges ________.”
+P•	Name the process of charging a body by rubbing it with another body.
+P•	What is an electroscope used for?
+P•	Give two examples of good conductors of electricity.
+P•	Give two examples of good insulators of electricity.
+P•	What is lightning?
+P•	What is the function of a lightning conductor?
+P•	What is the combination of two or more cells called?
+P•	Name the safety device that melts and breaks the circuit when excess current flows.
+P•	Name the modern safety device that automatically switches off when current exceeds the safe limit.
+P•	On which effect of electric current does an electric iron work?
+P•	On which effect of electric current does an electric bell work?
+P	Short Answer Type Questions
+P	(Questions 28 to 31)
+P	Directions: Answer the following questions briefly in 2–3 sentences.
+P•	What are the three methods of charging a body? Give one example for each.
+P•	Distinguish between conductors and insulators. Give two examples of each.
+P•	What is lightning? How does a lightning conductor protect a building from damage?
+P•	Explain the working of an electric fuse. Why is it called a safety device?
+P	Long Answer Type Questions / Essay Type Questions
+P•	Draw a labelled diagram of an electric bell and explain its working in detail. Why does the bell keep ringing continuously as long as the switch is pressed?
+P•	Describe how electricity is generated in a power plant. Explain the role of a turbine and a dynamo in this process. How is this electricity supplied to our homes?
+P•	What is the difference between overloading and short circuiting in a household circuit? Explain how a fuse or MCB protects the circuit in both cases.
+P•	Explain the heating effect of electric current. Why do filament bulbs waste more electricity than CFLs or LED bulbs? Suggest two ways to reduce the wastage of electricity at home.
+P	CONCEPT APPLICATION
+P	Level 1
+P	True or False
+P	Directions: Write True or False for each of the following statements.
+P•	Unlike charges repel each other.
+P•	A body can be charged only by the method of friction.
+P•	An electroscope can detect the presence as well as the nature of charge on a body.
+P•	Wood and plastic are good conductors of electricity.
+P•	Lightning conductor protects buildings by safely carrying the charge to the ground.
+P•	A fuse melts and breaks the circuit when current exceeds the safe limit.
+P•	An electric bell works on the heating effect of electric current.
+P	Directions: Fill in the blanks with the most appropriate word or term.
+P•	The SI unit of electric current is ________.
+P•	A device that automatically switches off the circuit when current exceeds the safe limit is called ________.
+P•	The process by which an uncharged body gets charged without actual contact with a charged body is called charging by ________.
+P•	The thin wire inside an electric bulb that becomes hot and glows is called ________.
+P•	A lightning conductor has a sharp pointed top made of ________ to safely carry the charge to the ground.
+P•	The heating element in an electric iron or heater is usually made of ________ wire.
+P	Directions for questions 49 to 61: For each of the questions, four choices have been provided. Select the correct alternative.
+P•	Which of the following is the correct rule about electric charges? (A) Like charges attract each other (B) Unlike charges repel each other (C) Like charges repel each other and unlike charges attract each other (D) Charges do not interact with each other
+P•	The process of charging a body by simply bringing a charged object near it without touching is called (A) charging by friction (B) charging by conduction (C) charging by induction (D) charging by electrolysis
+P•	Which of the following is a good insulator of electricity? (A) Copper (B) Aluminium (C) Plastic (D) Iron
+P•	Lightning is a natural phenomenon caused due to (A) heating effect of current (B) sudden discharge of huge electric charge in clouds (C) chemical effect of current (D) magnetic effect of current
+P•	The main purpose of installing a lightning conductor on a building is to (A) produce lightning safely (B) safely carry the lightning charge into the ground (C) store electric charge (D) increase the brightness of lightning
+P•	The safety device that melts and breaks the circuit when excess current flows is called (A) MCB (B) electroscope (C) electric fuse (D) lightning conductor
+P•	Miniature Circuit Breaker (MCB) is better than a fuse because (A) it can be easily reset (B) it is cheaper (C) it produces more heat (D) it works on heating effect
+P•	The working of an electric iron and electric heater is based on (A) magnetic effect of current (B) chemical effect of current (C) heating effect of current (D) electroplating
+P•	The working of an electric bell is based on (A) heating effect of current (B) magnetic effect of current (C) chemical effect of current (D) lighting effect of current
+P•	The process of depositing a thin layer of gold or silver on a cheaper metal object is called (A) electrolysis (B) electroplating (C) charging by induction (D) magnetic effect of current
+P•	The SI unit of electric power is (A) joule (B) watt (C) volt (D) ampere
+P•	One unit of electricity (1 kWh) is equal to (A) 3.6 × 10⁶ J (B) 1 × 10⁶ J (C) 3.6 × 10⁵ J (D) 1 × 10⁵ J
+P•	Which of the following is an example of the magnetic effect of electric current? (A) Electric heater (B) Electric bell (C) Filament bulb (D) Electroplating
+P•	 Match the terms in Column I with their correct descriptions in Column II.
+P	Column I
+P	Column II
+P	(a) Like charges
+P	(i) Device used to detect charge
+P	(b) Charging by induction
+P	(ii) Repel each other
+P	(c) Electroscope
+P	(iii) Sudden discharge of charge in clouds
+P	(d) Lightning
+P	(iv) Bringing a charged body near without touching
+P	(e) Lightning conductor
+P	(v) Safely carries charge to the ground
+P•	 Match the devices/appliances in Column I with the effect of electric current they mainly work on in Column II.
+P	Column I
+P	Column II
+P	(a) Electric iron / heater
+P	(i) Chemical effect
+P	(b) Electric bell
+P	(ii) Heating effect
+P	(c) Electromagnet
+P	(iii) Magnetic effect
+P	(d) Electroplating
+P	(iv) Converts mechanical energy to electrical energy
+P	(e) Electric generator
+P	(v) Produces sound by repeated make and break
+P	Level 2 - Conceptual Application
+P	Directions for questions 64 to 68: For each of the questions, four choices have been provided. Select the correct alternative.
+P•	Why is a fuse wire made of a material that has low melting point? (A) So that it melts easily when current is low (B) So that it melts quickly when current exceeds the safe limit (C) So that it does not get heated (D) So that it increases the current
+P•	An electromagnet is made by winding wire on an iron rod. To increase its strength, the student should (A) decrease the number of turns (B) decrease the current (C) increase the number of turns and current (D) use a wooden rod instead of iron
+P•	A lightning conductor has a sharp pointed top. This shape is used because (A) it looks attractive (B) it easily allows charge to leak into the air and prevents lightning strike (C) it stores the charge (D) it melts during lightning
+P•	In an electric bell, the hammer keeps striking the gong repeatedly because (A) the electromagnet remains magnetised all the time (B) the circuit is continuously made and broken (C) the battery keeps supplying more current (D) the gong is made of magnetic material
+P•	Which of the following is the best way to reduce electricity wastage at home? (A) Using filament bulbs instead of CFLs (B) Using more appliances in series (C) Using CFLs/LEDs and switching off appliances when not in use (D) Connecting all appliances in series
+P	Directions: Answer the following questions briefly in 2–3 sentences.
+P•	What is the difference between charging by conduction and charging by induction?
+P•	Why are metals good conductors of electricity while plastic and wood are good insulators?
+P•	Explain why a lightning conductor is always installed with a sharp pointed top on buildings.
+P•	Explain the working of a fuse. Why is it considered a safety device?
+P•	How does an MCB work? Mention one advantage of MCB over a traditional fuse.
+P•	Describe the heating effect of electric current with one real-life example.
+P•	Explain the magnetic effect of electric current with a simple experiment.
+P	HINTS AND SOLUTIONS
+P	TEST YOUR CONCEPTS
+P	Very Short Answer Type Questions
+P	(Fill in the Blanks)
+P•	Like charges repel each other while unlike charges attract each other. (This is the fundamental rule of electric charges.)
+P•	The process of charging a body by rubbing it with another body is called charging by friction. (Example: Rubbing a plastic pen with silk cloth.)
+P•	An electroscope is a device used to detect the presence and nature of charge on a body.
+P•	Materials that do not allow electric charges to pass through them are called insulators while materials that allow charges to flow easily are called conductors. (Examples: Insulators – wood, plastic; Conductors – copper, aluminium)
+P•	Lightning is a natural phenomenon caused by the sudden discharge of huge electric charge accumulated in the clouds.
+P•	A lightning conductor is used to safely carry the charge from lightning into the ground and protect buildings.
+P•	The combination of two or more cells joined together is called a battery.
+P	SECTION-A: MULTIPLE CHOICE QUESTIONS (MCQs)
+P•	. Materials like wood, plastic and rubber are
+P	Correct Answer: (B) good insulators of electricity
+P	Explanation: These materials do not allow electric charges to flow through them easily, so they are called insulators.
+P•	. Lightning is a natural phenomenon caused due to
+P	Correct Answer: (B) sudden discharge of huge electric charge accumulated in clouds
+P	Explanation: When opposite charges in clouds become very strong, the air insulation breaks and a huge spark (lightning) occurs.
+P•	. A lightning conductor protects buildings by
+P	Correct Answer: (B) safely carrying the lightning charge into the ground
+P	Explanation: It provides an easy path for the charge to flow into the earth, preventing damage to the building.
+P•	. The safety device that automatically turns off when current exceeds the safe limit is
+P	Correct Answer: (B) miniature circuit breaker (MCB)
+P	Explanation: MCB is a modern, reusable switch that trips automatically on overload or short circuit.
+P•	. The working of an electric iron and electric heater is based on
+P	Correct Answer: (C) heating effect of current
+P	Explanation: When current passes through the heating element (nichrome wire), electrical energy is converted into heat energy.
+P•	 Electric generators in power plants convert
+P	Correct Answer: (B) mechanical energy into electrical energy
+P	Explanation: The turbine rotates the dynamo, which converts mechanical energy (from water or steam) into electrical energy.
+P	SECTION-C: MATCH THE FOLLOWING
+P	(a) Copper → (ii) Good conductor of electricity
+P	(b) Plastic → (i) Insulator
+P	(c) Lightning conductor → (iii) Protects buildings from lightning damage
+P	(d) Fuse / MCB → (iv) Safety device to prevent excess current
+P	(e) Dry cell → (v) Source of electric current
+P	Very Short Answer Type Questions
+P	(Questions 24 to 27)
+P•	What is the SI unit of electric charge?
+P	Answer: Coulomb (C)
+P•	State the rule: “Like charges ________ and unlike charges ________.”
+P	Answer: Like charges repel and unlike charges attract each other.
+P•	Name the process of charging a body by rubbing it with another body.
+P	Answer: Charging by friction.
+P•	What is an electroscope used for?
+P	Answer: An electroscope is used to detect the presence and nature (positive or negative) of charge on a body.
+P•	Give two examples of good conductors of electricity.
+P	Answer: Copper and aluminium (or silver, iron, gold).
+P•	Give two examples of good insulators of electricity.
+P	Answer: Wood and plastic (or rubber, glass, air).
+P•	What is lightning?
+P	Answer: Lightning is a natural phenomenon caused by the sudden discharge of a huge amount of electric charge accumulated in the clouds.
+P•	What is the function of a lightning conductor?
+P	Answer: It safely carries the electric charge from lightning into the ground and protects buildings from damage.
+P•	 What is the combination of two or more cells called?
+P	Answer: Battery. 
+P•	Name the safety device that melts and breaks the circuit when excess current flows.
+P	Answer: Electric fuse (or fuse)..
+P•	 Name the modern safety device that automatically switches off when current exceeds the safe limit.
+P	Answer: Miniature Circuit Breaker (MCB).
+P•	On which effect of electric current does an electric iron work?
+P	Answer: Heating effect of electric current.
+P•	On which effect of electric current does an electric bell work?
+P	Answer: Magnetic effect of electric current.
+P	Short Answer Type Questions
+P	(Questions 28 to 31)
+P•	 What are the three methods of charging a body? Give one example for each.
+P	Answer: The three methods of charging a body are:
+P	(i) Charging by friction — Example: Rubbing a plastic pen with silk cloth.
+P	(ii) Charging by conduction — Example: Touching an uncharged body with a charged body.
+P	(iii) Charging by induction — Example: Bringing a charged rod near an uncharged body without touching it.
+P	29. Distinguish between conductors and insulators. Give two examples of each.
+P	Answer: Conductors are materials that allow electric charges to flow through them easily (e.g., copper, aluminium). Insulators are materials that do not allow electric charges to pass through them (e.g., wood, plastic). Conductors are used for making wires, while insulators are used for covering wires to prevent shocks.
+P	30. What is lightning? How does a lightning conductor protect a building from damage?
+P	Answer: Lightning is a huge electric spark caused by the sudden discharge of a large amount of electric charge accumulated in the clouds. A lightning conductor is a thick metal strip with a sharp pointed top fixed on buildings. It provides an easy path for the charge to flow safely into the ground, protecting the building from damage.
+P	31. Explain the working of an electric fuse. Why is it called a safety device?
+P	Answer: An electric fuse contains a thin wire of low melting point. When current exceeds the safe limit, the wire gets heated, melts, and breaks the circuit. This stops the flow of excess current and protects the appliance and wiring from damage. It is called a safety device because it prevents fire and damage due to overloading or short circuit.
+P	Long Answer Type Questions / Essay Type Questions
+P	32. (Diagram: Show electromagnet, soft iron strip with hammer, gong, contact screw and spring.)
+P	When the switch is pressed, current flows through the coil and the electromagnet attracts the soft iron strip. The hammer strikes the gong and produces sound. At the same time, the strip loses contact with the screw, breaking the circuit. The electromagnet loses its magnetism and the strip returns to its original position due to the spring. This again completes the circuit. The process repeats rapidly, so the bell keeps ringing continuously as long as the switch is pressed.
+P	33. In power plants, electricity is generated by converting mechanical energy into electrical energy using an electric generator. Fast-flowing water (from dams) or high-pressure steam rotates a turbine at high speed. The turbine is connected to a dynamo. As the dynamo rotates, it converts mechanical energy into electrical energy.
+P	This electricity is stepped up to high voltage and transmitted through thick cables and towers to cities and villages. Near our homes, it is stepped down by transformers and supplied through live and neutral wires.
+P	34. Overloading occurs when too many appliances are connected to a single socket and draw more current than the circuit can handle. Short circuiting occurs when the live and neutral wires touch each other due to damaged insulation, causing a sudden huge flow of current.
+P	Both a fuse and MCB protect the circuit. When current exceeds the safe limit, the fuse wire melts and breaks the circuit, while the MCB automatically switches off, stopping the dangerous current and preventing fire or damage to appliances.
+P	35. When electric current passes through a wire, electrical energy is converted into heat energy. This is called the heating effect of electric current.
+P	Filament bulbs waste more electricity because most of the energy is converted into heat instead of light. CFLs and LED bulbs produce very little heat and give more light, so they save electricity.
+P	Two ways to reduce wastage at home: (i) Switch off lights, fans and appliances when not in use, (ii) Replace filament bulbs with CFLs or LED bulbs.
+P	True or False
+P•	False Unlike charges attract each other.
+P•	False A body can be charged by friction, conduction or induction.
+P•	True An electroscope detects both the presence and nature (positive or negative) of charge.
+P•	False Wood and plastic are good insulators of electricity.
+P•	True Lightning conductor safely carries the charge to the ground.
+P•	True A fuse melts and breaks the circuit when current exceeds the safe limit.
+P•	False An electric bell works on the magnetic effect of electric current.
+P	Fill in the Blanks
+P•	The SI unit of electric current is ampere (A).
+P•	A device that automatically switches off the circuit when current exceeds the safe limit is called MCB (Miniature Circuit Breaker).
+P•	The process by which an uncharged body gets charged without actual contact with a charged body is called charging by induction.
+P•	The thin wire inside an electric bulb that becomes hot and glows is called filament.
+P•	A lightning conductor has a sharp pointed top made of copper to safely carry the charge to the ground.
+P•	The heating element in an electric iron or heater is usually made of nichrome wire.
+P	Multiple Choice Questions
+P•	(C) Like charges repel each other and unlike charges attract each other.
+P•	(C) charging by induction.
+P•	(C) Plastic.
+P•	(B) sudden discharge of huge electric charge in clouds.
+P•	(B) safely carrying the lightning charge into the ground.
+P•	(C) electric fuse.
+P•	(A) it can be easily reset.
+P•	(C) heating effect of current.
+P•	(B) magnetic effect of current.
+P•	(B) electroplating.
+P•	(B) watt.
+P•	(A) 3.6 × 10⁶ J.
+P•	(B) Electric bell.
+P	62.
+P	(a) (ii)
+P	(b) (iv)
+P	(c) (i)
+P	(d) (iii)
+P	(e) (v)
+P	63.
+P	(a) (ii)
+P	(b) (v)
+P	(c) (iii)
+P	(d) (i)
+P	(e) (iv)
+P	Multiple Choice Questions (Q64–68)
+P	64 . (B) So that it melts quickly when current exceeds the safe limit
+P	65. (C) increase the number of turns and current
+P	66. (B) it easily allows charge to leak into the air and prevents lightning strike
+P	67. (B) the circuit is continuously made and broken
+P	68. (C) Using CFLs/LEDs and switching off appliances when not in use
+P	Multiple Choice Questions (Q64–68)
+P	69. Charging by conduction requires direct contact between a charged and an uncharged body. Charging by induction takes place without any contact — only by bringing a charged body near an uncharged body.
+P	70. Metals are good conductors because they have free electrons that can move easily. Plastic and wood are good insulators because they do not have free electrons, so charges cannot flow through them.
+P	71. The sharp pointed top of a lightning conductor allows electric charge to leak gradually into the air, reducing the chance of a sudden heavy lightning strike on the building.
+P	72. A fuse is a thin wire of low melting point connected in series. When current exceeds the safe limit, the wire heats up, melts and breaks the circuit. It is a safety device because it protects appliances and wiring from damage due to overloading or short circuit.
+P	73. An MCB is an automatic switch that turns off when current exceeds the safe limit. Advantage: It can be easily reset by flipping the switch, unlike a fuse which needs replacement.
+P	74. When electric current passes through a wire, electrical energy is converted into heat energy. Example: The heating element in an electric iron or room heater becomes hot due to this effect.
+P	75. When current flows through a wire, the wire behaves like a magnet. Simple experiment: Wind insulated wire around a compass and connect to a cell. The compass needle deflects when current flows.
+P	\
+P	                                                                                                  MIND MAP
+P	[IMG]
+P	                                                                             END

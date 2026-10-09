@@ -1,0 +1,2362 @@
+{
+ "file_key": "Zv0GkiCv8zs61l4BJ0dUUN",
+ "container": "ELECTRICITY — Grade 7",
+ "pages": [
+  {
+   "idx": 0,
+   "id": "250:3932",
+   "name": "Cover Front - Physics Grade 7",
+   "w": 595,
+   "h": 842,
+   "placeholders": [],
+   "images": [
+    {
+     "id": "250:3934",
+     "name": "Physics Cover - IIT Course - Grade 7 1 2",
+     "x": -590.50390625,
+     "y": 0.0,
+     "w": 1186.253173828125,
+     "h": 841.5428466796875
+    }
+   ],
+   "page_no": null,
+   "role": "cover",
+   "text_nodes": 0
+  },
+  {
+   "idx": 1,
+   "id": "250:8514",
+   "name": "phy0",
+   "w": 595,
+   "h": 842,
+   "placeholders": [],
+   "images": [],
+   "page_no": null,
+   "role": "toc",
+   "text_nodes": 15
+  },
+  {
+   "idx": 2,
+   "id": "250:58",
+   "name": "phy1",
+   "w": 595,
+   "h": 842,
+   "placeholders": [],
+   "images": [],
+   "page_no": null,
+   "role": "cover/empty",
+   "text_nodes": 0
+  },
+  {
+   "idx": 3,
+   "id": "250:21",
+   "name": "phy2",
+   "w": 595,
+   "h": 842,
+   "placeholders": [],
+   "images": [],
+   "page_no": 1,
+   "role": "content",
+   "text_nodes": 19
+  },
+  {
+   "idx": 4,
+   "id": "250:1107",
+   "name": "phy20",
+   "w": 595,
+   "h": 842,
+   "placeholders": [],
+   "images": [
+    {
+     "id": "250:1143",
+     "name": "image 272",
+     "x": 100.0,
+     "y": 472.0,
+     "w": 395.0,
+     "h": 310.0
+    }
+   ],
+   "page_no": 2,
+   "role": "content",
+   "text_nodes": 19
+  },
+  {
+   "idx": 5,
+   "id": "250:1144",
+   "name": "phy21",
+   "w": 595,
+   "h": 842,
+   "placeholders": [],
+   "images": [],
+   "page_no": 3,
+   "role": "content",
+   "text_nodes": 36
+  },
+  {
+   "idx": 6,
+   "id": "250:1208",
+   "name": "phy22",
+   "w": 595,
+   "h": 842,
+   "placeholders": [],
+   "images": [],
+   "page_no": 4,
+   "role": "content",
+   "text_nodes": 35
+  },
+  {
+   "idx": 7,
+   "id": "250:1270",
+   "name": "phy23",
+   "w": 595,
+   "h": 842,
+   "placeholders": [],
+   "images": [],
+   "page_no": 5,
+   "role": "content",
+   "text_nodes": 53
+  },
+  {
+   "idx": 8,
+   "id": "250:1376",
+   "name": "phy24",
+   "w": 595,
+   "h": 842,
+   "placeholders": [],
+   "images": [],
+   "page_no": 6,
+   "role": "content",
+   "text_nodes": 43
+  },
+  {
+   "idx": 9,
+   "id": "250:1461",
+   "name": "phy25",
+   "w": 595,
+   "h": 842,
+   "placeholders": [],
+   "images": [],
+   "page_no": 7,
+   "role": "content",
+   "text_nodes": 20
+  },
+  {
+   "idx": 10,
+   "id": "250:1497",
+   "name": "phy26",
+   "w": 595,
+   "h": 842,
+   "placeholders": [],
+   "images": [
+    {
+     "id": "250:1527",
+     "name": "image 275",
+     "x": 131.087890625,
+     "y": 472.0,
+     "w": 332.82421875,
+     "h": 308.96136474609375
+    }
+   ],
+   "page_no": 8,
+   "role": "content",
+   "text_nodes": 17
+  },
+  {
+   "idx": 11,
+   "id": "250:1528",
+   "name": "phy27",
+   "w": 595,
+   "h": 842,
+   "placeholders": [],
+   "images": [],
+   "page_no": 9,
+   "role": "content",
+   "text_nodes": 45
+  },
+  {
+   "idx": 12,
+   "id": "250:1613",
+   "name": "phy28",
+   "w": 595,
+   "h": 842,
+   "placeholders": [],
+   "images": [],
+   "page_no": 10,
+   "role": "content",
+   "text_nodes": 7
+  },
+  {
+   "idx": 13,
+   "id": "250:1628",
+   "name": "phy29",
+   "w": 595,
+   "h": 842,
+   "placeholders": [],
+   "images": [
+    {
+     "id": "250:1656",
+     "name": "image 276",
+     "x": 83.0,
+     "y": 279.0,
+     "w": 429.0,
+     "h": 487.0
+    }
+   ],
+   "page_no": 11,
+   "role": "content",
+   "text_nodes": 15
+  },
+  {
+   "idx": 14,
+   "id": "250:1657",
+   "name": "phy30",
+   "w": 595,
+   "h": 842,
+   "placeholders": [],
+   "images": [],
+   "page_no": 12,
+   "role": "content",
+   "text_nodes": 51
+  },
+  {
+   "idx": 15,
+   "id": "250:2825",
+   "name": "phy50",
+   "w": 595,
+   "h": 842,
+   "placeholders": [],
+   "images": [],
+   "page_no": 13,
+   "role": "content",
+   "text_nodes": 41
+  },
+  {
+   "idx": 16,
+   "id": "250:2904",
+   "name": "phy51",
+   "w": 595,
+   "h": 842,
+   "placeholders": [],
+   "images": [],
+   "page_no": 50,
+   "role": "content",
+   "text_nodes": 52
+  },
+  {
+   "idx": 17,
+   "id": "250:3009",
+   "name": "phy52",
+   "w": 595,
+   "h": 842,
+   "placeholders": [],
+   "images": [],
+   "page_no": 14,
+   "role": "content",
+   "text_nodes": 27
+  },
+  {
+   "idx": 18,
+   "id": "250:3063",
+   "name": "phy53",
+   "w": 595,
+   "h": 842,
+   "placeholders": [],
+   "images": [],
+   "page_no": 15,
+   "role": "content",
+   "text_nodes": 46
+  },
+  {
+   "idx": 19,
+   "id": "250:3144",
+   "name": "phy54",
+   "w": 595,
+   "h": 842,
+   "placeholders": [],
+   "images": [],
+   "page_no": 16,
+   "role": "content",
+   "text_nodes": 43
+  },
+  {
+   "idx": 20,
+   "id": "250:3227",
+   "name": "phy55",
+   "w": 595,
+   "h": 842,
+   "placeholders": [],
+   "images": [],
+   "page_no": 17,
+   "role": "content",
+   "text_nodes": 46
+  },
+  {
+   "idx": 21,
+   "id": "250:3334",
+   "name": "phy56",
+   "w": 595,
+   "h": 842,
+   "placeholders": [],
+   "images": [],
+   "page_no": 18,
+   "role": "content",
+   "text_nodes": 30
+  },
+  {
+   "idx": 22,
+   "id": "250:3384",
+   "name": "phy57",
+   "w": 595,
+   "h": 842,
+   "placeholders": [],
+   "images": [],
+   "page_no": 19,
+   "role": "content",
+   "text_nodes": 18
+  },
+  {
+   "idx": 23,
+   "id": "250:8421",
+   "name": "phy58",
+   "w": 595,
+   "h": 842,
+   "placeholders": [],
+   "images": [],
+   "page_no": 20,
+   "role": "content",
+   "text_nodes": 34
+  },
+  {
+   "idx": 24,
+   "id": "250:3418",
+   "name": "phy59",
+   "w": 595,
+   "h": 842,
+   "placeholders": [],
+   "images": [],
+   "page_no": 21,
+   "role": "content",
+   "text_nodes": 43
+  },
+  {
+   "idx": 25,
+   "id": "250:3524",
+   "name": "phy60",
+   "w": 595,
+   "h": 842,
+   "placeholders": [],
+   "images": [],
+   "page_no": 22,
+   "role": "content",
+   "text_nodes": 22
+  },
+  {
+   "idx": 26,
+   "id": "250:3585",
+   "name": "phy61",
+   "w": 595,
+   "h": 842,
+   "placeholders": [],
+   "images": [],
+   "page_no": 23,
+   "role": "content",
+   "text_nodes": 36
+  },
+  {
+   "idx": 27,
+   "id": "250:3687",
+   "name": "phy62",
+   "w": 595,
+   "h": 842,
+   "placeholders": [],
+   "images": [],
+   "page_no": 24,
+   "role": "content",
+   "text_nodes": 50
+  },
+  {
+   "idx": 28,
+   "id": "250:3845",
+   "name": "phy63",
+   "w": 595,
+   "h": 842,
+   "placeholders": [],
+   "images": [],
+   "page_no": 25,
+   "role": "content",
+   "text_nodes": 19
+  },
+  {
+   "idx": 29,
+   "id": "250:3906",
+   "name": "phy64",
+   "w": 595,
+   "h": 842,
+   "placeholders": [],
+   "images": [
+    {
+     "id": "250:3918",
+     "name": "Group 1261155726 2",
+     "x": 40.0,
+     "y": 87.0,
+     "w": 515.0,
+     "h": 343.0
+    }
+   ],
+   "page_no": 26,
+   "role": "content",
+   "text_nodes": 4
+  },
+  {
+   "idx": 30,
+   "id": "250:3919",
+   "name": "phy65",
+   "w": 595,
+   "h": 842,
+   "placeholders": [],
+   "images": [],
+   "page_no": 27,
+   "role": "end",
+   "text_nodes": 6
+  },
+  {
+   "idx": 31,
+   "id": "250:3935",
+   "name": "Cover Back - Physics Grade 7",
+   "w": 595,
+   "h": 842,
+   "placeholders": [],
+   "images": [
+    {
+     "id": "250:3936",
+     "name": "Physics Cover - IIT Course - Grade 7 1 3",
+     "x": 0.0,
+     "y": -0.7490234375,
+     "w": 1188.501220703125,
+     "h": 843.0415649414062
+    }
+   ],
+   "page_no": null,
+   "role": "cover",
+   "text_nodes": 0
+  }
+ ],
+ "score": 93.1,
+ "stats": {
+  "matched": 5157,
+  "doc_tokens": 5510,
+  "figma_tokens": 5224
+ },
+ "diffs": [
+  {
+   "kind": "missing",
+   "doc": "KEY IDEAS",
+   "figma": "",
+   "block": "b0006",
+   "page": 3,
+   "node": "250:38",
+   "ctx": "KEY IDEAS After completing this chapter, you should",
+   "id": "15c0ab060c"
+  },
+  {
+   "kind": "missing",
+   "doc": "Conductors and Insulators",
+   "figma": "",
+   "block": "b0022",
+   "page": 4,
+   "node": "250:1120",
+   "ctx": "Understand magnetic effects of electric current Conductors and Insulators Introduction Electric charge can move from",
+   "id": "87e54d777c"
+  },
+  {
+   "kind": "missing",
+   "doc": "Conductors Insulators",
+   "figma": "",
+   "block": "b0025",
+   "page": 4,
+   "node": "250:1130",
+   "ctx": "charge, materials are broadly classified into: Conductors Insulators This classification forms the basis of",
+   "id": "3ba484fe2b"
+  },
+  {
+   "kind": "missing",
+   "doc": "Conductors",
+   "figma": "",
+   "block": "b0028",
+   "page": 4,
+   "node": "250:1134",
+   "ctx": "of electrical technology and circuit design. Conductors Definition Materials that allow electric charges",
+   "id": "59de26e3a5"
+  },
+  {
+   "kind": "missing",
+   "doc": "Insulators",
+   "figma": "",
+   "block": "b0058",
+   "page": 6,
+   "node": "250:1221",
+   "ctx": "used for long-distance transmission of electricity. Insulators Definition Materials that do not allow",
+   "id": "08e3cd1b67"
+  },
+  {
+   "kind": "punctuation",
+   "doc": "1",
+   "figma": "1:",
+   "block": "b0118",
+   "page": 8,
+   "node": "250:1421",
+   "id": "79b0a4884f"
+  },
+  {
+   "kind": "punctuation",
+   "doc": "Concept",
+   "figma": "Concept:",
+   "block": "b0120",
+   "page": 8,
+   "node": "250:1422",
+   "id": "f23b83f2ec"
+  },
+  {
+   "kind": "punctuation",
+   "doc": "2",
+   "figma": "2:",
+   "block": "b0122",
+   "page": 8,
+   "node": "250:1424",
+   "id": "7e3e741d64"
+  },
+  {
+   "kind": "punctuation",
+   "doc": "Concept",
+   "figma": "Concept:",
+   "block": "b0124",
+   "page": 8,
+   "node": "250:1425",
+   "id": "f23b83f2ec"
+  },
+  {
+   "kind": "punctuation",
+   "doc": "3",
+   "figma": "3:",
+   "block": "b0126",
+   "page": 8,
+   "node": "250:1427",
+   "id": "94281f1f62"
+  },
+  {
+   "kind": "punctuation",
+   "doc": "Concept",
+   "figma": "Concept:",
+   "block": "b0128",
+   "page": 8,
+   "node": "250:1428",
+   "id": "f23b83f2ec"
+  },
+  {
+   "kind": "missing",
+   "doc": "SYNOPSIS-2 Lightning and Lightning Conductor",
+   "figma": "",
+   "block": "b0151",
+   "page": 10,
+   "node": "250:1510",
+   "ctx": "salts. Graphite is a conducting non-metal. SYNOPSIS-2 Lightning and Lightning Conductor Lightning A Large-Scale Electrical Discharge in",
+   "id": "ef1f634c90"
+  },
+  {
+   "kind": "missing",
+   "doc": "1.",
+   "figma": "",
+   "block": "b0163",
+   "page": 11,
+   "node": "250:1547",
+   "ctx": "heard as thunder. Types of Lightning 1. Intra-cloud Lightning Electrical discharge occurring within",
+   "id": "2734bab962"
+  },
+  {
+   "kind": "missing",
+   "doc": "2.",
+   "figma": "",
+   "block": "b0164",
+   "page": 11,
+   "node": "250:1553",
+   "ctx": "discharge occurring within the same cloud. 2. Cloud-to-Cloud Lightning Electrical discharge occurring between",
+   "id": "f23fc9702a"
+  },
+  {
+   "kind": "missing",
+   "doc": "Lightning Conductor",
+   "figma": "",
+   "block": "b0185",
+   "page": 13,
+   "node": "250:1640",
+   "ctx": "and currents of several thousand amperes. Lightning Conductor A lightning conductor is a protective",
+   "id": "f40820f295"
+  },
+  {
+   "kind": "missing",
+   "doc": "TEST YOUR CONCEPTS",
+   "figma": "",
+   "block": "b0203",
+   "page": 15,
+   "node": "250:2838",
+   "ctx": "the invention of the lightning conductor. TEST YOUR CONCEPTS Very Short Answer Type Questions Directions",
+   "id": "8ebe660742"
+  },
+  {
+   "kind": "missing",
+   "doc": "1.",
+   "figma": "",
+   "block": "b0206",
+   "page": 15,
+   "node": "250:2847",
+   "ctx": "the most appropriate word or term. 1. Like charges each other while unlike",
+   "id": "2734bab962"
+  },
+  {
+   "kind": "missing",
+   "doc": "2.",
+   "figma": "",
+   "block": "b0207",
+   "page": 15,
+   "node": "250:2850",
+   "ctx": "other while unlike charges each other. 2. The process of charging a body",
+   "id": "f23fc9702a"
+  },
+  {
+   "kind": "missing",
+   "doc": "7.",
+   "figma": "",
+   "block": "b0212",
+   "page": 15,
+   "node": "250:2865",
+   "ctx": "into the ground and protect buildings. 7. The combination of two or more",
+   "id": "841fad6185"
+  },
+  {
+   "kind": "extra",
+   "doc": "",
+   "figma": "(A) electrical energy into mechanical energy",
+   "block": "b0219",
+   "page": 16,
+   "node": "250:2924",
+   "ctx": "Electric generators in power plants convert (A) electrical energy into mechanical energy",
+   "id": "2d5db77662"
+  },
+  {
+   "kind": "extra",
+   "doc": "",
+   "figma": "Fill in the Blanks",
+   "block": "b0261",
+   "page": 18,
+   "node": "250:3102",
+   "ctx": "the heating effect of electric current. Directions: Fill in the blanks with",
+   "id": "5e0a8dffb2"
+  },
+  {
+   "kind": "missing",
+   "doc": "HINTS AND SOLUTIONS TEST YOUR CONCEPTS Very Short Answer Type Questions",
+   "figma": "",
+   "block": "b0301",
+   "page": 23,
+   "node": "250:8438",
+   "ctx": "electric current with a simple experiment. HINTS AND SOLUTIONS TEST YOUR CONCEPTS Very Short Answer Type Questions (Fill in the Blanks) 1. Like",
+   "id": "224f618f32"
+  },
+  {
+   "kind": "punctuation",
+   "doc": "(Fill",
+   "figma": "Fill",
+   "block": "b0304",
+   "page": 23,
+   "node": "250:8438",
+   "id": "84cb2913e5"
+  },
+  {
+   "kind": "punctuation",
+   "doc": "Blanks)",
+   "figma": "Blanks",
+   "block": "b0304",
+   "page": 23,
+   "node": "250:8438",
+   "id": "a54336ca8e"
+  },
+  {
+   "kind": "missing",
+   "doc": "1.",
+   "figma": "",
+   "block": "b0305",
+   "page": 23,
+   "node": "250:8445",
+   "ctx": "Type Questions (Fill in the Blanks) 1. Like charges repel each other while",
+   "id": "2734bab962"
+  },
+  {
+   "kind": "missing",
+   "doc": "2.",
+   "figma": "",
+   "block": "b0306",
+   "page": 23,
+   "node": "250:8451",
+   "ctx": "the fundamental rule of electric charges.) 2. The process of charging a body",
+   "id": "f23fc9702a"
+  },
+  {
+   "kind": "missing",
+   "doc": "3.",
+   "figma": "",
+   "block": "b0307",
+   "page": 23,
+   "node": "250:8457",
+   "ctx": "a plastic pen with silk cloth.) 3. An electroscope is a device used",
+   "id": "6ada4202af"
+  },
+  {
+   "kind": "missing",
+   "doc": "4.",
+   "figma": "",
+   "block": "b0308",
+   "page": 23,
+   "node": "250:8463",
+   "ctx": "nature of charge on a body. 4. Materials that do not allow electric",
+   "id": "dd6a313fe1"
+  },
+  {
+   "kind": "missing",
+   "doc": "5.",
+   "figma": "",
+   "block": "b0309",
+   "page": 23,
+   "node": "250:8469",
+   "ctx": "Insulators wood, plastic; Conductors copper, aluminium) 5. Lightning is a natural phenomenon caused",
+   "id": "d783e6f3c3"
+  },
+  {
+   "kind": "missing",
+   "doc": "6.",
+   "figma": "",
+   "block": "b0310",
+   "page": 23,
+   "node": "250:8475",
+   "ctx": "electric charge accumulated in the clouds. 6. A lightning conductor is used to",
+   "id": "dec9548b3c"
+  },
+  {
+   "kind": "missing",
+   "doc": "7.",
+   "figma": "",
+   "block": "b0311",
+   "page": 23,
+   "node": "250:8481",
+   "ctx": "into the ground and protect buildings. 7. The combination of two or more",
+   "id": "841fad6185"
+  },
+  {
+   "kind": "missing",
+   "doc": "8. Materials like wood, plastic and rubber are Correct Answer:",
+   "figma": "",
+   "block": "b0313",
+   "page": 23,
+   "node": "250:8491",
+   "ctx": "battery. SECTION-A: MULTIPLE CHOICE QUESTIONS (MCQs) 8. Materials like wood, plastic and rubber are Correct Answer: (B) good insulators of electricity Explanation:",
+   "id": "c1a9d69206"
+  },
+  {
+   "kind": "missing",
+   "doc": "Explanation:",
+   "figma": "",
+   "block": "b0315",
+   "page": 23,
+   "node": "250:8492",
+   "ctx": "Answer: (B) good insulators of electricity Explanation: These materials do not allow electric",
+   "id": "c69a4ce749"
+  },
+  {
+   "kind": "missing",
+   "doc": "9. Lightning is a natural phenomenon caused due to Correct Answer:",
+   "figma": "",
+   "block": "b0316",
+   "page": 23,
+   "node": "250:8498",
+   "ctx": "easily, so they are called insulators. 9. Lightning is a natural phenomenon caused due to Correct Answer: (B) sudden discharge of huge electric",
+   "id": "a8b1019e17"
+  },
+  {
+   "kind": "missing",
+   "doc": "Explanation:",
+   "figma": "",
+   "block": "b0318",
+   "page": 23,
+   "node": "250:8499",
+   "ctx": "huge electric charge accumulated in clouds Explanation: When opposite charges in clouds become",
+   "id": "c69a4ce749"
+  },
+  {
+   "kind": "missing",
+   "doc": "A lightning conductor protects buildings by Correct Answer:",
+   "figma": "",
+   "block": "b0319",
+   "page": 23,
+   "node": "250:8505",
+   "ctx": "a huge spark (lightning) occurs. 10. A lightning conductor protects buildings by Correct Answer: (B) safely carrying the lightning charge",
+   "id": "5c97d74427"
+  },
+  {
+   "kind": "missing",
+   "doc": "Explanation:",
+   "figma": "",
+   "block": "b0321",
+   "page": 23,
+   "node": "250:8506",
+   "ctx": "the lightning charge into the ground Explanation: It provides an easy path for",
+   "id": "c69a4ce749"
+  },
+  {
+   "kind": "missing",
+   "doc": "The safety device that automatically turns off when current exceeds the safe limit is Correct Answer:",
+   "figma": "",
+   "block": "b0322",
+   "page": 23,
+   "node": "250:8512",
+   "ctx": "preventing damage to the building. 11. The safety device that automatically turns off when current exceeds the safe limit is Correct Answer: (B) miniature circuit breaker (MCB) Explanation:",
+   "id": "5ea04d1f85"
+  },
+  {
+   "kind": "missing",
+   "doc": "Explanation:",
+   "figma": "",
+   "block": "b0324",
+   "page": 23,
+   "node": "250:8513",
+   "ctx": "Answer: (B) miniature circuit breaker (MCB) Explanation: MCB is a modern, reusable switch",
+   "id": "c69a4ce749"
+  },
+  {
+   "kind": "missing",
+   "doc": "The working of an electric iron and electric heater is based on Correct Answer:",
+   "figma": "",
+   "block": "b0325",
+   "page": 24,
+   "node": "250:3434",
+   "ctx": "on overload or short circuit. 12. The working of an electric iron and electric heater is based on Correct Answer: (C) heating effect of current Explanation:",
+   "id": "b16df564d3"
+  },
+  {
+   "kind": "missing",
+   "doc": "Explanation:",
+   "figma": "",
+   "block": "b0327",
+   "page": 24,
+   "node": "250:3435",
+   "ctx": "Answer: (C) heating effect of current Explanation: When current passes through the heating",
+   "id": "c69a4ce749"
+  },
+  {
+   "kind": "missing",
+   "doc": "Electric generators in power plants convert Correct Answer:",
+   "figma": "",
+   "block": "b0328",
+   "page": 24,
+   "node": "250:3441",
+   "ctx": "is converted into heat energy. 13. Electric generators in power plants convert Correct Answer: (B) mechanical energy into electrical energy",
+   "id": "80c3d626e1"
+  },
+  {
+   "kind": "missing",
+   "doc": "Explanation:",
+   "figma": "",
+   "block": "b0330",
+   "page": 24,
+   "node": "250:3442",
+   "ctx": "(B) mechanical energy into electrical energy Explanation: The turbine rotates the dynamo, which",
+   "id": "c69a4ce749"
+  },
+  {
+   "kind": "changed",
+   "doc": "SECTION-C:",
+   "figma": "Section C",
+   "block": "b0331",
+   "page": 24,
+   "node": "250:3445",
+   "ctx": "water or steam) into electrical energy. SECTION-C: MATCH THE FOLLOWING (a) Copper (ii)",
+   "id": "7498e31370"
+  },
+  {
+   "kind": "extra",
+   "doc": "",
+   "figma": "14.",
+   "block": "b0332",
+   "page": 24,
+   "node": "250:3449",
+   "ctx": "electrical energy. SECTION-C: MATCH THE FOLLOWING (a) Copper (ii) Good conductor of",
+   "id": "564b26dc9c"
+  },
+  {
+   "kind": "changed",
+   "doc": "(Questions 24 to 27) 14. What is the SI unit of electric charge? Answer:",
+   "figma": "(Q24–27) 15.",
+   "block": "b0338",
+   "page": 24,
+   "node": "250:3457",
+   "ctx": "current Very Short Answer Type Questions (Questions 24 to 27) 14. What is the SI unit of electric charge? Answer: Coulomb (C) 15. State the rule:",
+   "id": "ee26ad634f"
+  },
+  {
+   "kind": "changed",
+   "doc": "15. State the rule: “Like charges and unlike charges Answer:",
+   "figma": "16.",
+   "block": "b0341",
+   "page": 24,
+   "node": "250:3466",
+   "ctx": "of electric charge? Answer: Coulomb (C) 15. State the rule: “Like charges and unlike charges Answer: Like charges repel and unlike charges",
+   "id": "c877e8cf05"
+  },
+  {
+   "kind": "changed",
+   "doc": "16. Name the process of charging a body by rubbing it with another body. Answer:",
+   "figma": "17.",
+   "block": "b0343",
+   "page": 24,
+   "node": "250:3471",
+   "ctx": "and unlike charges attract each other. 16. Name the process of charging a body by rubbing it with another body. Answer: Charging by friction. 17. What is",
+   "id": "fea8ae90ff"
+  },
+  {
+   "kind": "changed",
+   "doc": "17. What is an electroscope used for? Answer:",
+   "figma": "18.",
+   "block": "b0345",
+   "page": 24,
+   "node": "250:3476",
+   "ctx": "another body. Answer: Charging by friction. 17. What is an electroscope used for? Answer: An electroscope is used to detect",
+   "id": "8cea32efd8"
+  },
+  {
+   "kind": "changed",
+   "doc": "18. Give two examples of good conductors of electricity. Answer:",
+   "figma": "19.",
+   "block": "b0347",
+   "page": 24,
+   "node": "250:3481",
+   "ctx": "negative) of charge on a body. 18. Give two examples of good conductors of electricity. Answer: Copper and aluminium (or silver, iron,",
+   "id": "993cd85870"
+  },
+  {
+   "kind": "changed",
+   "doc": "19. Give two examples of good insulators of electricity. Answer:",
+   "figma": "20.",
+   "block": "b0349",
+   "page": 24,
+   "node": "250:3486",
+   "ctx": "and aluminium (or silver, iron, gold). 19. Give two examples of good insulators of electricity. Answer: Wood and plastic (or rubber, glass,",
+   "id": "74cef2e67c"
+  },
+  {
+   "kind": "changed",
+   "doc": "20. What is lightning? Answer:",
+   "figma": "21.",
+   "block": "b0351",
+   "page": 24,
+   "node": "250:3491",
+   "ctx": "and plastic (or rubber, glass, air). 20. What is lightning? Answer: Lightning is a natural phenomenon caused",
+   "id": "fb071090b2"
+  },
+  {
+   "kind": "changed",
+   "doc": "21. What is the function of a lightning conductor? Answer:",
+   "figma": "22.",
+   "block": "b0353",
+   "page": 24,
+   "node": "250:3496",
+   "ctx": "electric charge accumulated in the clouds. 21. What is the function of a lightning conductor? Answer: It safely carries the electric charge",
+   "id": "1b3831c386"
+  },
+  {
+   "kind": "changed",
+   "doc": "22. What is the combination of two or more cells called? Answer:",
+   "figma": "23.",
+   "block": "b0355",
+   "page": 24,
+   "node": "250:3501",
+   "ctx": "ground and protects buildings from damage. 22. What is the combination of two or more cells called? Answer: Battery. 23. Name the safety device",
+   "id": "f3aedf781d"
+  },
+  {
+   "kind": "changed",
+   "doc": "23. Name the safety device that melts and breaks the circuit when excess current flows. Answer:",
+   "figma": "24.",
+   "block": "b0357",
+   "page": 24,
+   "node": "250:3506",
+   "ctx": "or more cells called? Answer: Battery. 23. Name the safety device that melts and breaks the circuit when excess current flows. Answer: Electric fuse (or fuse).. 24. Name",
+   "id": "dfba48abf2"
+  },
+  {
+   "kind": "punctuation",
+   "doc": "fuse)..",
+   "figma": "fuse).",
+   "block": "b0358",
+   "page": 24,
+   "node": "250:3508",
+   "id": "22f6e59893"
+  },
+  {
+   "kind": "changed",
+   "doc": "24. Name the modern safety device that automatically switches off when current exceeds the safe limit. Answer:",
+   "figma": "25.",
+   "block": "b0359",
+   "page": 24,
+   "node": "250:3511",
+   "ctx": "flows. Answer: Electric fuse (or fuse).. 24. Name the modern safety device that automatically switches off when current exceeds the safe limit. Answer: Miniature Circuit Breaker (MCB). 25. On",
+   "id": "2efc98a030"
+  },
+  {
+   "kind": "changed",
+   "doc": "25. On which effect of electric current does an electric iron work? Answer:",
+   "figma": "26.",
+   "block": "b0361",
+   "page": 24,
+   "node": "250:3516",
+   "ctx": "limit. Answer: Miniature Circuit Breaker (MCB). 25. On which effect of electric current does an electric iron work? Answer: Heating effect of electric current. 26.",
+   "id": "5b9e12d39b"
+  },
+  {
+   "kind": "changed",
+   "doc": "26. On which effect of electric current does an electric bell work? Answer:",
+   "figma": "27.",
+   "block": "b0363",
+   "page": 24,
+   "node": "250:3521",
+   "ctx": "Answer: Heating effect of electric current. 26. On which effect of electric current does an electric bell work? Answer: Magnetic effect of electric current. Short",
+   "id": "06b6139ab5"
+  },
+  {
+   "kind": "changed",
+   "doc": "(Questions",
+   "figma": "(Q28–31)",
+   "block": "b0366",
+   "page": 25,
+   "node": "250:3537",
+   "ctx": "electric current. Short Answer Type Questions (Questions 28 to 31) 27. What are",
+   "id": "f296e8a697"
+  },
+  {
+   "kind": "punctuation",
+   "doc": "28",
+   "figma": "28.",
+   "block": "b0366",
+   "page": 25,
+   "node": "250:3541",
+   "id": "3f2b305367"
+  },
+  {
+   "kind": "missing",
+   "doc": "to 31) 27. What are the three methods of charging a body? Give one example for each. Answer:",
+   "figma": "",
+   "block": "b0366",
+   "page": 25,
+   "node": "250:3544",
+   "ctx": "Short Answer Type Questions (Questions 28 to 31) 27. What are the three methods of charging a body? Give one example for each. Answer: The three methods of charging a",
+   "id": "ffb6bf3197"
+  },
+  {
+   "kind": "missing",
+   "doc": "Distinguish between conductors and insulators. Give two examples of each. Answer:",
+   "figma": "",
+   "block": "b0372",
+   "page": 25,
+   "node": "250:3556",
+   "ctx": "uncharged body without touching it. 29. Distinguish between conductors and insulators. Give two examples of each. Answer: Conductors are materials that allow electric",
+   "id": "c528d6a2cd"
+  },
+  {
+   "kind": "missing",
+   "doc": "What is lightning? How does a lightning conductor protect a building from damage? Answer:",
+   "figma": "",
+   "block": "b0374",
+   "page": 25,
+   "node": "250:3562",
+   "ctx": "covering wires to prevent shocks. 30. What is lightning? How does a lightning conductor protect a building from damage? Answer: Lightning is a huge electric spark",
+   "id": "7a8d5474f8"
+  },
+  {
+   "kind": "missing",
+   "doc": "Explain the working of an electric fuse. Why is it called a safety device? Answer:",
+   "figma": "",
+   "block": "b0376",
+   "page": 25,
+   "node": "250:3568",
+   "ctx": "protecting the building from damage. 31. Explain the working of an electric fuse. Why is it called a safety device? Answer: An electric fuse contains a thin",
+   "id": "b90e52f64d"
+  },
+  {
+   "kind": "extra",
+   "doc": "",
+   "figma": "(Q32–35",
+   "block": "b0379",
+   "page": 25,
+   "node": "250:3570",
+   "ctx": "Answer Type Questions Essay Type Questions 32. (Diagram: Show electromagnet, soft iron",
+   "id": "8a396e406b"
+  },
+  {
+   "kind": "extra",
+   "doc": "",
+   "figma": "CONCEPT APPLICATION Level 1",
+   "block": "b0388",
+   "page": 26,
+   "node": "250:3614",
+   "ctx": "bulbs with CFLs or LED bulbs. True or False 36. False Unlike",
+   "id": "0cf4161097"
+  },
+  {
+   "kind": "extra",
+   "doc": "",
+   "figma": "(Q79–98)",
+   "block": "b0404",
+   "page": 27,
+   "node": "250:3715",
+   "ctx": "of nichrome wire. Multiple Choice Questions 49. (C) Like charges repel each",
+   "id": "413f6e3b7d"
+  },
+  {
+   "kind": "extra",
+   "doc": "",
+   "figma": "Match the Following",
+   "block": "b0417",
+   "page": 27,
+   "node": "250:3797",
+   "ctx": "106 J. 61. (B) Electric bell. 62. (a) (ii) (b) (iv) (c)",
+   "id": "a4f070cbd6"
+  },
+  {
+   "kind": "punctuation",
+   "doc": "(ii)",
+   "figma": "(ii),",
+   "block": "b0418",
+   "page": 27,
+   "node": "250:3804",
+   "id": "3bc4ed0794"
+  },
+  {
+   "kind": "punctuation",
+   "doc": "(iv)",
+   "figma": "(iv),",
+   "block": "b0419",
+   "page": 27,
+   "node": "250:3804",
+   "id": "9acf838413"
+  },
+  {
+   "kind": "punctuation",
+   "doc": "(i)",
+   "figma": "(i),",
+   "block": "b0420",
+   "page": 27,
+   "node": "250:3804",
+   "id": "2b8f946a7a"
+  },
+  {
+   "kind": "punctuation",
+   "doc": "(iii)",
+   "figma": "(iii),",
+   "block": "b0421",
+   "page": 27,
+   "node": "250:3804",
+   "id": "a7fd88fa1e"
+  },
+  {
+   "kind": "punctuation",
+   "doc": "(ii)",
+   "figma": "(ii),",
+   "block": "b0424",
+   "page": 27,
+   "node": "250:3810",
+   "id": "3bc4ed0794"
+  },
+  {
+   "kind": "punctuation",
+   "doc": "(v)",
+   "figma": "(v),",
+   "block": "b0425",
+   "page": 27,
+   "node": "250:3810",
+   "id": "af98abef44"
+  },
+  {
+   "kind": "punctuation",
+   "doc": "(iii)",
+   "figma": "(iii),",
+   "block": "b0426",
+   "page": 27,
+   "node": "250:3810",
+   "id": "a7fd88fa1e"
+  },
+  {
+   "kind": "punctuation",
+   "doc": "(i)",
+   "figma": "(i),",
+   "block": "b0427",
+   "page": 27,
+   "node": "250:3810",
+   "id": "2b8f946a7a"
+  },
+  {
+   "kind": "changed",
+   "doc": "(Q64–68)",
+   "figma": "(Q64 –68)",
+   "block": "b0429",
+   "page": 27,
+   "node": "250:3813",
+   "ctx": "(i) (e) (iv) Multiple Choice Questions (Q64–68) 64 (B) So that it melts",
+   "id": "47b4b3a8a6"
+  },
+  {
+   "kind": "punctuation",
+   "doc": "64",
+   "figma": "64.",
+   "block": "b0430",
+   "page": 27,
+   "node": "250:3817",
+   "id": "8f3c1e2d15"
+  },
+  {
+   "kind": "changed",
+   "doc": "Multiple Choice",
+   "figma": "Short Answer Type",
+   "block": "b0435",
+   "page": 28,
+   "node": "250:3858",
+   "ctx": "off appliances when not in use Multiple Choice Questions (Q64–68) 69. Charging by conduction",
+   "id": "3b7319a12c"
+  },
+  {
+   "kind": "changed",
+   "doc": "(Q64–68)",
+   "figma": "(Q111–120)",
+   "block": "b0435",
+   "page": 28,
+   "node": "250:3858",
+   "ctx": "not in use Multiple Choice Questions (Q64–68) 69. Charging by conduction requires direct",
+   "id": "4359861839"
+  },
+  {
+   "kind": "extra",
+   "doc": "",
+   "figma": "Short Answer Type Questions (Q111–120)",
+   "block": "b0440",
+   "page": 28,
+   "node": "250:3886",
+   "ctx": "due to overloading or short circuit. 73. An MCB is an automatic",
+   "id": "02a513eeb6"
+  },
+  {
+   "kind": "missing",
+   "doc": "MIND MAP",
+   "figma": "",
+   "block": "b0444",
+   "page": 28,
+   "node": "250:3905",
+   "ctx": "compass needle deflects when current flows. MIND MAP",
+   "id": "9346ca2e3f"
+  }
+ ],
+ "case_warnings": [
+  {
+   "kind": "case",
+   "doc": "MATCH",
+   "figma": "Match",
+   "block": "b0331",
+   "page": 24,
+   "node": "250:3445"
+  },
+  {
+   "kind": "case",
+   "doc": "THE",
+   "figma": "the",
+   "block": "b0331",
+   "page": 24,
+   "node": "250:3445"
+  },
+  {
+   "kind": "case",
+   "doc": "FOLLOWING",
+   "figma": "Following",
+   "block": "b0331",
+   "page": 24,
+   "node": "250:3445"
+  }
+ ],
+ "case_total": 3,
+ "derived": [
+  {
+   "page": "phy2",
+   "text": "CHAPTER"
+  },
+  {
+   "page": "phy2",
+   "text": "Electricity"
+  },
+  {
+   "page": "phy2",
+   "text": "KEY IDEAS"
+  },
+  {
+   "page": "phy2",
+   "text": "✓"
+  },
+  {
+   "page": "phy2",
+   "text": "✓"
+  },
+  {
+   "page": "phy2",
+   "text": "✓"
+  },
+  {
+   "page": "phy2",
+   "text": "✓"
+  },
+  {
+   "page": "phy2",
+   "text": "✓"
+  },
+  {
+   "page": "phy2",
+   "text": "✓"
+  },
+  {
+   "page": "phy20",
+   "text": "SYNOPSIS-1"
+  },
+  {
+   "page": "phy20",
+   "text": "Conductors and Insulators"
+  },
+  {
+   "page": "phy20",
+   "text": "•"
+  },
+  {
+   "page": "phy20",
+   "text": "Conductors"
+  },
+  {
+   "page": "phy20",
+   "text": "•"
+  },
+  {
+   "page": "phy20",
+   "text": "Insulators"
+  },
+  {
+   "page": "phy20",
+   "text": "Conductors"
+  },
+  {
+   "page": "phy21",
+   "text": "•"
+  },
+  {
+   "page": "phy21",
+   "text": "•"
+  },
+  {
+   "page": "phy21",
+   "text": "•"
+  },
+  {
+   "page": "phy21",
+   "text": "•"
+  },
+  {
+   "page": "phy21",
+   "text": "•"
+  },
+  {
+   "page": "phy21",
+   "text": "•"
+  },
+  {
+   "page": "phy21",
+   "text": "•"
+  },
+  {
+   "page": "phy21",
+   "text": "•"
+  },
+  {
+   "page": "phy21",
+   "text": "•"
+  },
+  {
+   "page": "phy21",
+   "text": "•"
+  },
+  {
+   "page": "phy22",
+   "text": "Insulators"
+  },
+  {
+   "page": "phy22",
+   "text": "•"
+  },
+  {
+   "page": "phy22",
+   "text": "•"
+  },
+  {
+   "page": "phy22",
+   "text": "•"
+  },
+  {
+   "page": "phy22",
+   "text": "•"
+  },
+  {
+   "page": "phy22",
+   "text": "•"
+  },
+  {
+   "page": "phy22",
+   "text": "•"
+  },
+  {
+   "page": "phy22",
+   "text": "•"
+  },
+  {
+   "page": "phy22",
+   "text": "•"
+  },
+  {
+   "page": "phy23",
+   "text": "•"
+  },
+  {
+   "page": "phy23",
+   "text": "•"
+  },
+  {
+   "page": "phy23",
+   "text": "•"
+  },
+  {
+   "page": "phy23",
+   "text": "•"
+  },
+  {
+   "page": "phy23",
+   "text": "•"
+  },
+  {
+   "page": "phy23",
+   "text": "•"
+  },
+  {
+   "page": "phy23",
+   "text": "•"
+  },
+  {
+   "page": "phy23",
+   "text": "•"
+  },
+  {
+   "page": "phy23",
+   "text": "•"
+  },
+  {
+   "page": "phy23",
+   "text": "•"
+  },
+  {
+   "page": "phy24",
+   "text": "•"
+  },
+  {
+   "page": "phy24",
+   "text": "•"
+  },
+  {
+   "page": "phy24",
+   "text": "•"
+  },
+  {
+   "page": "phy24",
+   "text": "•"
+  },
+  {
+   "page": "phy24",
+   "text": "•"
+  }
+ ],
+ "anomalies": [
+  {
+   "kind": "font",
+   "page": 8,
+   "node": "250:1421",
+   "msg": "phy24: uses font “Mulish” (e.g. “Misconception 1: “All liquids ”). The book uses Avenir and DIN Condensed only."
+  },
+  {
+   "kind": "font",
+   "page": 18,
+   "node": "250:3078",
+   "msg": "phy53: uses font “Mulish” (e.g. “Directions: Write True or Fals”). The book uses Avenir and DIN Condensed only."
+  }
+ ],
+ "todos": [
+  {
+   "id": "15c0ab060c",
+   "type": "content",
+   "severity": "error",
+   "text": "phy2 (page 1): this doc text is missing from Figma: “KEY IDEAS”. Add it.",
+   "page": 3,
+   "node": "250:38",
+   "link": "https://www.figma.com/design/Zv0GkiCv8zs61l4BJ0dUUN?node-id=250-38",
+   "diff": "15c0ab060c"
+  },
+  {
+   "id": "87e54d777c",
+   "type": "content",
+   "severity": "error",
+   "text": "phy20 (page 2): this doc text is missing from Figma: “Conductors and Insulators”. Add it.",
+   "page": 4,
+   "node": "250:1120",
+   "link": "https://www.figma.com/design/Zv0GkiCv8zs61l4BJ0dUUN?node-id=250-1120",
+   "diff": "87e54d777c"
+  },
+  {
+   "id": "3ba484fe2b",
+   "type": "content",
+   "severity": "error",
+   "text": "phy20 (page 2): this doc text is missing from Figma: “Conductors Insulators”. Add it.",
+   "page": 4,
+   "node": "250:1130",
+   "link": "https://www.figma.com/design/Zv0GkiCv8zs61l4BJ0dUUN?node-id=250-1130",
+   "diff": "3ba484fe2b"
+  },
+  {
+   "id": "59de26e3a5",
+   "type": "content",
+   "severity": "error",
+   "text": "phy20 (page 2): this doc text is missing from Figma: “Conductors”. Add it.",
+   "page": 4,
+   "node": "250:1134",
+   "link": "https://www.figma.com/design/Zv0GkiCv8zs61l4BJ0dUUN?node-id=250-1134",
+   "diff": "59de26e3a5"
+  },
+  {
+   "id": "08e3cd1b67",
+   "type": "content",
+   "severity": "error",
+   "text": "phy22 (page 4): this doc text is missing from Figma: “Insulators”. Add it.",
+   "page": 6,
+   "node": "250:1221",
+   "link": "https://www.figma.com/design/Zv0GkiCv8zs61l4BJ0dUUN?node-id=250-1221",
+   "diff": "08e3cd1b67"
+  },
+  {
+   "id": "79b0a4884f",
+   "type": "content",
+   "severity": "error",
+   "text": "phy24 (page 6): character/punctuation differs. Doc: “1” → Figma: “1:”.",
+   "page": 8,
+   "node": "250:1421",
+   "link": "https://www.figma.com/design/Zv0GkiCv8zs61l4BJ0dUUN?node-id=250-1421",
+   "diff": "79b0a4884f"
+  },
+  {
+   "id": "f23b83f2ec",
+   "type": "content",
+   "severity": "error",
+   "text": "phy24 (page 6): character/punctuation differs. Doc: “Concept” → Figma: “Concept:”.",
+   "page": 8,
+   "node": "250:1422",
+   "link": "https://www.figma.com/design/Zv0GkiCv8zs61l4BJ0dUUN?node-id=250-1422",
+   "diff": "f23b83f2ec"
+  },
+  {
+   "id": "7e3e741d64",
+   "type": "content",
+   "severity": "error",
+   "text": "phy24 (page 6): character/punctuation differs. Doc: “2” → Figma: “2:”.",
+   "page": 8,
+   "node": "250:1424",
+   "link": "https://www.figma.com/design/Zv0GkiCv8zs61l4BJ0dUUN?node-id=250-1424",
+   "diff": "7e3e741d64"
+  },
+  {
+   "id": "f23b83f2ec",
+   "type": "content",
+   "severity": "error",
+   "text": "phy24 (page 6): character/punctuation differs. Doc: “Concept” → Figma: “Concept:”.",
+   "page": 8,
+   "node": "250:1425",
+   "link": "https://www.figma.com/design/Zv0GkiCv8zs61l4BJ0dUUN?node-id=250-1425",
+   "diff": "f23b83f2ec"
+  },
+  {
+   "id": "94281f1f62",
+   "type": "content",
+   "severity": "error",
+   "text": "phy24 (page 6): character/punctuation differs. Doc: “3” → Figma: “3:”.",
+   "page": 8,
+   "node": "250:1427",
+   "link": "https://www.figma.com/design/Zv0GkiCv8zs61l4BJ0dUUN?node-id=250-1427",
+   "diff": "94281f1f62"
+  },
+  {
+   "id": "f23b83f2ec",
+   "type": "content",
+   "severity": "error",
+   "text": "phy24 (page 6): character/punctuation differs. Doc: “Concept” → Figma: “Concept:”.",
+   "page": 8,
+   "node": "250:1428",
+   "link": "https://www.figma.com/design/Zv0GkiCv8zs61l4BJ0dUUN?node-id=250-1428",
+   "diff": "f23b83f2ec"
+  },
+  {
+   "id": "ef1f634c90",
+   "type": "content",
+   "severity": "error",
+   "text": "phy26 (page 8): this doc text is missing from Figma: “SYNOPSIS-2 Lightning and Lightning Conductor”. Add it.",
+   "page": 10,
+   "node": "250:1510",
+   "link": "https://www.figma.com/design/Zv0GkiCv8zs61l4BJ0dUUN?node-id=250-1510",
+   "diff": "ef1f634c90"
+  },
+  {
+   "id": "2734bab962",
+   "type": "content",
+   "severity": "error",
+   "text": "phy27 (page 9): this doc text is missing from Figma: “1.”. Add it.",
+   "page": 11,
+   "node": "250:1547",
+   "link": "https://www.figma.com/design/Zv0GkiCv8zs61l4BJ0dUUN?node-id=250-1547",
+   "diff": "2734bab962"
+  },
+  {
+   "id": "f23fc9702a",
+   "type": "content",
+   "severity": "error",
+   "text": "phy27 (page 9): this doc text is missing from Figma: “2.”. Add it.",
+   "page": 11,
+   "node": "250:1553",
+   "link": "https://www.figma.com/design/Zv0GkiCv8zs61l4BJ0dUUN?node-id=250-1553",
+   "diff": "f23fc9702a"
+  },
+  {
+   "id": "f40820f295",
+   "type": "content",
+   "severity": "error",
+   "text": "phy29 (page 11): this doc text is missing from Figma: “Lightning Conductor”. Add it.",
+   "page": 13,
+   "node": "250:1640",
+   "link": "https://www.figma.com/design/Zv0GkiCv8zs61l4BJ0dUUN?node-id=250-1640",
+   "diff": "f40820f295"
+  },
+  {
+   "id": "8ebe660742",
+   "type": "content",
+   "severity": "error",
+   "text": "phy50 (page 13): this doc text is missing from Figma: “TEST YOUR CONCEPTS”. Add it.",
+   "page": 15,
+   "node": "250:2838",
+   "link": "https://www.figma.com/design/Zv0GkiCv8zs61l4BJ0dUUN?node-id=250-2838",
+   "diff": "8ebe660742"
+  },
+  {
+   "id": "2734bab962",
+   "type": "content",
+   "severity": "error",
+   "text": "phy50 (page 13): this doc text is missing from Figma: “1.”. Add it.",
+   "page": 15,
+   "node": "250:2847",
+   "link": "https://www.figma.com/design/Zv0GkiCv8zs61l4BJ0dUUN?node-id=250-2847",
+   "diff": "2734bab962"
+  },
+  {
+   "id": "f23fc9702a",
+   "type": "content",
+   "severity": "error",
+   "text": "phy50 (page 13): this doc text is missing from Figma: “2.”. Add it.",
+   "page": 15,
+   "node": "250:2850",
+   "link": "https://www.figma.com/design/Zv0GkiCv8zs61l4BJ0dUUN?node-id=250-2850",
+   "diff": "f23fc9702a"
+  },
+  {
+   "id": "841fad6185",
+   "type": "content",
+   "severity": "error",
+   "text": "phy50 (page 13): this doc text is missing from Figma: “7.”. Add it.",
+   "page": 15,
+   "node": "250:2865",
+   "link": "https://www.figma.com/design/Zv0GkiCv8zs61l4BJ0dUUN?node-id=250-2865",
+   "diff": "841fad6185"
+  },
+  {
+   "id": "2d5db77662",
+   "type": "content",
+   "severity": "error",
+   "text": "phy51 (page 50): this text is in Figma but not in the doc: “(A) electrical energy into mechanical energy”. Remove it (or confirm it is intended).",
+   "page": 16,
+   "node": "250:2924",
+   "link": "https://www.figma.com/design/Zv0GkiCv8zs61l4BJ0dUUN?node-id=250-2924",
+   "diff": "2d5db77662"
+  },
+  {
+   "id": "5e0a8dffb2",
+   "type": "content",
+   "severity": "error",
+   "text": "phy53 (page 15): this text is in Figma but not in the doc: “Fill in the Blanks”. Remove it (or confirm it is intended).",
+   "page": 18,
+   "node": "250:3102",
+   "link": "https://www.figma.com/design/Zv0GkiCv8zs61l4BJ0dUUN?node-id=250-3102",
+   "diff": "5e0a8dffb2"
+  },
+  {
+   "id": "224f618f32",
+   "type": "content",
+   "severity": "error",
+   "text": "phy58 (page 20): this doc text is missing from Figma: “HINTS AND SOLUTIONS TEST YOUR CONCEPTS Very Short Answer Type Questions”. Add it.",
+   "page": 23,
+   "node": "250:8438",
+   "link": "https://www.figma.com/design/Zv0GkiCv8zs61l4BJ0dUUN?node-id=250-8438",
+   "diff": "224f618f32"
+  },
+  {
+   "id": "84cb2913e5",
+   "type": "content",
+   "severity": "error",
+   "text": "phy58 (page 20): character/punctuation differs. Doc: “(Fill” → Figma: “Fill”.",
+   "page": 23,
+   "node": "250:8438",
+   "link": "https://www.figma.com/design/Zv0GkiCv8zs61l4BJ0dUUN?node-id=250-8438",
+   "diff": "84cb2913e5"
+  },
+  {
+   "id": "a54336ca8e",
+   "type": "content",
+   "severity": "error",
+   "text": "phy58 (page 20): character/punctuation differs. Doc: “Blanks)” → Figma: “Blanks”.",
+   "page": 23,
+   "node": "250:8438",
+   "link": "https://www.figma.com/design/Zv0GkiCv8zs61l4BJ0dUUN?node-id=250-8438",
+   "diff": "a54336ca8e"
+  },
+  {
+   "id": "2734bab962",
+   "type": "content",
+   "severity": "error",
+   "text": "phy58 (page 20): this doc text is missing from Figma: “1.”. Add it.",
+   "page": 23,
+   "node": "250:8445",
+   "link": "https://www.figma.com/design/Zv0GkiCv8zs61l4BJ0dUUN?node-id=250-8445",
+   "diff": "2734bab962"
+  },
+  {
+   "id": "f23fc9702a",
+   "type": "content",
+   "severity": "error",
+   "text": "phy58 (page 20): this doc text is missing from Figma: “2.”. Add it.",
+   "page": 23,
+   "node": "250:8451",
+   "link": "https://www.figma.com/design/Zv0GkiCv8zs61l4BJ0dUUN?node-id=250-8451",
+   "diff": "f23fc9702a"
+  },
+  {
+   "id": "6ada4202af",
+   "type": "content",
+   "severity": "error",
+   "text": "phy58 (page 20): this doc text is missing from Figma: “3.”. Add it.",
+   "page": 23,
+   "node": "250:8457",
+   "link": "https://www.figma.com/design/Zv0GkiCv8zs61l4BJ0dUUN?node-id=250-8457",
+   "diff": "6ada4202af"
+  },
+  {
+   "id": "dd6a313fe1",
+   "type": "content",
+   "severity": "error",
+   "text": "phy58 (page 20): this doc text is missing from Figma: “4.”. Add it.",
+   "page": 23,
+   "node": "250:8463",
+   "link": "https://www.figma.com/design/Zv0GkiCv8zs61l4BJ0dUUN?node-id=250-8463",
+   "diff": "dd6a313fe1"
+  },
+  {
+   "id": "d783e6f3c3",
+   "type": "content",
+   "severity": "error",
+   "text": "phy58 (page 20): this doc text is missing from Figma: “5.”. Add it.",
+   "page": 23,
+   "node": "250:8469",
+   "link": "https://www.figma.com/design/Zv0GkiCv8zs61l4BJ0dUUN?node-id=250-8469",
+   "diff": "d783e6f3c3"
+  },
+  {
+   "id": "dec9548b3c",
+   "type": "content",
+   "severity": "error",
+   "text": "phy58 (page 20): this doc text is missing from Figma: “6.”. Add it.",
+   "page": 23,
+   "node": "250:8475",
+   "link": "https://www.figma.com/design/Zv0GkiCv8zs61l4BJ0dUUN?node-id=250-8475",
+   "diff": "dec9548b3c"
+  },
+  {
+   "id": "841fad6185",
+   "type": "content",
+   "severity": "error",
+   "text": "phy58 (page 20): this doc text is missing from Figma: “7.”. Add it.",
+   "page": 23,
+   "node": "250:8481",
+   "link": "https://www.figma.com/design/Zv0GkiCv8zs61l4BJ0dUUN?node-id=250-8481",
+   "diff": "841fad6185"
+  },
+  {
+   "id": "c1a9d69206",
+   "type": "content",
+   "severity": "error",
+   "text": "phy58 (page 20): this doc text is missing from Figma: “8. Materials like wood, plastic and rubber are Correct Answer:”. Add it.",
+   "page": 23,
+   "node": "250:8491",
+   "link": "https://www.figma.com/design/Zv0GkiCv8zs61l4BJ0dUUN?node-id=250-8491",
+   "diff": "c1a9d69206"
+  },
+  {
+   "id": "c69a4ce749",
+   "type": "content",
+   "severity": "error",
+   "text": "phy58 (page 20): this doc text is missing from Figma: “Explanation:”. Add it.",
+   "page": 23,
+   "node": "250:8492",
+   "link": "https://www.figma.com/design/Zv0GkiCv8zs61l4BJ0dUUN?node-id=250-8492",
+   "diff": "c69a4ce749"
+  },
+  {
+   "id": "a8b1019e17",
+   "type": "content",
+   "severity": "error",
+   "text": "phy58 (page 20): this doc text is missing from Figma: “9. Lightning is a natural phenomenon caused due to Correct Answer:”. Add it.",
+   "page": 23,
+   "node": "250:8498",
+   "link": "https://www.figma.com/design/Zv0GkiCv8zs61l4BJ0dUUN?node-id=250-8498",
+   "diff": "a8b1019e17"
+  },
+  {
+   "id": "c69a4ce749",
+   "type": "content",
+   "severity": "error",
+   "text": "phy58 (page 20): this doc text is missing from Figma: “Explanation:”. Add it.",
+   "page": 23,
+   "node": "250:8499",
+   "link": "https://www.figma.com/design/Zv0GkiCv8zs61l4BJ0dUUN?node-id=250-8499",
+   "diff": "c69a4ce749"
+  },
+  {
+   "id": "5c97d74427",
+   "type": "content",
+   "severity": "error",
+   "text": "phy58 (page 20): this doc text is missing from Figma: “A lightning conductor protects buildings by Correct Answer:”. Add it.",
+   "page": 23,
+   "node": "250:8505",
+   "link": "https://www.figma.com/design/Zv0GkiCv8zs61l4BJ0dUUN?node-id=250-8505",
+   "diff": "5c97d74427"
+  },
+  {
+   "id": "c69a4ce749",
+   "type": "content",
+   "severity": "error",
+   "text": "phy58 (page 20): this doc text is missing from Figma: “Explanation:”. Add it.",
+   "page": 23,
+   "node": "250:8506",
+   "link": "https://www.figma.com/design/Zv0GkiCv8zs61l4BJ0dUUN?node-id=250-8506",
+   "diff": "c69a4ce749"
+  },
+  {
+   "id": "5ea04d1f85",
+   "type": "content",
+   "severity": "error",
+   "text": "phy58 (page 20): this doc text is missing from Figma: “The safety device that automatically turns off when current exceeds the safe limit is Correct Answer:”. Add it.",
+   "page": 23,
+   "node": "250:8512",
+   "link": "https://www.figma.com/design/Zv0GkiCv8zs61l4BJ0dUUN?node-id=250-8512",
+   "diff": "5ea04d1f85"
+  },
+  {
+   "id": "c69a4ce749",
+   "type": "content",
+   "severity": "error",
+   "text": "phy58 (page 20): this doc text is missing from Figma: “Explanation:”. Add it.",
+   "page": 23,
+   "node": "250:8513",
+   "link": "https://www.figma.com/design/Zv0GkiCv8zs61l4BJ0dUUN?node-id=250-8513",
+   "diff": "c69a4ce749"
+  },
+  {
+   "id": "b16df564d3",
+   "type": "content",
+   "severity": "error",
+   "text": "phy59 (page 21): this doc text is missing from Figma: “The working of an electric iron and electric heater is based on Correct Answer:”. Add it.",
+   "page": 24,
+   "node": "250:3434",
+   "link": "https://www.figma.com/design/Zv0GkiCv8zs61l4BJ0dUUN?node-id=250-3434",
+   "diff": "b16df564d3"
+  },
+  {
+   "id": "c69a4ce749",
+   "type": "content",
+   "severity": "error",
+   "text": "phy59 (page 21): this doc text is missing from Figma: “Explanation:”. Add it.",
+   "page": 24,
+   "node": "250:3435",
+   "link": "https://www.figma.com/design/Zv0GkiCv8zs61l4BJ0dUUN?node-id=250-3435",
+   "diff": "c69a4ce749"
+  },
+  {
+   "id": "80c3d626e1",
+   "type": "content",
+   "severity": "error",
+   "text": "phy59 (page 21): this doc text is missing from Figma: “Electric generators in power plants convert Correct Answer:”. Add it.",
+   "page": 24,
+   "node": "250:3441",
+   "link": "https://www.figma.com/design/Zv0GkiCv8zs61l4BJ0dUUN?node-id=250-3441",
+   "diff": "80c3d626e1"
+  },
+  {
+   "id": "c69a4ce749",
+   "type": "content",
+   "severity": "error",
+   "text": "phy59 (page 21): this doc text is missing from Figma: “Explanation:”. Add it.",
+   "page": 24,
+   "node": "250:3442",
+   "link": "https://www.figma.com/design/Zv0GkiCv8zs61l4BJ0dUUN?node-id=250-3442",
+   "diff": "c69a4ce749"
+  },
+  {
+   "id": "7498e31370",
+   "type": "content",
+   "severity": "error",
+   "text": "phy59 (page 21): wording differs. Doc: “SECTION-C:” → Figma: “Section C”.",
+   "page": 24,
+   "node": "250:3445",
+   "link": "https://www.figma.com/design/Zv0GkiCv8zs61l4BJ0dUUN?node-id=250-3445",
+   "diff": "7498e31370"
+  },
+  {
+   "id": "564b26dc9c",
+   "type": "content",
+   "severity": "error",
+   "text": "phy59 (page 21): this text is in Figma but not in the doc: “14.”. Remove it (or confirm it is intended).",
+   "page": 24,
+   "node": "250:3449",
+   "link": "https://www.figma.com/design/Zv0GkiCv8zs61l4BJ0dUUN?node-id=250-3449",
+   "diff": "564b26dc9c"
+  },
+  {
+   "id": "ee26ad634f",
+   "type": "content",
+   "severity": "error",
+   "text": "phy59 (page 21): wording differs. Doc: “(Questions 24 to 27) 14. What is the SI unit of electric charge? Answer:” → Figma: “(Q24–27) 15.”.",
+   "page": 24,
+   "node": "250:3457",
+   "link": "https://www.figma.com/design/Zv0GkiCv8zs61l4BJ0dUUN?node-id=250-3457",
+   "diff": "ee26ad634f"
+  },
+  {
+   "id": "c877e8cf05",
+   "type": "content",
+   "severity": "error",
+   "text": "phy59 (page 21): wording differs. Doc: “15. State the rule: “Like charges and unlike charges Answer:” → Figma: “16.”.",
+   "page": 24,
+   "node": "250:3466",
+   "link": "https://www.figma.com/design/Zv0GkiCv8zs61l4BJ0dUUN?node-id=250-3466",
+   "diff": "c877e8cf05"
+  },
+  {
+   "id": "fea8ae90ff",
+   "type": "content",
+   "severity": "error",
+   "text": "phy59 (page 21): wording differs. Doc: “16. Name the process of charging a body by rubbing it with another body. Answer:” → Figma: “17.”.",
+   "page": 24,
+   "node": "250:3471",
+   "link": "https://www.figma.com/design/Zv0GkiCv8zs61l4BJ0dUUN?node-id=250-3471",
+   "diff": "fea8ae90ff"
+  },
+  {
+   "id": "8cea32efd8",
+   "type": "content",
+   "severity": "error",
+   "text": "phy59 (page 21): wording differs. Doc: “17. What is an electroscope used for? Answer:” → Figma: “18.”.",
+   "page": 24,
+   "node": "250:3476",
+   "link": "https://www.figma.com/design/Zv0GkiCv8zs61l4BJ0dUUN?node-id=250-3476",
+   "diff": "8cea32efd8"
+  },
+  {
+   "id": "993cd85870",
+   "type": "content",
+   "severity": "error",
+   "text": "phy59 (page 21): wording differs. Doc: “18. Give two examples of good conductors of electricity. Answer:” → Figma: “19.”.",
+   "page": 24,
+   "node": "250:3481",
+   "link": "https://www.figma.com/design/Zv0GkiCv8zs61l4BJ0dUUN?node-id=250-3481",
+   "diff": "993cd85870"
+  },
+  {
+   "id": "74cef2e67c",
+   "type": "content",
+   "severity": "error",
+   "text": "phy59 (page 21): wording differs. Doc: “19. Give two examples of good insulators of electricity. Answer:” → Figma: “20.”.",
+   "page": 24,
+   "node": "250:3486",
+   "link": "https://www.figma.com/design/Zv0GkiCv8zs61l4BJ0dUUN?node-id=250-3486",
+   "diff": "74cef2e67c"
+  },
+  {
+   "id": "fb071090b2",
+   "type": "content",
+   "severity": "error",
+   "text": "phy59 (page 21): wording differs. Doc: “20. What is lightning? Answer:” → Figma: “21.”.",
+   "page": 24,
+   "node": "250:3491",
+   "link": "https://www.figma.com/design/Zv0GkiCv8zs61l4BJ0dUUN?node-id=250-3491",
+   "diff": "fb071090b2"
+  },
+  {
+   "id": "1b3831c386",
+   "type": "content",
+   "severity": "error",
+   "text": "phy59 (page 21): wording differs. Doc: “21. What is the function of a lightning conductor? Answer:” → Figma: “22.”.",
+   "page": 24,
+   "node": "250:3496",
+   "link": "https://www.figma.com/design/Zv0GkiCv8zs61l4BJ0dUUN?node-id=250-3496",
+   "diff": "1b3831c386"
+  },
+  {
+   "id": "f3aedf781d",
+   "type": "content",
+   "severity": "error",
+   "text": "phy59 (page 21): wording differs. Doc: “22. What is the combination of two or more cells called? Answer:” → Figma: “23.”.",
+   "page": 24,
+   "node": "250:3501",
+   "link": "https://www.figma.com/design/Zv0GkiCv8zs61l4BJ0dUUN?node-id=250-3501",
+   "diff": "f3aedf781d"
+  },
+  {
+   "id": "dfba48abf2",
+   "type": "content",
+   "severity": "error",
+   "text": "phy59 (page 21): wording differs. Doc: “23. Name the safety device that melts and breaks the circuit when excess current flows. Answer:” → Figma: “24.”.",
+   "page": 24,
+   "node": "250:3506",
+   "link": "https://www.figma.com/design/Zv0GkiCv8zs61l4BJ0dUUN?node-id=250-3506",
+   "diff": "dfba48abf2"
+  },
+  {
+   "id": "22f6e59893",
+   "type": "content",
+   "severity": "error",
+   "text": "phy59 (page 21): character/punctuation differs. Doc: “fuse)..” → Figma: “fuse).”.",
+   "page": 24,
+   "node": "250:3508",
+   "link": "https://www.figma.com/design/Zv0GkiCv8zs61l4BJ0dUUN?node-id=250-3508",
+   "diff": "22f6e59893"
+  },
+  {
+   "id": "2efc98a030",
+   "type": "content",
+   "severity": "error",
+   "text": "phy59 (page 21): wording differs. Doc: “24. Name the modern safety device that automatically switches off when current exceeds the safe limit. Answer:” → Figma: “25.”.",
+   "page": 24,
+   "node": "250:3511",
+   "link": "https://www.figma.com/design/Zv0GkiCv8zs61l4BJ0dUUN?node-id=250-3511",
+   "diff": "2efc98a030"
+  },
+  {
+   "id": "5b9e12d39b",
+   "type": "content",
+   "severity": "error",
+   "text": "phy59 (page 21): wording differs. Doc: “25. On which effect of electric current does an electric iron work? Answer:” → Figma: “26.”.",
+   "page": 24,
+   "node": "250:3516",
+   "link": "https://www.figma.com/design/Zv0GkiCv8zs61l4BJ0dUUN?node-id=250-3516",
+   "diff": "5b9e12d39b"
+  },
+  {
+   "id": "06b6139ab5",
+   "type": "content",
+   "severity": "error",
+   "text": "phy59 (page 21): wording differs. Doc: “26. On which effect of electric current does an electric bell work? Answer:” → Figma: “27.”.",
+   "page": 24,
+   "node": "250:3521",
+   "link": "https://www.figma.com/design/Zv0GkiCv8zs61l4BJ0dUUN?node-id=250-3521",
+   "diff": "06b6139ab5"
+  },
+  {
+   "id": "f296e8a697",
+   "type": "content",
+   "severity": "error",
+   "text": "phy60 (page 22): wording differs. Doc: “(Questions” → Figma: “(Q28–31)”.",
+   "page": 25,
+   "node": "250:3537",
+   "link": "https://www.figma.com/design/Zv0GkiCv8zs61l4BJ0dUUN?node-id=250-3537",
+   "diff": "f296e8a697"
+  },
+  {
+   "id": "3f2b305367",
+   "type": "content",
+   "severity": "error",
+   "text": "phy60 (page 22): character/punctuation differs. Doc: “28” → Figma: “28.”.",
+   "page": 25,
+   "node": "250:3541",
+   "link": "https://www.figma.com/design/Zv0GkiCv8zs61l4BJ0dUUN?node-id=250-3541",
+   "diff": "3f2b305367"
+  },
+  {
+   "id": "ffb6bf3197",
+   "type": "content",
+   "severity": "error",
+   "text": "phy60 (page 22): this doc text is missing from Figma: “to 31) 27. What are the three methods of charging a body? Give one example for each. Answer:”. Add it.",
+   "page": 25,
+   "node": "250:3544",
+   "link": "https://www.figma.com/design/Zv0GkiCv8zs61l4BJ0dUUN?node-id=250-3544",
+   "diff": "ffb6bf3197"
+  },
+  {
+   "id": "c528d6a2cd",
+   "type": "content",
+   "severity": "error",
+   "text": "phy60 (page 22): this doc text is missing from Figma: “Distinguish between conductors and insulators. Give two examples of each. Answer:”. Add it.",
+   "page": 25,
+   "node": "250:3556",
+   "link": "https://www.figma.com/design/Zv0GkiCv8zs61l4BJ0dUUN?node-id=250-3556",
+   "diff": "c528d6a2cd"
+  },
+  {
+   "id": "7a8d5474f8",
+   "type": "content",
+   "severity": "error",
+   "text": "phy60 (page 22): this doc text is missing from Figma: “What is lightning? How does a lightning conductor protect a building from damage? Answer:”. Add it.",
+   "page": 25,
+   "node": "250:3562",
+   "link": "https://www.figma.com/design/Zv0GkiCv8zs61l4BJ0dUUN?node-id=250-3562",
+   "diff": "7a8d5474f8"
+  },
+  {
+   "id": "b90e52f64d",
+   "type": "content",
+   "severity": "error",
+   "text": "phy60 (page 22): this doc text is missing from Figma: “Explain the working of an electric fuse. Why is it called a safety device? Answer:”. Add it.",
+   "page": 25,
+   "node": "250:3568",
+   "link": "https://www.figma.com/design/Zv0GkiCv8zs61l4BJ0dUUN?node-id=250-3568",
+   "diff": "b90e52f64d"
+  },
+  {
+   "id": "8a396e406b",
+   "type": "content",
+   "severity": "error",
+   "text": "phy60 (page 22): this text is in Figma but not in the doc: “(Q32–35”. Remove it (or confirm it is intended).",
+   "page": 25,
+   "node": "250:3570",
+   "link": "https://www.figma.com/design/Zv0GkiCv8zs61l4BJ0dUUN?node-id=250-3570",
+   "diff": "8a396e406b"
+  },
+  {
+   "id": "0cf4161097",
+   "type": "content",
+   "severity": "error",
+   "text": "phy61 (page 23): this text is in Figma but not in the doc: “CONCEPT APPLICATION Level 1”. Remove it (or confirm it is intended).",
+   "page": 26,
+   "node": "250:3614",
+   "link": "https://www.figma.com/design/Zv0GkiCv8zs61l4BJ0dUUN?node-id=250-3614",
+   "diff": "0cf4161097"
+  },
+  {
+   "id": "413f6e3b7d",
+   "type": "content",
+   "severity": "error",
+   "text": "phy62 (page 24): this text is in Figma but not in the doc: “(Q79–98)”. Remove it (or confirm it is intended).",
+   "page": 27,
+   "node": "250:3715",
+   "link": "https://www.figma.com/design/Zv0GkiCv8zs61l4BJ0dUUN?node-id=250-3715",
+   "diff": "413f6e3b7d"
+  },
+  {
+   "id": "a4f070cbd6",
+   "type": "content",
+   "severity": "error",
+   "text": "phy62 (page 24): this text is in Figma but not in the doc: “Match the Following”. Remove it (or confirm it is intended).",
+   "page": 27,
+   "node": "250:3797",
+   "link": "https://www.figma.com/design/Zv0GkiCv8zs61l4BJ0dUUN?node-id=250-3797",
+   "diff": "a4f070cbd6"
+  },
+  {
+   "id": "3bc4ed0794",
+   "type": "content",
+   "severity": "error",
+   "text": "phy62 (page 24): character/punctuation differs. Doc: “(ii)” → Figma: “(ii),”.",
+   "page": 27,
+   "node": "250:3804",
+   "link": "https://www.figma.com/design/Zv0GkiCv8zs61l4BJ0dUUN?node-id=250-3804",
+   "diff": "3bc4ed0794"
+  },
+  {
+   "id": "9acf838413",
+   "type": "content",
+   "severity": "error",
+   "text": "phy62 (page 24): character/punctuation differs. Doc: “(iv)” → Figma: “(iv),”.",
+   "page": 27,
+   "node": "250:3804",
+   "link": "https://www.figma.com/design/Zv0GkiCv8zs61l4BJ0dUUN?node-id=250-3804",
+   "diff": "9acf838413"
+  },
+  {
+   "id": "2b8f946a7a",
+   "type": "content",
+   "severity": "error",
+   "text": "phy62 (page 24): character/punctuation differs. Doc: “(i)” → Figma: “(i),”.",
+   "page": 27,
+   "node": "250:3804",
+   "link": "https://www.figma.com/design/Zv0GkiCv8zs61l4BJ0dUUN?node-id=250-3804",
+   "diff": "2b8f946a7a"
+  },
+  {
+   "id": "a7fd88fa1e",
+   "type": "content",
+   "severity": "error",
+   "text": "phy62 (page 24): character/punctuation differs. Doc: “(iii)” → Figma: “(iii),”.",
+   "page": 27,
+   "node": "250:3804",
+   "link": "https://www.figma.com/design/Zv0GkiCv8zs61l4BJ0dUUN?node-id=250-3804",
+   "diff": "a7fd88fa1e"
+  },
+  {
+   "id": "3bc4ed0794",
+   "type": "content",
+   "severity": "error",
+   "text": "phy62 (page 24): character/punctuation differs. Doc: “(ii)” → Figma: “(ii),”.",
+   "page": 27,
+   "node": "250:3810",
+   "link": "https://www.figma.com/design/Zv0GkiCv8zs61l4BJ0dUUN?node-id=250-3810",
+   "diff": "3bc4ed0794"
+  },
+  {
+   "id": "af98abef44",
+   "type": "content",
+   "severity": "error",
+   "text": "phy62 (page 24): character/punctuation differs. Doc: “(v)” → Figma: “(v),”.",
+   "page": 27,
+   "node": "250:3810",
+   "link": "https://www.figma.com/design/Zv0GkiCv8zs61l4BJ0dUUN?node-id=250-3810",
+   "diff": "af98abef44"
+  },
+  {
+   "id": "a7fd88fa1e",
+   "type": "content",
+   "severity": "error",
+   "text": "phy62 (page 24): character/punctuation differs. Doc: “(iii)” → Figma: “(iii),”.",
+   "page": 27,
+   "node": "250:3810",
+   "link": "https://www.figma.com/design/Zv0GkiCv8zs61l4BJ0dUUN?node-id=250-3810",
+   "diff": "a7fd88fa1e"
+  },
+  {
+   "id": "2b8f946a7a",
+   "type": "content",
+   "severity": "error",
+   "text": "phy62 (page 24): character/punctuation differs. Doc: “(i)” → Figma: “(i),”.",
+   "page": 27,
+   "node": "250:3810",
+   "link": "https://www.figma.com/design/Zv0GkiCv8zs61l4BJ0dUUN?node-id=250-3810",
+   "diff": "2b8f946a7a"
+  },
+  {
+   "id": "47b4b3a8a6",
+   "type": "content",
+   "severity": "error",
+   "text": "phy62 (page 24): wording differs. Doc: “(Q64–68)” → Figma: “(Q64 –68)”.",
+   "page": 27,
+   "node": "250:3813",
+   "link": "https://www.figma.com/design/Zv0GkiCv8zs61l4BJ0dUUN?node-id=250-3813",
+   "diff": "47b4b3a8a6"
+  },
+  {
+   "id": "8f3c1e2d15",
+   "type": "content",
+   "severity": "error",
+   "text": "phy62 (page 24): character/punctuation differs. Doc: “64” → Figma: “64.”.",
+   "page": 27,
+   "node": "250:3817",
+   "link": "https://www.figma.com/design/Zv0GkiCv8zs61l4BJ0dUUN?node-id=250-3817",
+   "diff": "8f3c1e2d15"
+  },
+  {
+   "id": "3b7319a12c",
+   "type": "content",
+   "severity": "error",
+   "text": "phy63 (page 25): wording differs. Doc: “Multiple Choice” → Figma: “Short Answer Type”.",
+   "page": 28,
+   "node": "250:3858",
+   "link": "https://www.figma.com/design/Zv0GkiCv8zs61l4BJ0dUUN?node-id=250-3858",
+   "diff": "3b7319a12c"
+  },
+  {
+   "id": "4359861839",
+   "type": "content",
+   "severity": "error",
+   "text": "phy63 (page 25): wording differs. Doc: “(Q64–68)” → Figma: “(Q111–120)”.",
+   "page": 28,
+   "node": "250:3858",
+   "link": "https://www.figma.com/design/Zv0GkiCv8zs61l4BJ0dUUN?node-id=250-3858",
+   "diff": "4359861839"
+  },
+  {
+   "id": "02a513eeb6",
+   "type": "content",
+   "severity": "error",
+   "text": "phy63 (page 25): this text is in Figma but not in the doc: “Short Answer Type Questions (Q111–120)”. Remove it (or confirm it is intended).",
+   "page": 28,
+   "node": "250:3886",
+   "link": "https://www.figma.com/design/Zv0GkiCv8zs61l4BJ0dUUN?node-id=250-3886",
+   "diff": "02a513eeb6"
+  },
+  {
+   "id": "9346ca2e3f",
+   "type": "content",
+   "severity": "error",
+   "text": "phy63 (page 25): this doc text is missing from Figma: “MIND MAP”. Add it.",
+   "page": 28,
+   "node": "250:3905",
+   "link": "https://www.figma.com/design/Zv0GkiCv8zs61l4BJ0dUUN?node-id=250-3905",
+   "diff": "9346ca2e3f"
+  },
+  {
+   "id": "b0abe5baa7",
+   "type": "font",
+   "severity": "warning",
+   "text": "phy24: uses font “Mulish” (e.g. “Misconception 1: “All liquids ”). The book uses Avenir and DIN Condensed only.",
+   "page": 8,
+   "node": "250:1421",
+   "link": "https://www.figma.com/design/Zv0GkiCv8zs61l4BJ0dUUN?node-id=250-1421"
+  },
+  {
+   "id": "4d96acadfe",
+   "type": "font",
+   "severity": "warning",
+   "text": "phy53: uses font “Mulish” (e.g. “Directions: Write True or Fals”). The book uses Avenir and DIN Condensed only.",
+   "page": 18,
+   "node": "250:3078",
+   "link": "https://www.figma.com/design/Zv0GkiCv8zs61l4BJ0dUUN?node-id=250-3078"
+  }
+ ],
+ "images": {
+  "in_doc": 3,
+  "placeholders": 0,
+  "placed": 4
+ },
+ "accepted": []
+}

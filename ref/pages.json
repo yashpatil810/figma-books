@@ -1,0 +1,7347 @@
+{
+ "meta": {
+  "subject": "Physics",
+  "module": "2",
+  "chapter_title": "ELECTRICITY",
+  "grade": "7",
+  "synopsis_count": 2
+ },
+ "theme": null,
+ "pages": [
+  {
+   "kind": "toc",
+   "bg": "tint",
+   "pill": null,
+   "pageNo": null,
+   "blocks": [
+    {
+     "t": "toc",
+     "title": "TABLE OF CONTENTS",
+     "chapter": "ELECTRICITY",
+     "chapter_no": "2",
+     "entries": [
+      {
+       "label": "SYNOPSIS-1",
+       "title": "Conductors and Insulators",
+       "ref": "syn1",
+       "kind": "synopsis",
+       "page": 2
+      },
+      {
+       "label": "SYNOPSIS-2",
+       "title": "Lightning and Lightning Conductor",
+       "ref": "syn2",
+       "kind": "synopsis",
+       "page": 7
+      },
+      {
+       "label": "Test your concepts",
+       "title": null,
+       "ref": "test",
+       "kind": "section",
+       "page": 12
+      },
+      {
+       "label": "HINTS AND SOLUTIONS",
+       "title": null,
+       "ref": "hints",
+       "kind": "section",
+       "page": 20
+      },
+      {
+       "label": "Mind Map",
+       "title": null,
+       "ref": "mind",
+       "kind": "section",
+       "page": 27
+      }
+     ],
+     "src": [
+      "b0015"
+     ]
+    }
+   ],
+   "section": "toc"
+  },
+  {
+   "kind": "opener",
+   "bg": "white",
+   "pill": "ELECTRICITY",
+   "pageNo": 1,
+   "blocks": [
+    {
+     "t": "title",
+     "eyebrow": "CHAPTER",
+     "text": "ELECTRICITY",
+     "gen_eyebrow": true,
+     "src": [
+      "b0002"
+     ]
+    },
+    {
+     "t": "callout",
+     "variant": "keyideas",
+     "title": "KEY IDEAS",
+     "title_src": "b0006",
+     "blocks": [
+      {
+       "t": "p",
+       "runs": [
+        {
+         "t": "After completing this chapter, you should be able to:"
+        }
+       ],
+       "src": [
+        "b0007"
+       ]
+      },
+      {
+       "t": "ul",
+       "mark": "✓",
+       "items": [
+        [
+         {
+          "t": "Discuss the nature of electric charges and electroscopes"
+         }
+        ],
+        [
+         {
+          "t": "Understand electric circuits and symbols used in them"
+         }
+        ],
+        [
+         {
+          "t": "Define cell and its types—Voltaic Cell, Leclanché cell,"
+         },
+         {
+          "t": " "
+         },
+         {
+          "t": "Dry cell, Bichromate cell"
+         }
+        ],
+        [
+         {
+          "t": "Study household distribution of electrical energy"
+         }
+        ],
+        [
+         {
+          "t": "Learn about heating effect of electricity"
+         }
+        ],
+        [
+         {
+          "t": "Understand magnetic effects of electric current"
+         }
+        ]
+       ],
+       "src": [
+        "b0008",
+        "b0009",
+        "b0010",
+        "b0011",
+        "b0012",
+        "b0013",
+        "b0014"
+       ]
+      }
+     ],
+     "src": [
+      "b0006",
+      "b0007",
+      "b0008",
+      "b0009",
+      "b0010",
+      "b0011",
+      "b0012",
+      "b0013",
+      "b0014"
+     ]
+    }
+   ],
+   "section": "opener",
+   "cont": false
+  },
+  {
+   "kind": "synopsis",
+   "bg": "white",
+   "pill": "CONDUCTORS AND INSULATORS",
+   "pageNo": 2,
+   "blocks": [
+    {
+     "t": "title",
+     "eyebrow": "SYNOPSIS-1",
+     "text": "Conductors and Insulators",
+     "gen_eyebrow": false,
+     "src": [
+      "b0022"
+     ]
+    },
+    {
+     "t": "h",
+     "lvl": 2,
+     "text": "Introduction",
+     "src": [
+      "b0023"
+     ]
+    },
+    {
+     "t": "p",
+     "runs": [
+      {
+       "t": "Electric charge can move from one body to another under suitable conditions. However, all materials do not allow the movement of electric charges with equal ease. Based on their ability to permit the flow of electric charge, materials are broadly classified into:"
+      }
+     ],
+     "src": [
+      "b0024"
+     ]
+    },
+    {
+     "t": "ul",
+     "mark": "•",
+     "items": [
+      [
+       {
+        "t": "Conductors"
+       }
+      ],
+      [
+       {
+        "t": "Insulators"
+       }
+      ]
+     ],
+     "src": [
+      "b0025",
+      "b0026"
+     ]
+    },
+    {
+     "t": "p",
+     "runs": [
+      {
+       "t": "This classification forms the basis of electrical technology and circuit design."
+      }
+     ],
+     "src": [
+      "b0027"
+     ]
+    },
+    {
+     "t": "h",
+     "lvl": 3,
+     "text": "Conductors",
+     "src": [
+      "b0028"
+     ]
+    },
+    {
+     "t": "h",
+     "lvl": 5,
+     "text": "Definition",
+     "src": [
+      "b0029"
+     ]
+    },
+    {
+     "t": "p",
+     "runs": [
+      {
+       "t": "Materials that allow electric charges to flow through them easily are called conductors."
+      }
+     ],
+     "src": [
+      "b0030"
+     ]
+    },
+    {
+     "t": "p",
+     "runs": [
+      {
+       "t": "In conductors, some electrons are loosely bound to atoms and can move freely within the material. These free electrons are responsible for electrical conduction."
+      }
+     ],
+     "src": [
+      "b0031"
+     ]
+    },
+    {
+     "t": "h",
+     "lvl": 4,
+     "text": "Scientific Principle",
+     "src": [
+      "b0032"
+     ]
+    },
+    {
+     "t": "p",
+     "runs": [
+      {
+       "t": "Metals contain a large number of free electrons. When a potential difference is applied across a conductor, these electrons move in a particular direction, resulting in the flow of electric current."
+      }
+     ],
+     "src": [
+      "b0033"
+     ]
+    },
+    {
+     "t": "p",
+     "runs": [
+      {
+       "t": "Thus, electrical conduction in conductors occurs due to the movement of free electrons."
+      }
+     ],
+     "src": [
+      "b0034"
+     ]
+    },
+    {
+     "t": "h",
+     "lvl": 3,
+     "text": "Examples of Conductors",
+     "src": [
+      "b0035"
+     ]
+    },
+    {
+     "t": "h",
+     "lvl": 5,
+     "text": "Metals",
+     "src": [
+      "b0036"
+     ]
+    },
+    {
+     "t": "ul",
+     "mark": "•",
+     "items": [
+      [
+       {
+        "t": "Copper"
+       }
+      ],
+      [
+       {
+        "t": "Aluminium"
+       }
+      ],
+      [
+       {
+        "t": "Silver"
+       }
+      ],
+      [
+       {
+        "t": "Gold"
+       }
+      ],
+      [
+       {
+        "t": "Iron"
+       }
+      ]
+     ],
+     "src": [
+      "b0037",
+      "b0038",
+      "b0039",
+      "b0040",
+      "b0041"
+     ]
+    },
+    {
+     "t": "h",
+     "lvl": 5,
+     "text": "Other Conducting Materials",
+     "src": [
+      "b0042"
+     ]
+    },
+    {
+     "t": "ul",
+     "mark": "•",
+     "items": [
+      [
+       {
+        "t": "Graphite"
+       }
+      ],
+      [
+       {
+        "t": "Human body"
+       }
+      ],
+      [
+       {
+        "t": "Tap water"
+       }
+      ],
+      [
+       {
+        "t": "Acidic solutions"
+       }
+      ],
+      [
+       {
+        "t": "Salt solutions"
+       }
+      ]
+     ],
+     "src": [
+      "b0043",
+      "b0044",
+      "b0045",
+      "b0046",
+      "b0047"
+     ]
+    },
+    {
+     "t": "p",
+     "runs": [
+      {
+       "t": "Among common metals, silver is the best conductor of electricity, although copper is more widely used because of its lower cost and high conductivity."
+      }
+     ],
+     "src": [
+      "b0048"
+     ]
+    }
+   ],
+   "section": "synopsis",
+   "cont": false
+  },
+  {
+   "kind": "synopsis",
+   "bg": "white",
+   "pill": "CONDUCTORS AND INSULATORS",
+   "pageNo": 3,
+   "blocks": [
+    {
+     "t": "h",
+     "lvl": 3,
+     "text": "Applications of Conductors",
+     "src": [
+      "b0049"
+     ]
+    },
+    {
+     "t": "h",
+     "lvl": 5,
+     "text": "Electrical Wiring",
+     "src": [
+      "b0050"
+     ]
+    },
+    {
+     "t": "p",
+     "runs": [
+      {
+       "t": "Copper and aluminium are used in household wiring because they allow current to pass easily with low energy loss."
+      }
+     ],
+     "src": [
+      "b0051"
+     ]
+    },
+    {
+     "t": "h",
+     "lvl": 5,
+     "text": "Electrical Appliances",
+     "src": [
+      "b0052"
+     ]
+    },
+    {
+     "t": "p",
+     "runs": [
+      {
+       "t": "Internal components of electrical devices are generally made of conducting materials."
+      }
+     ],
+     "src": [
+      "b0053"
+     ]
+    },
+    {
+     "t": "h",
+     "lvl": 5,
+     "text": "Earthing",
+     "src": [
+      "b0054"
+     ]
+    },
+    {
+     "t": "p",
+     "runs": [
+      {
+       "t": "The metallic body of electrical appliances is connected to earth using conducting wires to ensure safety."
+      }
+     ],
+     "src": [
+      "b0055"
+     ]
+    },
+    {
+     "t": "h",
+     "lvl": 5,
+     "text": "Transmission Lines",
+     "src": [
+      "b0056"
+     ]
+    },
+    {
+     "t": "p",
+     "runs": [
+      {
+       "t": "Aluminium cables reinforced with steel are commonly used for long-distance transmission of electricity."
+      }
+     ],
+     "src": [
+      "b0057"
+     ]
+    },
+    {
+     "t": "h",
+     "lvl": 3,
+     "text": "Insulators",
+     "src": [
+      "b0058"
+     ]
+    },
+    {
+     "t": "h",
+     "lvl": 5,
+     "text": "Definition",
+     "src": [
+      "b0059"
+     ]
+    },
+    {
+     "t": "p",
+     "runs": [
+      {
+       "t": "Materials that do not allow electric charges to flow through them easily are called insulators."
+      }
+     ],
+     "src": [
+      "b0060"
+     ]
+    },
+    {
+     "t": "p",
+     "runs": [
+      {
+       "t": "Insulators do not contain free electrons in sufficient quantity. Therefore, charges cannot move freely through them."
+      }
+     ],
+     "src": [
+      "b0061"
+     ]
+    },
+    {
+     "t": "h",
+     "lvl": 4,
+     "text": "Scientific Principle",
+     "src": [
+      "b0062"
+     ]
+    },
+    {
+     "t": "p",
+     "runs": [
+      {
+       "t": "In insulators, electrons are tightly bound to their atoms. Since these electrons cannot move freely, electric current cannot pass through the material under ordinary conditions."
+      }
+     ],
+     "src": [
+      "b0063"
+     ]
+    },
+    {
+     "t": "h",
+     "lvl": 4,
+     "text": "Examples of Insulators",
+     "src": [
+      "b0064"
+     ]
+    },
+    {
+     "t": "ul",
+     "mark": "•",
+     "items": [
+      [
+       {
+        "t": "Rubber"
+       }
+      ],
+      [
+       {
+        "t": "Plastic"
+       }
+      ],
+      [
+       {
+        "t": "Glass"
+       }
+      ],
+      [
+       {
+        "t": "Wood"
+       }
+      ],
+      [
+       {
+        "t": "Dry air"
+       }
+      ],
+      [
+       {
+        "t": "Porcelain"
+       }
+      ],
+      [
+       {
+        "t": "Mica"
+       }
+      ],
+      [
+       {
+        "t": "Ebonite"
+       }
+      ]
+     ],
+     "src": [
+      "b0065",
+      "b0066",
+      "b0067",
+      "b0068",
+      "b0069",
+      "b0070",
+      "b0071",
+      "b0072"
+     ]
+    },
+    {
+     "t": "h",
+     "lvl": 3,
+     "text": "Applications of Insulators",
+     "src": [
+      "b0073"
+     ]
+    },
+    {
+     "t": "h",
+     "lvl": 5,
+     "text": "Covering of Electrical Wires",
+     "src": [
+      "b0074"
+     ]
+    },
+    {
+     "t": "p",
+     "runs": [
+      {
+       "t": "Electric wires are covered with plastic or rubber to prevent electric shocks."
+      }
+     ],
+     "src": [
+      "b0075"
+     ]
+    },
+    {
+     "t": "h",
+     "lvl": 5,
+     "text": "Switches and Plug Tops",
+     "src": [
+      "b0076"
+     ]
+    },
+    {
+     "t": "p",
+     "runs": [
+      {
+       "t": "The outer bodies of switches and plugs are made of insulating materials for user safety."
+      }
+     ],
+     "src": [
+      "b0077"
+     ]
+    },
+    {
+     "t": "h",
+     "lvl": 5,
+     "text": "Insulating Supports",
+     "src": [
+      "b0078"
+     ]
+    },
+    {
+     "t": "p",
+     "runs": [
+      {
+       "t": "Transmission wires are mounted on porcelain insulators to prevent leakage of current to the ground."
+      }
+     ],
+     "src": [
+      "b0079"
+     ]
+    }
+   ],
+   "section": "synopsis",
+   "cont": true
+  },
+  {
+   "kind": "synopsis",
+   "bg": "white",
+   "pill": "CONDUCTORS AND INSULATORS",
+   "pageNo": 4,
+   "blocks": [
+    {
+     "t": "h",
+     "lvl": 5,
+     "text": "Electrical Tools",
+     "src": [
+      "b0080"
+     ]
+    },
+    {
+     "t": "p",
+     "runs": [
+      {
+       "t": "Handles of screwdrivers, pliers, and testers are made of insulating materials."
+      }
+     ],
+     "src": [
+      "b0081"
+     ]
+    },
+    {
+     "t": "h",
+     "lvl": 4,
+     "text": "Conductors and Insulators in Daily Life",
+     "src": [
+      "b0082"
+     ]
+    },
+    {
+     "t": "table",
+     "head": [
+      "Application",
+      "Conducting Part",
+      "Insulating Part"
+     ],
+     "rows": [
+      [
+       "Electric wire",
+       "Copper core",
+       "Plastic covering"
+      ],
+      [
+       "Electric iron",
+       "Metal body and coil",
+       "Plastic handle"
+      ],
+      [
+       "Screwdriver",
+       "Metal rod",
+       "Plastic handle"
+      ],
+      [
+       "Plug",
+       "Metal pins",
+       "Plastic casing"
+      ]
+     ],
+     "widths": [
+      139,
+      204,
+      172
+     ],
+     "src": [
+      "b0083"
+     ]
+    },
+    {
+     "t": "h",
+     "lvl": 3,
+     "text": "Classification Based on Electrical Conductivity",
+     "src": [
+      "b0084"
+     ]
+    },
+    {
+     "t": "h",
+     "lvl": 5,
+     "text": "Good Conductors",
+     "src": [
+      "b0085"
+     ]
+    },
+    {
+     "t": "p",
+     "runs": [
+      {
+       "t": "Materials through which electric current passes very easily."
+      }
+     ],
+     "src": [
+      "b0086"
+     ]
+    },
+    {
+     "t": "p",
+     "runs": [
+      {
+       "t": "Examples:"
+      }
+     ],
+     "src": [
+      "b0087"
+     ]
+    },
+    {
+     "t": "ul",
+     "mark": "•",
+     "items": [
+      [
+       {
+        "t": "Silver"
+       }
+      ],
+      [
+       {
+        "t": "Copper"
+       }
+      ],
+      [
+       {
+        "t": "Aluminium"
+       }
+      ]
+     ],
+     "src": [
+      "b0088",
+      "b0089",
+      "b0090"
+     ]
+    },
+    {
+     "t": "h",
+     "lvl": 5,
+     "text": "Poor Conductors",
+     "src": [
+      "b0091"
+     ]
+    },
+    {
+     "t": "p",
+     "runs": [
+      {
+       "t": "Materials that allow only a very small amount of current to pass."
+      }
+     ],
+     "src": [
+      "b0092"
+     ]
+    },
+    {
+     "t": "p",
+     "runs": [
+      {
+       "t": "Examples:"
+      }
+     ],
+     "src": [
+      "b0093"
+     ]
+    },
+    {
+     "t": "ul",
+     "mark": "•",
+     "items": [
+      [
+       {
+        "t": "Distilled water"
+       }
+      ],
+      [
+       {
+        "t": "Wood"
+       }
+      ],
+      [
+       {
+        "t": "Human skin (dry)"
+       }
+      ]
+     ],
+     "src": [
+      "b0094",
+      "b0095",
+      "b0096"
+     ]
+    },
+    {
+     "t": "h",
+     "lvl": 3,
+     "text": "Special Case: Water",
+     "src": [
+      "b0097"
+     ]
+    },
+    {
+     "t": "h",
+     "lvl": 5,
+     "text": "Pure Water",
+     "src": [
+      "b0098"
+     ]
+    },
+    {
+     "t": "p",
+     "runs": [
+      {
+       "t": "Pure or distilled water is a poor conductor of electricity because it contains very few ions."
+      }
+     ],
+     "src": [
+      "b0099"
+     ]
+    },
+    {
+     "t": "h",
+     "lvl": 5,
+     "text": "Tap Water",
+     "src": [
+      "b0100"
+     ]
+    },
+    {
+     "t": "p",
+     "runs": [
+      {
+       "t": "Tap water contains dissolved salts and minerals that produce ions, making it a conductor of electricity."
+      }
+     ],
+     "src": [
+      "b0101"
+     ]
+    },
+    {
+     "t": "p",
+     "runs": [
+      {
+       "t": "This is why handling electrical appliances with wet hands is dangerous."
+      }
+     ],
+     "src": [
+      "b0102"
+     ]
+    },
+    {
+     "t": "h",
+     "lvl": 4,
+     "text": "Important Observations",
+     "src": [
+      "b0103"
+     ]
+    },
+    {
+     "t": "ul",
+     "mark": "•",
+     "items": [
+      [
+       {
+        "t": "Metals are generally good conductors."
+       }
+      ],
+      [
+       {
+        "t": "Most non-metals are insulators."
+       }
+      ],
+      [
+       {
+        "t": "Graphite is an exception among non-metals because it conducts electricity."
+       }
+      ],
+      [
+       {
+        "t": "Conductivity depends upon the availability of free electrons or ions."
+       }
+      ]
+     ],
+     "src": [
+      "b0104",
+      "b0105",
+      "b0106",
+      "b0107"
+     ]
+    }
+   ],
+   "section": "synopsis",
+   "cont": true
+  },
+  {
+   "kind": "synopsis",
+   "bg": "white",
+   "pill": "CONDUCTORS AND INSULATORS",
+   "pageNo": 5,
+   "blocks": [
+    {
+     "t": "h",
+     "lvl": 4,
+     "text": "Conceptual Insight",
+     "src": [
+      "b0108"
+     ]
+    },
+    {
+     "t": "p",
+     "runs": [
+      {
+       "t": "Electrical conduction in solids mainly depends on:"
+      }
+     ],
+     "src": [
+      "b0109"
+     ]
+    },
+    {
+     "t": "ul",
+     "mark": "•",
+     "items": [
+      [
+       {
+        "t": "Availability of free electrons"
+       }
+      ],
+      [
+       {
+        "t": "Atomic structure of the material"
+       }
+      ],
+      [
+       {
+        "t": "Temperature of the material"
+       }
+      ]
+     ],
+     "src": [
+      "b0110",
+      "b0111",
+      "b0112"
+     ]
+    },
+    {
+     "t": "p",
+     "runs": [
+      {
+       "t": "In metals:"
+      }
+     ],
+     "src": [
+      "b0113"
+     ]
+    },
+    {
+     "t": "ul",
+     "mark": "•",
+     "items": [
+      [
+       {
+        "t": "Resistance generally increases with temperature."
+       }
+      ]
+     ],
+     "src": [
+      "b0114"
+     ]
+    },
+    {
+     "t": "p",
+     "runs": [
+      {
+       "t": "In some non-metals:"
+      }
+     ],
+     "src": [
+      "b0115"
+     ]
+    },
+    {
+     "t": "ul",
+     "mark": "•",
+     "items": [
+      [
+       {
+        "t": "Conductivity may increase with temperature."
+       }
+      ]
+     ],
+     "src": [
+      "b0116"
+     ]
+    },
+    {
+     "t": "callout",
+     "variant": "misc",
+     "title": "Common Misconceptions",
+     "title_src": "b0117",
+     "blocks": [
+      {
+       "t": "p",
+       "runs": [
+        {
+         "t": "Misconception 1",
+         "b": 1
+        }
+       ],
+       "src": [
+        "b0118"
+       ]
+      },
+      {
+       "t": "p",
+       "runs": [
+        {
+         "t": "“All liquids conduct electricity.”"
+        }
+       ],
+       "src": [
+        "b0119"
+       ]
+      },
+      {
+       "t": "p",
+       "runs": [
+        {
+         "t": "Correct Concept",
+         "b": 1
+        }
+       ],
+       "src": [
+        "b0120"
+       ]
+      },
+      {
+       "t": "p",
+       "runs": [
+        {
+         "t": "Only liquids containing ions conduct electricity effectively."
+        }
+       ],
+       "src": [
+        "b0121"
+       ]
+      },
+      {
+       "t": "p",
+       "runs": [
+        {
+         "t": "Misconception 2",
+         "b": 1
+        }
+       ],
+       "src": [
+        "b0122"
+       ]
+      },
+      {
+       "t": "p",
+       "runs": [
+        {
+         "t": "“All non-metals are insulators.”"
+        }
+       ],
+       "src": [
+        "b0123"
+       ]
+      },
+      {
+       "t": "p",
+       "runs": [
+        {
+         "t": "Correct Concept",
+         "b": 1
+        }
+       ],
+       "src": [
+        "b0124"
+       ]
+      },
+      {
+       "t": "p",
+       "runs": [
+        {
+         "t": "Graphite is a non-metal that conducts electricity."
+        }
+       ],
+       "src": [
+        "b0125"
+       ]
+      },
+      {
+       "t": "p",
+       "runs": [
+        {
+         "t": "Misconception 3",
+         "b": 1
+        }
+       ],
+       "src": [
+        "b0126"
+       ]
+      },
+      {
+       "t": "p",
+       "runs": [
+        {
+         "t": "“Plastic stops electricity because it is thick.”"
+        }
+       ],
+       "src": [
+        "b0127"
+       ]
+      },
+      {
+       "t": "p",
+       "runs": [
+        {
+         "t": "Correct Concept",
+         "b": 1
+        }
+       ],
+       "src": [
+        "b0128"
+       ]
+      },
+      {
+       "t": "p",
+       "runs": [
+        {
+         "t": "Plastic is an insulator because it lacks free electrons."
+        }
+       ],
+       "src": [
+        "b0129"
+       ]
+      }
+     ],
+     "src": [
+      "b0117",
+      "b0118",
+      "b0119",
+      "b0120",
+      "b0121",
+      "b0122",
+      "b0123",
+      "b0124",
+      "b0125",
+      "b0126",
+      "b0127",
+      "b0128",
+      "b0129"
+     ]
+    },
+    {
+     "t": "callout",
+     "variant": "iit",
+     "title": "IIT Foundation Understanding",
+     "title_src": "b0130",
+     "blocks": [
+      {
+       "t": "p",
+       "runs": [
+        {
+         "t": "Students should clearly understand:"
+        }
+       ],
+       "src": [
+        "b0131"
+       ]
+      },
+      {
+       "t": "ul",
+       "mark": "•",
+       "items": [
+        [
+         {
+          "t": "Conductors contain free electrons."
+         }
+        ],
+        [
+         {
+          "t": "Insulators resist electron movement."
+         }
+        ],
+        [
+         {
+          "t": "Current in metals is due to electron flow."
+         }
+        ],
+        [
+         {
+          "t": "Conductivity and insulation are relative properties."
+         }
+        ],
+        [
+         {
+          "t": "Practical electrical safety depends heavily on insulating materials."
+         }
+        ]
+       ],
+       "src": [
+        "b0132",
+        "b0133",
+        "b0134",
+        "b0135",
+        "b0136"
+       ]
+      }
+     ],
+     "src": [
+      "b0130",
+      "b0131",
+      "b0132",
+      "b0133",
+      "b0134",
+      "b0135",
+      "b0136"
+     ]
+    }
+   ],
+   "section": "synopsis",
+   "cont": true
+  },
+  {
+   "kind": "synopsis",
+   "bg": "white",
+   "pill": "CONDUCTORS AND INSULATORS",
+   "pageNo": 6,
+   "blocks": [
+    {
+     "t": "callout",
+     "variant": "dyk",
+     "title": "Did You Know?",
+     "title_src": "b0137",
+     "blocks": [
+      {
+       "t": "ul",
+       "mark": "•",
+       "items": [
+        [
+         {
+          "t": "Silver is the best electrical conductor among common metals."
+         }
+        ],
+        [
+         {
+          "t": "Copper is preferred in electrical wiring because it offers high conductivity at comparatively low cost."
+         }
+        ],
+        [
+         {
+          "t": "Birds sitting on high-voltage transmission lines usually do not get electric shock because current does not pass through their bodies to the ground."
+         }
+        ]
+       ],
+       "src": [
+        "b0138",
+        "b0139",
+        "b0140"
+       ]
+      }
+     ],
+     "src": [
+      "b0137",
+      "b0138",
+      "b0139",
+      "b0140"
+     ]
+    },
+    {
+     "t": "h",
+     "lvl": 4,
+     "text": "Summary Points",
+     "src": [
+      "b0141"
+     ]
+    },
+    {
+     "t": "ul",
+     "mark": "•",
+     "items": [
+      [
+       {
+        "t": "Materials are classified as conductors and insulators based on electrical conductivity."
+       }
+      ],
+      [
+       {
+        "t": "Conductors allow free movement of electric charges."
+       }
+      ],
+      [
+       {
+        "t": "Metals are generally good conductors due to the presence of free electrons."
+       }
+      ],
+      [
+       {
+        "t": "Insulators resist the flow of electric charges because electrons are tightly bound."
+       }
+      ],
+      [
+       {
+        "t": "Copper and aluminium are widely used in electrical wiring."
+       }
+      ],
+      [
+       {
+        "t": "Rubber and plastic are commonly used as insulating materials."
+       }
+      ],
+      [
+       {
+        "t": "Pure water is a poor conductor, whereas tap water conducts electricity due to dissolved salts."
+       }
+      ],
+      [
+       {
+        "t": "Graphite is a conducting non-metal."
+       }
+      ]
+     ],
+     "src": [
+      "b0142",
+      "b0143",
+      "b0144",
+      "b0145",
+      "b0146",
+      "b0147",
+      "b0148",
+      "b0149"
+     ]
+    },
+    {
+     "t": "h",
+     "lvl": 5,
+     "text": "‘",
+     "src": [
+      "b0150"
+     ]
+    }
+   ],
+   "section": "synopsis",
+   "cont": true
+  },
+  {
+   "kind": "synopsis",
+   "bg": "white",
+   "pill": "LIGHTNING",
+   "pageNo": 7,
+   "blocks": [
+    {
+     "t": "title",
+     "eyebrow": "SYNOPSIS-2",
+     "text": "Lightning and Lightning Conductor",
+     "gen_eyebrow": false,
+     "src": [
+      "b0152",
+      "b0151"
+     ]
+    },
+    {
+     "t": "h",
+     "lvl": 2,
+     "text": "Lightning – A Large-Scale Electrical Discharge in the Atmosphere",
+     "src": [
+      "b0153"
+     ]
+    },
+    {
+     "t": "image",
+     "label": "Image",
+     "w": 362,
+     "h": 320,
+     "src": [
+      "b0154"
+     ]
+    },
+    {
+     "t": "p",
+     "runs": [
+      {
+       "t": "Lightning is a natural electrical phenomenon produced by the accumulation and sudden discharge of electric charges inside clouds or between clouds and the Earth. It is one of the largest natural examples of static electricity."
+      }
+     ],
+     "src": [
+      "b0155"
+     ]
+    },
+    {
+     "t": "p",
+     "runs": [
+      {
+       "t": "During thunderstorms, strong air currents continuously move water droplets, ice crystals, and hail particles inside clouds. Frequent collisions and friction between these particles produce electric charges."
+      }
+     ],
+     "src": [
+      "b0156"
+     ]
+    },
+    {
+     "t": "p",
+     "runs": [
+      {
+       "t": "As a result:"
+      }
+     ],
+     "src": [
+      "b0157"
+     ]
+    },
+    {
+     "t": "ul",
+     "mark": "•",
+     "items": [
+      [
+       {
+        "t": "The upper part of the cloud generally becomes positively charged."
+       }
+      ],
+      [
+       {
+        "t": "The lower part becomes negatively charged."
+       }
+      ],
+      [
+       {
+        "t": "Sometimes a small positively charged region forms near the bottom of the cloud."
+       }
+      ]
+     ],
+     "src": [
+      "b0157",
+      "b0157",
+      "b0157"
+     ]
+    },
+    {
+     "t": "p",
+     "runs": [
+      {
+       "t": "The negatively charged lower region of the cloud induces positive charges on the Earth’s surface directly below it due to electrical induction."
+      }
+     ],
+     "src": [
+      "b0158"
+     ]
+    },
+    {
+     "t": "p",
+     "runs": [
+      {
+       "t": "Normally, air acts as an insulator and prevents the movement of charges. However, when the amount of charge becomes extremely large, the potential difference between oppositely charged regions increases enormously. At this stage, the insulating property of air breaks down. The air becomes ionised and suddenly allows electric current to pass through it."
+      }
+     ],
+     "src": [
+      "b0159"
+     ]
+    }
+   ],
+   "section": "synopsis",
+   "cont": false
+  },
+  {
+   "kind": "synopsis",
+   "bg": "white",
+   "pill": "LIGHTNING",
+   "pageNo": 8,
+   "blocks": [
+    {
+     "t": "p",
+     "runs": [
+      {
+       "t": "This sudden and rapid discharge of electricity produces a bright flash called lightning."
+      }
+     ],
+     "src": [
+      "b0160"
+     ]
+    },
+    {
+     "t": "p",
+     "runs": [
+      {
+       "t": "The electric discharge heats the surrounding air to extremely high temperatures, sometimes close to 30,000°C. The heated air expands very rapidly and produces shock waves. These shock waves are heard as thunder."
+      }
+     ],
+     "src": [
+      "b0161"
+     ]
+    },
+    {
+     "t": "h",
+     "lvl": 4,
+     "text": "Types of Lightning",
+     "src": [
+      "b0162"
+     ]
+    },
+    {
+     "t": "ol",
+     "items": [
+      {
+       "label": "1.",
+       "lines": [
+        [
+         {
+          "t": "Intra-cloud Lightning",
+          "b": 1
+         }
+        ],
+        [
+         {
+          "t": "Electrical discharge occurring within the same cloud."
+         }
+        ]
+       ]
+      },
+      {
+       "label": "2.",
+       "lines": [
+        [
+         {
+          "t": "Cloud-to-Cloud Lightning",
+          "b": 1
+         }
+        ],
+        [
+         {
+          "t": "Electrical discharge occurring between two different clouds."
+         }
+        ]
+       ]
+      },
+      {
+       "label": "3.",
+       "lines": [
+        [
+         {
+          "t": "Cloud-to-Ground Lightning",
+          "b": 1
+         }
+        ],
+        [
+         {
+          "t": "Electrical discharge occurring between a cloud and the Earth. This type can cause serious damage to life and property."
+         }
+        ]
+       ]
+      }
+     ],
+     "src": [
+      "b0163",
+      "b0164",
+      "b0165"
+     ]
+    },
+    {
+     "t": "h",
+     "lvl": 4,
+     "text": "Why Thunder is Heard After Lightning",
+     "src": [
+      "b0166"
+     ]
+    },
+    {
+     "t": "p",
+     "runs": [
+      {
+       "t": "Light travels much faster than sound."
+      }
+     ],
+     "src": [
+      "b0167"
+     ]
+    },
+    {
+     "t": "ul",
+     "mark": "•",
+     "items": [
+      [
+       {
+        "t": "Speed of light = 3 × 10⁸ m/s"
+       }
+      ],
+      [
+       {
+        "t": "Speed of sound in air ≈ 340 m/s"
+       }
+      ]
+     ],
+     "src": [
+      "b0168",
+      "b0168"
+     ]
+    },
+    {
+     "t": "p",
+     "runs": [
+      {
+       "t": "Therefore, the flash of lightning is seen almost immediately, while the sound of thunder reaches us after a short delay."
+      }
+     ],
+     "src": [
+      "b0169"
+     ]
+    },
+    {
+     "t": "h",
+     "lvl": 4,
+     "text": "Estimating the Distance of Lightning",
+     "src": [
+      "b0170"
+     ]
+    },
+    {
+     "t": "p",
+     "runs": [
+      {
+       "t": "The approximate distance of lightning from an observer can be estimated using the time interval between the flash and the thunder."
+      }
+     ],
+     "src": [
+      "b0171"
+     ]
+    },
+    {
+     "t": "formula",
+     "text": "Distance = Speed of sound × Time interval",
+     "src": [
+      "b0172"
+     ]
+    },
+    {
+     "t": "p",
+     "runs": [
+      {
+       "t": "Example:"
+      }
+     ],
+     "src": [
+      "b0173"
+     ]
+    },
+    {
+     "t": "p",
+     "runs": [
+      {
+       "t": "If thunder is heard 4 seconds after the flash,"
+      }
+     ],
+     "src": [
+      "b0174"
+     ]
+    },
+    {
+     "t": "p",
+     "runs": [
+      {
+       "t": "Distance = 340 × 4"
+      }
+     ],
+     "src": [
+      "b0175"
+     ]
+    },
+    {
+     "t": "p",
+     "runs": [
+      {
+       "t": "= 1360 m"
+      }
+     ],
+     "src": [
+      "b0175"
+     ]
+    },
+    {
+     "t": "p",
+     "runs": [
+      {
+       "t": "Thus, the lightning occurred approximately 1.36 km away."
+      }
+     ],
+     "src": [
+      "b0176"
+     ]
+    },
+    {
+     "t": "h",
+     "lvl": 4,
+     "text": "Safety Precautions During Lightning",
+     "src": [
+      "b0177"
+     ]
+    },
+    {
+     "t": "ul",
+     "mark": "•",
+     "items": [
+      [
+       {
+        "t": "Avoid standing under isolated trees during thunderstorms."
+       }
+      ],
+      [
+       {
+        "t": "Stay away from open fields and water bodies."
+       }
+      ],
+      [
+       {
+        "t": "Do not touch electrical appliances or metal objects during severe lightning storms."
+       }
+      ],
+      [
+       {
+        "t": "Remain inside a building or a closed vehicle whenever possible."
+       }
+      ]
+     ],
+     "src": [
+      "b0178",
+      "b0178",
+      "b0178",
+      "b0178"
+     ]
+    },
+    {
+     "t": "h",
+     "lvl": 4,
+     "text": "Scientific Significance of Lightning",
+     "src": [
+      "b0179"
+     ]
+    },
+    {
+     "t": "ul",
+     "mark": "•",
+     "items": [
+      [
+       {
+        "t": "Lightning helps convert atmospheric nitrogen into nitrogen compounds useful for plants."
+       }
+      ],
+      [
+       {
+        "t": "The study of lightning contributed significantly to the development of electrical science."
+       }
+      ]
+     ],
+     "src": [
+      "b0180",
+      "b0180",
+      "b0180"
+     ]
+    }
+   ],
+   "section": "synopsis",
+   "cont": true
+  },
+  {
+   "kind": "synopsis",
+   "bg": "white",
+   "pill": "LIGHTNING",
+   "pageNo": 9,
+   "blocks": [
+    {
+     "t": "ul",
+     "mark": "•",
+     "items": [
+      [
+       {
+        "t": "Atmospheric electrical discharges help scientists understand charge separation and high-voltage phenomena."
+       }
+      ]
+     ],
+     "src": [
+      "b0180",
+      "b0180",
+      "b0180"
+     ],
+     "cont": true
+    },
+    {
+     "t": "callout",
+     "variant": "insight",
+     "title": "Concept Insight",
+     "title_src": "b0181",
+     "blocks": [
+      {
+       "t": "p",
+       "runs": [
+        {
+         "t": "Lightning is essentially a giant electric spark produced when accumulated charges discharge through ionised air. The same principles of charging by friction, induction, attraction, and repulsion observed in laboratory experiments operate in thunderstorms on a much larger scale."
+        }
+       ],
+       "src": [
+        "b0182"
+       ]
+      }
+     ],
+     "src": [
+      "b0181",
+      "b0182"
+     ]
+    },
+    {
+     "t": "callout",
+     "variant": "dyk",
+     "title": "Did You Know?",
+     "title_src": "b0183",
+     "blocks": [
+      {
+       "t": "p",
+       "runs": [
+        {
+         "t": "A single lightning strike may involve millions of volts of potential difference and currents of several thousand amperes."
+        }
+       ],
+       "src": [
+        "b0184"
+       ]
+      }
+     ],
+     "src": [
+      "b0183",
+      "b0184"
+     ]
+    }
+   ],
+   "section": "synopsis",
+   "cont": true
+  },
+  {
+   "kind": "synopsis",
+   "bg": "white",
+   "pill": "LIGHTNING CONDUCTOR",
+   "pageNo": 10,
+   "blocks": [
+    {
+     "t": "h",
+     "lvl": 2,
+     "text": "Lightning Conductor",
+     "src": [
+      "b0185"
+     ]
+    },
+    {
+     "t": "image",
+     "label": "Image",
+     "w": 284,
+     "h": 320,
+     "src": [
+      "b0186"
+     ]
+    },
+    {
+     "t": "p",
+     "runs": [
+      {
+       "t": "A lightning conductor is a protective device used to safeguard buildings and tall structures from the damaging effects of lightning. It was developed by Benjamin Franklin after he demonstrated that lightning is an electrical discharge."
+      }
+     ],
+     "src": [
+      "b0187"
+     ]
+    },
+    {
+     "t": "p",
+     "runs": [
+      {
+       "t": "A lightning conductor consists of:"
+      }
+     ],
+     "src": [
+      "b0188"
+     ]
+    },
+    {
+     "t": "ul",
+     "mark": "•",
+     "items": [
+      [
+       {
+        "t": "A long, thick metal rod, usually made of copper or aluminium"
+       }
+      ],
+      [
+       {
+        "t": "A pointed upper end fixed at the highest point of the building"
+       }
+      ],
+      [
+       {
+        "t": "A thick metal strip connected to the rod and extending down the side of the building"
+       }
+      ],
+      [
+       {
+        "t": "A metal plate buried deep inside the ground"
+       }
+      ]
+     ],
+     "src": [
+      "b0188",
+      "b0188",
+      "b0188",
+      "b0188"
+     ]
+    },
+    {
+     "t": "p",
+     "runs": [
+      {
+       "t": "The metal rod and strip provide a low-resistance conducting path between the atmosphere and the Earth."
+      }
+     ],
+     "src": [
+      "b0189"
+     ]
+    },
+    {
+     "t": "h",
+     "lvl": 4,
+     "text": "Working Principle of a Lightning Conductor",
+     "src": [
+      "b0190"
+     ]
+    },
+    {
+     "t": "p",
+     "runs": [
+      {
+       "t": "During a thunderstorm, a large potential difference develops between the charged clouds and the Earth. If lightning strikes the building, the electric charge passes through the metal conductor directly into the ground instead of flowing through the building structure."
+      }
+     ],
+     "src": [
+      "b0191"
+     ]
+    },
+    {
+     "t": "p",
+     "runs": [
+      {
+       "t": "Thus, the lightning conductor safely transfers the enormous electric charge to the Earth and protects the building from:"
+      }
+     ],
+     "src": [
+      "b0192"
+     ]
+    },
+    {
+     "t": "ul",
+     "mark": "•",
+     "items": [
+      [
+       {
+        "t": "Fire hazards"
+       }
+      ],
+      [
+       {
+        "t": "Structural damage"
+       }
+      ],
+      [
+       {
+        "t": "Electrical damage"
+       }
+      ],
+      [
+       {
+        "t": "Risk to human life"
+       }
+      ]
+     ],
+     "src": [
+      "b0192",
+      "b0192",
+      "b0192",
+      "b0192"
+     ]
+    }
+   ],
+   "section": "synopsis",
+   "cont": false
+  },
+  {
+   "kind": "synopsis",
+   "bg": "white",
+   "pill": "LIGHTNING CONDUCTOR",
+   "pageNo": 11,
+   "blocks": [
+    {
+     "t": "p",
+     "runs": [
+      {
+       "t": "The pointed upper end of the conductor helps the charges leak gradually into the air, reducing the possibility of a violent discharge."
+      }
+     ],
+     "src": [
+      "b0193"
+     ]
+    },
+    {
+     "t": "h",
+     "lvl": 4,
+     "text": "Applications",
+     "src": [
+      "b0194"
+     ]
+    },
+    {
+     "t": "p",
+     "runs": [
+      {
+       "t": "Lightning conductors are installed on:"
+      }
+     ],
+     "src": [
+      "b0194"
+     ]
+    },
+    {
+     "t": "ul",
+     "mark": "•",
+     "items": [
+      [
+       {
+        "t": "Tall buildings"
+       }
+      ],
+      [
+       {
+        "t": "Towers"
+       }
+      ],
+      [
+       {
+        "t": "Factories"
+       }
+      ],
+      [
+       {
+        "t": "Monuments"
+       }
+      ],
+      [
+       {
+        "t": "Airports"
+       }
+      ],
+      [
+       {
+        "t": "Power stations"
+       }
+      ]
+     ],
+     "src": [
+      "b0194",
+      "b0194",
+      "b0194",
+      "b0194",
+      "b0194",
+      "b0194"
+     ]
+    },
+    {
+     "t": "h",
+     "lvl": 4,
+     "text": "Safety Precautions During Thunderstorms",
+     "src": [
+      "b0195"
+     ]
+    },
+    {
+     "t": "ul",
+     "mark": "•",
+     "items": [
+      [
+       {
+        "t": "Do not stand under isolated tall trees."
+       }
+      ],
+      [
+       {
+        "t": "Avoid open fields during lightning storms."
+       }
+      ],
+      [
+       {
+        "t": "Stay away from metal poles, electric wires, and water bodies."
+       }
+      ],
+      [
+       {
+        "t": "Avoid using wired electrical appliances during severe thunderstorms."
+       }
+      ]
+     ],
+     "src": [
+      "b0195",
+      "b0195",
+      "b0195",
+      "b0195"
+     ]
+    },
+    {
+     "t": "h",
+     "lvl": 4,
+     "text": "Scientific Principle",
+     "src": [
+      "b0196"
+     ]
+    },
+    {
+     "t": "p",
+     "runs": [
+      {
+       "t": "A lightning conductor works on the principles of:"
+      }
+     ],
+     "src": [
+      "b0197"
+     ]
+    },
+    {
+     "t": "ul",
+     "mark": "•",
+     "items": [
+      [
+       {
+        "t": "Electrical conduction"
+       }
+      ],
+      [
+       {
+        "t": "Earthing"
+       }
+      ],
+      [
+       {
+        "t": "Electric discharge through a low-resistance path"
+       }
+      ]
+     ],
+     "src": [
+      "b0197",
+      "b0197",
+      "b0197"
+     ]
+    },
+    {
+     "t": "p",
+     "runs": [
+      {
+       "t": "Since metals are good conductors of electricity, the charge prefers to flow through the conductor rather than through the building materials."
+      }
+     ],
+     "src": [
+      "b0198"
+     ]
+    },
+    {
+     "t": "callout",
+     "variant": "insight",
+     "title": "Concept Insight",
+     "title_src": "b0199",
+     "blocks": [
+      {
+       "t": "p",
+       "runs": [
+        {
+         "t": "Lightning always follows the path of least electrical resistance. A lightning conductor provides a safe conducting path from the cloud to the Earth, thereby preventing damage to structures."
+        }
+       ],
+       "src": [
+        "b0200"
+       ]
+      }
+     ],
+     "src": [
+      "b0199",
+      "b0200"
+     ]
+    },
+    {
+     "t": "callout",
+     "variant": "dyk",
+     "title": "Did You Know?",
+     "title_src": "b0201",
+     "blocks": [
+      {
+       "t": "p",
+       "runs": [
+        {
+         "t": "Benjamin Franklin demonstrated the electrical nature of lightning through his famous kite experiment in 1752. His work laid the foundation for the invention of the lightning conductor."
+        }
+       ],
+       "src": [
+        "b0202"
+       ]
+      }
+     ],
+     "src": [
+      "b0201",
+      "b0202"
+     ]
+    }
+   ],
+   "section": "synopsis",
+   "cont": true
+  },
+  {
+   "kind": "test",
+   "bg": "tint",
+   "pill": "TEST YOUR CONCEPTS",
+   "pageNo": 12,
+   "blocks": [
+    {
+     "t": "title",
+     "eyebrow": null,
+     "text": "TEST YOUR CONCEPTS",
+     "gen_eyebrow": false,
+     "src": [
+      "b0203"
+     ]
+    },
+    {
+     "t": "h",
+     "lvl": 3,
+     "text": "Very Short Answer Type Questions",
+     "src": [
+      "b0204"
+     ]
+    },
+    {
+     "t": "h",
+     "lvl": 3,
+     "text": "Directions for questions 1 to 7: Fill in the blanks with the most appropriate word or term.",
+     "src": [
+      "b0205"
+     ]
+    },
+    {
+     "t": "qcard",
+     "items": [
+      {
+       "label": "1.",
+       "lines": [
+        [
+         {
+          "t": "Like charges ________ each other while unlike charges ________ each other.",
+          "b": 1
+         }
+        ]
+       ]
+      },
+      {
+       "label": "2.",
+       "lines": [
+        [
+         {
+          "t": "The process of charging a body by rubbing it with another body is called charging by ________.",
+          "b": 1
+         }
+        ]
+       ]
+      },
+      {
+       "label": "3.",
+       "lines": [
+        [
+         {
+          "t": "An ________ is a device used to detect the presence and nature of charge on a body.",
+          "b": 1
+         }
+        ]
+       ]
+      },
+      {
+       "label": "4.",
+       "lines": [
+        [
+         {
+          "t": "Materials that do not allow electric charges to pass through them are called ________ while materials that allow charges to flow easily are called ________.",
+          "b": 1
+         }
+        ]
+       ]
+      },
+      {
+       "label": "5.",
+       "lines": [
+        [
+         {
+          "t": "Lightning is a natural phenomenon caused by the sudden ________ of huge electric charge accumulated in the clouds.",
+          "b": 1
+         }
+        ]
+       ]
+      },
+      {
+       "label": "6.",
+       "lines": [
+        [
+         {
+          "t": "A lightning ________ is used to safely carry the charge from lightning into the ground and protect buildings.",
+          "b": 1
+         }
+        ]
+       ]
+      },
+      {
+       "label": "7.",
+       "lines": [
+        [
+         {
+          "t": "The combination of two or more cells joined together is called a ________.",
+          "b": 1
+         }
+        ]
+       ]
+      }
+     ],
+     "src": [
+      "b0206",
+      "b0207",
+      "b0208",
+      "b0209",
+      "b0210",
+      "b0211",
+      "b0212"
+     ]
+    },
+    {
+     "t": "note",
+     "runs": [
+      {
+       "t": "Directions for questions 8 to 13: For each of the questions, four choices have been provided. Select the correct alternative.",
+       "b": 1
+      }
+     ],
+     "src": [
+      "b0213"
+     ]
+    },
+    {
+     "t": "mcq",
+     "n": "8.",
+     "stem": [
+      {
+       "t": "Materials like wood, plastic and rubber are",
+       "b": 1
+      }
+     ],
+     "options": [
+      {
+       "k": "A",
+       "runs": [
+        {
+         "t": "(A) good conductors of electricity",
+         "b": 1
+        }
+       ]
+      },
+      {
+       "k": "B",
+       "runs": [
+        {
+         "t": "(B) good insulators of electricity",
+         "b": 1
+        }
+       ]
+      },
+      {
+       "k": "C",
+       "runs": [
+        {
+         "t": "(C) good conductors of heat only",
+         "b": 1
+        }
+       ]
+      },
+      {
+       "k": "D",
+       "runs": [
+        {
+         "t": "(D) used to make heating elements",
+         "b": 1
+        }
+       ]
+      }
+     ],
+     "src": [
+      "b0214"
+     ]
+    },
+    {
+     "t": "mcq",
+     "n": "9.",
+     "stem": [
+      {
+       "t": "Lightning is a natural phenomenon caused due to",
+       "b": 1
+      }
+     ],
+     "options": [
+      {
+       "k": "A",
+       "runs": [
+        {
+         "t": "(A) heating effect of current",
+         "b": 1
+        }
+       ]
+      },
+      {
+       "k": "B",
+       "runs": [
+        {
+         "t": "(B) sudden discharge of huge electric charge accumulated in clouds",
+         "b": 1
+        }
+       ]
+      },
+      {
+       "k": "C",
+       "runs": [
+        {
+         "t": "(C) chemical effect of current",
+         "b": 1
+        }
+       ]
+      },
+      {
+       "k": "D",
+       "runs": [
+        {
+         "t": "(D) magnetic effect of current",
+         "b": 1
+        }
+       ]
+      }
+     ],
+     "src": [
+      "b0215"
+     ]
+    },
+    {
+     "t": "mcq",
+     "n": "10.",
+     "stem": [
+      {
+       "t": "A lightning conductor protects buildings by",
+       "b": 1
+      }
+     ],
+     "options": [
+      {
+       "k": "A",
+       "runs": [
+        {
+         "t": "(A) producing electric charge",
+         "b": 1
+        }
+       ]
+      },
+      {
+       "k": "B",
+       "runs": [
+        {
+         "t": "(B) safely carrying the lightning charge into the ground",
+         "b": 1
+        }
+       ]
+      },
+      {
+       "k": "C",
+       "runs": [
+        {
+         "t": "(C) increasing the strength of lightning",
+         "b": 1
+        }
+       ]
+      },
+      {
+       "k": "D",
+       "runs": [
+        {
+         "t": "(D) storing the electric charge",
+         "b": 1
+        }
+       ]
+      }
+     ],
+     "src": [
+      "b0216"
+     ]
+    }
+   ],
+   "section": "test",
+   "cont": false
+  },
+  {
+   "kind": "test",
+   "bg": "tint",
+   "pill": "TEST YOUR CONCEPTS",
+   "pageNo": 13,
+   "blocks": [
+    {
+     "t": "mcq",
+     "n": "11.",
+     "stem": [
+      {
+       "t": "The safety device that automatically turns off when current exceeds the safe limit is",
+       "b": 1
+      }
+     ],
+     "options": [
+      {
+       "k": "A",
+       "runs": [
+        {
+         "t": "(A) electric fuse",
+         "b": 1
+        }
+       ]
+      },
+      {
+       "k": "B",
+       "runs": [
+        {
+         "t": "(B) miniature circuit breaker (MCB)",
+         "b": 1
+        }
+       ]
+      },
+      {
+       "k": "C",
+       "runs": [
+        {
+         "t": "(C) electroscope",
+         "b": 1
+        }
+       ]
+      },
+      {
+       "k": "D",
+       "runs": [
+        {
+         "t": "(D) lightning conductor",
+         "b": 1
+        }
+       ]
+      }
+     ],
+     "src": [
+      "b0217"
+     ]
+    },
+    {
+     "t": "mcq",
+     "n": "12.",
+     "stem": [
+      {
+       "t": "The working of an electric iron and electric heater is based on",
+       "b": 1
+      }
+     ],
+     "options": [
+      {
+       "k": "A",
+       "runs": [
+        {
+         "t": "(A) magnetic effect of current",
+         "b": 1
+        }
+       ]
+      },
+      {
+       "k": "B",
+       "runs": [
+        {
+         "t": "(B) chemical effect of current",
+         "b": 1
+        }
+       ]
+      },
+      {
+       "k": "C",
+       "runs": [
+        {
+         "t": "(C) heating effect of current",
+         "b": 1
+        }
+       ]
+      },
+      {
+       "k": "D",
+       "runs": [
+        {
+         "t": "(D) electroplating",
+         "b": 1
+        }
+       ]
+      }
+     ],
+     "src": [
+      "b0218"
+     ]
+    },
+    {
+     "t": "mcq",
+     "n": "13.",
+     "stem": [
+      {
+       "t": "Electric generators in power plants convert",
+       "b": 1
+      }
+     ],
+     "options": [
+      {
+       "k": "A",
+       "runs": [
+        {
+         "t": "(A) electrical energy into mechanical energy",
+         "b": 1
+        }
+       ]
+      },
+      {
+       "k": "B",
+       "runs": [
+        {
+         "t": "(B) mechanical energy into electrical energy",
+         "b": 1
+        }
+       ]
+      },
+      {
+       "k": "C",
+       "runs": [
+        {
+         "t": "(C) chemical energy into electrical energy",
+         "b": 1
+        }
+       ]
+      },
+      {
+       "k": "D",
+       "runs": [
+        {
+         "t": "(D) heat energy into electrical energy",
+         "b": 1
+        }
+       ]
+      }
+     ],
+     "src": [
+      "b0219"
+     ]
+    },
+    {
+     "t": "p",
+     "runs": [
+      {
+       "t": "14. ",
+       "b": 1
+      },
+      {
+       "t": "Match the materials/devices given in Column I with their correct category or function given in Column II.",
+       "b": 1
+      }
+     ],
+     "src": [
+      "b0220"
+     ]
+    },
+    {
+     "t": "table",
+     "head": [
+      "Column I",
+      "Column II"
+     ],
+     "rows": [
+      [
+       "(a) Copper",
+       "(i) Insulator"
+      ],
+      [
+       "(b) Plastic",
+       "(ii) Good conductor of electricity"
+      ],
+      [
+       "(c) Lightning conductor",
+       "(iii) Protects buildings from lightning damage"
+      ],
+      [
+       "(d) Fuse / MCB",
+       "(iv) Safety device to prevent excess current"
+      ],
+      [
+       "(e) Dry cell",
+       "(v) Source of electric current"
+      ]
+     ],
+     "widths": [
+      172,
+      343
+     ],
+     "src": [
+      "b0221"
+     ]
+    },
+    {
+     "t": "h",
+     "lvl": 3,
+     "text": "Very Short Answer Type Questions",
+     "src": [
+      "b0222"
+     ]
+    },
+    {
+     "t": "note",
+     "runs": [
+      {
+       "t": "(Questions 15 to 27)",
+       "b": 1
+      }
+     ],
+     "src": [
+      "b0223"
+     ],
+     "muted": true
+    },
+    {
+     "t": "h",
+     "lvl": 3,
+     "text": "Directions: Answer the following questions in one word or one sentence only.",
+     "src": [
+      "b0224"
+     ]
+    },
+    {
+     "t": "qcard",
+     "items": [
+      {
+       "label": "15.",
+       "lines": [
+        [
+         {
+          "t": "What is the SI unit of electric charge?",
+          "b": 1
+         }
+        ]
+       ]
+      },
+      {
+       "label": "16.",
+       "lines": [
+        [
+         {
+          "t": "State the rule: “Like charges ________ and unlike charges ________.”",
+          "b": 1
+         }
+        ]
+       ]
+      },
+      {
+       "label": "17.",
+       "lines": [
+        [
+         {
+          "t": "Name the process of charging a body by rubbing it with another body.",
+          "b": 1
+         }
+        ]
+       ]
+      },
+      {
+       "label": "18.",
+       "lines": [
+        [
+         {
+          "t": "What is an electroscope used for?",
+          "b": 1
+         }
+        ]
+       ]
+      },
+      {
+       "label": "19.",
+       "lines": [
+        [
+         {
+          "t": "Give two examples of good conductors of electricity.",
+          "b": 1
+         }
+        ]
+       ]
+      },
+      {
+       "label": "20.",
+       "lines": [
+        [
+         {
+          "t": "Give two examples of good insulators of electricity.",
+          "b": 1
+         }
+        ]
+       ]
+      },
+      {
+       "label": "21.",
+       "lines": [
+        [
+         {
+          "t": "What is lightning?",
+          "b": 1
+         }
+        ]
+       ]
+      },
+      {
+       "label": "22.",
+       "lines": [
+        [
+         {
+          "t": "What is the function of a lightning conductor?",
+          "b": 1
+         }
+        ]
+       ]
+      }
+     ],
+     "src": [
+      "b0225",
+      "b0226",
+      "b0227",
+      "b0228",
+      "b0229",
+      "b0230",
+      "b0231",
+      "b0232",
+      "b0233",
+      "b0234",
+      "b0235",
+      "b0236",
+      "b0237"
+     ]
+    }
+   ],
+   "section": "test",
+   "cont": true
+  },
+  {
+   "kind": "test",
+   "bg": "tint",
+   "pill": "TEST YOUR CONCEPTS",
+   "pageNo": 14,
+   "blocks": [
+    {
+     "t": "qcard",
+     "items": [
+      {
+       "label": "23.",
+       "lines": [
+        [
+         {
+          "t": "What is the combination of two or more cells called?",
+          "b": 1
+         }
+        ]
+       ]
+      },
+      {
+       "label": "24.",
+       "lines": [
+        [
+         {
+          "t": "Name the safety device that melts and breaks the circuit when excess current flows.",
+          "b": 1
+         }
+        ]
+       ]
+      },
+      {
+       "label": "25.",
+       "lines": [
+        [
+         {
+          "t": "Name the modern safety device that automatically switches off when current exceeds the safe limit.",
+          "b": 1
+         }
+        ]
+       ]
+      },
+      {
+       "label": "26.",
+       "lines": [
+        [
+         {
+          "t": "On which effect of electric current does an electric iron work?",
+          "b": 1
+         }
+        ]
+       ]
+      },
+      {
+       "label": "27.",
+       "lines": [
+        [
+         {
+          "t": "On which effect of electric current does an electric bell work?",
+          "b": 1
+         }
+        ]
+       ]
+      }
+     ],
+     "src": [
+      "b0225",
+      "b0226",
+      "b0227",
+      "b0228",
+      "b0229",
+      "b0230",
+      "b0231",
+      "b0232",
+      "b0233",
+      "b0234",
+      "b0235",
+      "b0236",
+      "b0237"
+     ],
+     "cont": true
+    },
+    {
+     "t": "h",
+     "lvl": 3,
+     "text": "Short Answer Type Questions",
+     "src": [
+      "b0238"
+     ]
+    },
+    {
+     "t": "note",
+     "runs": [
+      {
+       "t": "(Questions 28 to 31)",
+       "b": 1
+      }
+     ],
+     "src": [
+      "b0239"
+     ],
+     "muted": true
+    },
+    {
+     "t": "h",
+     "lvl": 3,
+     "text": "Directions: Answer the following questions briefly in 2–3 sentences.",
+     "src": [
+      "b0240"
+     ]
+    },
+    {
+     "t": "qcard",
+     "items": [
+      {
+       "label": "28.",
+       "lines": [
+        [
+         {
+          "t": "What are the three methods of charging a body? Give one example for each.",
+          "b": 1
+         }
+        ]
+       ]
+      },
+      {
+       "label": "29.",
+       "lines": [
+        [
+         {
+          "t": "Distinguish between conductors and insulators. Give two examples of each.",
+          "b": 1
+         }
+        ]
+       ]
+      },
+      {
+       "label": "30.",
+       "lines": [
+        [
+         {
+          "t": "What is lightning? How does a lightning conductor protect a building from damage?",
+          "b": 1
+         }
+        ]
+       ]
+      },
+      {
+       "label": "31.",
+       "lines": [
+        [
+         {
+          "t": "Explain the working of an electric fuse. Why is it called a safety device?",
+          "b": 1
+         }
+        ]
+       ]
+      }
+     ],
+     "src": [
+      "b0241",
+      "b0242",
+      "b0243",
+      "b0244"
+     ]
+    },
+    {
+     "t": "h",
+     "lvl": 3,
+     "text": "Long Answer Type Questions / Essay Type Questions",
+     "src": [
+      "b0245"
+     ]
+    },
+    {
+     "t": "qcard",
+     "items": [
+      {
+       "label": "32.",
+       "lines": [
+        [
+         {
+          "t": "Draw a labelled diagram of an electric bell and explain its working in detail. Why does the bell keep ringing continuously as long as the switch is pressed?",
+          "b": 1
+         }
+        ]
+       ]
+      },
+      {
+       "label": "33.",
+       "lines": [
+        [
+         {
+          "t": "Describe how electricity is generated in a power plant. Explain the role of a turbine and a dynamo in this process. How is this electricity supplied to our homes?",
+          "b": 1
+         }
+        ]
+       ]
+      },
+      {
+       "label": "34.",
+       "lines": [
+        [
+         {
+          "t": "What is the difference between overloading and short circuiting in a household circuit? Explain how a fuse or MCB protects the circuit in both cases.",
+          "b": 1
+         }
+        ]
+       ]
+      },
+      {
+       "label": "35.",
+       "lines": [
+        [
+         {
+          "t": "Explain the heating effect of electric current. Why do filament bulbs waste more electricity than CFLs or LED bulbs? Suggest two ways to reduce the wastage of electricity at home.",
+          "b": 1
+         }
+        ]
+       ]
+      }
+     ],
+     "src": [
+      "b0246",
+      "b0247",
+      "b0248",
+      "b0249"
+     ]
+    }
+   ],
+   "section": "test",
+   "cont": true
+  },
+  {
+   "kind": "concept",
+   "bg": "tint",
+   "pill": "CONCEPT APPLICATION",
+   "pageNo": 15,
+   "blocks": [
+    {
+     "t": "title",
+     "eyebrow": null,
+     "text": "CONCEPT APPLICATION",
+     "gen_eyebrow": false,
+     "src": [
+      "b0250"
+     ]
+    },
+    {
+     "t": "h",
+     "lvl": 3,
+     "text": "Level 1",
+     "src": [
+      "b0251"
+     ]
+    },
+    {
+     "t": "h",
+     "lvl": 3,
+     "text": "True or False",
+     "src": [
+      "b0252"
+     ]
+    },
+    {
+     "t": "h",
+     "lvl": 3,
+     "text": "Directions: Write True or False for each of the following statements.",
+     "src": [
+      "b0253"
+     ]
+    },
+    {
+     "t": "qcard",
+     "items": [
+      {
+       "label": "36.",
+       "lines": [
+        [
+         {
+          "t": "Unlike charges repel each other.",
+          "b": 1
+         }
+        ]
+       ]
+      },
+      {
+       "label": "37.",
+       "lines": [
+        [
+         {
+          "t": "A body can be charged only by the method of friction.",
+          "b": 1
+         }
+        ]
+       ]
+      },
+      {
+       "label": "38.",
+       "lines": [
+        [
+         {
+          "t": "An electroscope can detect the presence as well as the nature of charge on a body.",
+          "b": 1
+         }
+        ]
+       ]
+      },
+      {
+       "label": "39.",
+       "lines": [
+        [
+         {
+          "t": "Wood and plastic are good conductors of electricity.",
+          "b": 1
+         }
+        ]
+       ]
+      },
+      {
+       "label": "40.",
+       "lines": [
+        [
+         {
+          "t": "Lightning conductor protects buildings by safely carrying the charge to the ground.",
+          "b": 1
+         }
+        ]
+       ]
+      },
+      {
+       "label": "41.",
+       "lines": [
+        [
+         {
+          "t": "A fuse melts and breaks the circuit when current exceeds the safe limit.",
+          "b": 1
+         }
+        ]
+       ]
+      },
+      {
+       "label": "42.",
+       "lines": [
+        [
+         {
+          "t": "An electric bell works on the heating effect of electric current.",
+          "b": 1
+         }
+        ]
+       ]
+      }
+     ],
+     "src": [
+      "b0254",
+      "b0255",
+      "b0256",
+      "b0257",
+      "b0258",
+      "b0259",
+      "b0260"
+     ]
+    },
+    {
+     "t": "h",
+     "lvl": 3,
+     "text": "Directions: Fill in the blanks with the most appropriate word or term.",
+     "src": [
+      "b0261"
+     ]
+    },
+    {
+     "t": "qcard",
+     "items": [
+      {
+       "label": "43.",
+       "lines": [
+        [
+         {
+          "t": "The SI unit of electric current is ________.",
+          "b": 1
+         }
+        ]
+       ]
+      },
+      {
+       "label": "44.",
+       "lines": [
+        [
+         {
+          "t": "A device that automatically switches off the circuit when current exceeds the safe limit is called ________.",
+          "b": 1
+         }
+        ]
+       ]
+      },
+      {
+       "label": "45.",
+       "lines": [
+        [
+         {
+          "t": "The process by which an uncharged body gets charged without actual contact with a charged body is called charging by ________.",
+          "b": 1
+         }
+        ]
+       ]
+      },
+      {
+       "label": "46.",
+       "lines": [
+        [
+         {
+          "t": "The thin wire inside an electric bulb that becomes hot and glows is called ________.",
+          "b": 1
+         }
+        ]
+       ]
+      },
+      {
+       "label": "47.",
+       "lines": [
+        [
+         {
+          "t": "A lightning conductor has a sharp pointed top made of ________ to safely carry the charge to the ground.",
+          "b": 1
+         }
+        ]
+       ]
+      },
+      {
+       "label": "48.",
+       "lines": [
+        [
+         {
+          "t": "The heating element in an electric iron or heater is usually made of ________ wire.",
+          "b": 1
+         }
+        ]
+       ]
+      }
+     ],
+     "src": [
+      "b0262",
+      "b0263",
+      "b0264",
+      "b0265",
+      "b0266",
+      "b0267"
+     ]
+    },
+    {
+     "t": "note",
+     "runs": [
+      {
+       "t": "Directions for questions 49 to 61: For each of the questions, four choices have been provided. Select the correct alternative.",
+       "b": 1
+      }
+     ],
+     "src": [
+      "b0268"
+     ]
+    },
+    {
+     "t": "mcq",
+     "n": "49.",
+     "stem": [
+      {
+       "t": "Which of the following is the correct rule about electric charges?",
+       "b": 1
+      }
+     ],
+     "options": [
+      {
+       "k": "A",
+       "runs": [
+        {
+         "t": "(A) Like charges attract each other",
+         "b": 1
+        }
+       ]
+      },
+      {
+       "k": "B",
+       "runs": [
+        {
+         "t": "(B) Unlike charges repel each other",
+         "b": 1
+        }
+       ]
+      },
+      {
+       "k": "C",
+       "runs": [
+        {
+         "t": "(C) Like charges repel each other and unlike charges attract each other",
+         "b": 1
+        }
+       ]
+      },
+      {
+       "k": "D",
+       "runs": [
+        {
+         "t": "(D) Charges do not interact with each other",
+         "b": 1
+        }
+       ]
+      }
+     ],
+     "src": [
+      "b0269"
+     ]
+    }
+   ],
+   "section": "concept",
+   "cont": false
+  },
+  {
+   "kind": "concept",
+   "bg": "tint",
+   "pill": "CONCEPT APPLICATION",
+   "pageNo": 16,
+   "blocks": [
+    {
+     "t": "mcq",
+     "n": "50.",
+     "stem": [
+      {
+       "t": "The process of charging a body by simply bringing a charged object near it without touching is called",
+       "b": 1
+      }
+     ],
+     "options": [
+      {
+       "k": "A",
+       "runs": [
+        {
+         "t": "(A) charging by friction",
+         "b": 1
+        }
+       ]
+      },
+      {
+       "k": "B",
+       "runs": [
+        {
+         "t": "(B) charging by conduction",
+         "b": 1
+        }
+       ]
+      },
+      {
+       "k": "C",
+       "runs": [
+        {
+         "t": "(C) charging by induction",
+         "b": 1
+        }
+       ]
+      },
+      {
+       "k": "D",
+       "runs": [
+        {
+         "t": "(D) charging by electrolysis",
+         "b": 1
+        }
+       ]
+      }
+     ],
+     "src": [
+      "b0270"
+     ]
+    },
+    {
+     "t": "mcq",
+     "n": "51.",
+     "stem": [
+      {
+       "t": "Which of the following is a good insulator of electricity?",
+       "b": 1
+      }
+     ],
+     "options": [
+      {
+       "k": "A",
+       "runs": [
+        {
+         "t": "(A) Copper",
+         "b": 1
+        }
+       ]
+      },
+      {
+       "k": "B",
+       "runs": [
+        {
+         "t": "(B) Aluminium",
+         "b": 1
+        }
+       ]
+      },
+      {
+       "k": "C",
+       "runs": [
+        {
+         "t": "(C) Plastic",
+         "b": 1
+        }
+       ]
+      },
+      {
+       "k": "D",
+       "runs": [
+        {
+         "t": "(D) Iron",
+         "b": 1
+        }
+       ]
+      }
+     ],
+     "src": [
+      "b0271"
+     ]
+    },
+    {
+     "t": "mcq",
+     "n": "52.",
+     "stem": [
+      {
+       "t": "Lightning is a natural phenomenon caused due to",
+       "b": 1
+      }
+     ],
+     "options": [
+      {
+       "k": "A",
+       "runs": [
+        {
+         "t": "(A) heating effect of current",
+         "b": 1
+        }
+       ]
+      },
+      {
+       "k": "B",
+       "runs": [
+        {
+         "t": "(B) sudden discharge of huge electric charge in clouds",
+         "b": 1
+        }
+       ]
+      },
+      {
+       "k": "C",
+       "runs": [
+        {
+         "t": "(C) chemical effect of current",
+         "b": 1
+        }
+       ]
+      },
+      {
+       "k": "D",
+       "runs": [
+        {
+         "t": "(D) magnetic effect of current",
+         "b": 1
+        }
+       ]
+      }
+     ],
+     "src": [
+      "b0272"
+     ]
+    },
+    {
+     "t": "mcq",
+     "n": "53.",
+     "stem": [
+      {
+       "t": "The main purpose of installing a lightning conductor on a building is to",
+       "b": 1
+      }
+     ],
+     "options": [
+      {
+       "k": "A",
+       "runs": [
+        {
+         "t": "(A) produce lightning safely",
+         "b": 1
+        }
+       ]
+      },
+      {
+       "k": "B",
+       "runs": [
+        {
+         "t": "(B) safely carry the lightning charge into the ground",
+         "b": 1
+        }
+       ]
+      },
+      {
+       "k": "C",
+       "runs": [
+        {
+         "t": "(C) store electric charge",
+         "b": 1
+        }
+       ]
+      },
+      {
+       "k": "D",
+       "runs": [
+        {
+         "t": "(D) increase the brightness of lightning",
+         "b": 1
+        }
+       ]
+      }
+     ],
+     "src": [
+      "b0273"
+     ]
+    },
+    {
+     "t": "mcq",
+     "n": "54.",
+     "stem": [
+      {
+       "t": "The safety device that melts and breaks the circuit when excess current flows is called",
+       "b": 1
+      }
+     ],
+     "options": [
+      {
+       "k": "A",
+       "runs": [
+        {
+         "t": "(A) MCB",
+         "b": 1
+        }
+       ]
+      },
+      {
+       "k": "B",
+       "runs": [
+        {
+         "t": "(B) electroscope",
+         "b": 1
+        }
+       ]
+      },
+      {
+       "k": "C",
+       "runs": [
+        {
+         "t": "(C) electric fuse",
+         "b": 1
+        }
+       ]
+      },
+      {
+       "k": "D",
+       "runs": [
+        {
+         "t": "(D) lightning conductor",
+         "b": 1
+        }
+       ]
+      }
+     ],
+     "src": [
+      "b0274"
+     ]
+    },
+    {
+     "t": "mcq",
+     "n": "55.",
+     "stem": [
+      {
+       "t": "Miniature Circuit Breaker (MCB) is better than a fuse because",
+       "b": 1
+      }
+     ],
+     "options": [
+      {
+       "k": "A",
+       "runs": [
+        {
+         "t": "(A) it can be easily reset",
+         "b": 1
+        }
+       ]
+      },
+      {
+       "k": "B",
+       "runs": [
+        {
+         "t": "(B) it is cheaper",
+         "b": 1
+        }
+       ]
+      },
+      {
+       "k": "C",
+       "runs": [
+        {
+         "t": "(C) it produces more heat",
+         "b": 1
+        }
+       ]
+      },
+      {
+       "k": "D",
+       "runs": [
+        {
+         "t": "(D) it works on heating effect",
+         "b": 1
+        }
+       ]
+      }
+     ],
+     "src": [
+      "b0275"
+     ]
+    },
+    {
+     "t": "mcq",
+     "n": "56.",
+     "stem": [
+      {
+       "t": "The working of an electric iron and electric heater is based on",
+       "b": 1
+      }
+     ],
+     "options": [
+      {
+       "k": "A",
+       "runs": [
+        {
+         "t": "(A) magnetic effect of current",
+         "b": 1
+        }
+       ]
+      },
+      {
+       "k": "B",
+       "runs": [
+        {
+         "t": "(B) chemical effect of current",
+         "b": 1
+        }
+       ]
+      },
+      {
+       "k": "C",
+       "runs": [
+        {
+         "t": "(C) heating effect of current",
+         "b": 1
+        }
+       ]
+      },
+      {
+       "k": "D",
+       "runs": [
+        {
+         "t": "(D) electroplating",
+         "b": 1
+        }
+       ]
+      }
+     ],
+     "src": [
+      "b0276"
+     ]
+    },
+    {
+     "t": "mcq",
+     "n": "57.",
+     "stem": [
+      {
+       "t": "The working of an electric bell is based on",
+       "b": 1
+      }
+     ],
+     "options": [
+      {
+       "k": "A",
+       "runs": [
+        {
+         "t": "(A) heating effect of current",
+         "b": 1
+        }
+       ]
+      },
+      {
+       "k": "B",
+       "runs": [
+        {
+         "t": "(B) magnetic effect of current",
+         "b": 1
+        }
+       ]
+      },
+      {
+       "k": "C",
+       "runs": [
+        {
+         "t": "(C) chemical effect of current",
+         "b": 1
+        }
+       ]
+      },
+      {
+       "k": "D",
+       "runs": [
+        {
+         "t": "(D) lighting effect of current",
+         "b": 1
+        }
+       ]
+      }
+     ],
+     "src": [
+      "b0277"
+     ]
+    }
+   ],
+   "section": "concept",
+   "cont": true
+  },
+  {
+   "kind": "concept",
+   "bg": "tint",
+   "pill": "CONCEPT APPLICATION",
+   "pageNo": 17,
+   "blocks": [
+    {
+     "t": "mcq",
+     "n": "58.",
+     "stem": [
+      {
+       "t": "The process of depositing a thin layer of gold or silver on a cheaper metal object is called",
+       "b": 1
+      }
+     ],
+     "options": [
+      {
+       "k": "A",
+       "runs": [
+        {
+         "t": "(A) electrolysis",
+         "b": 1
+        }
+       ]
+      },
+      {
+       "k": "B",
+       "runs": [
+        {
+         "t": "(B) electroplating",
+         "b": 1
+        }
+       ]
+      },
+      {
+       "k": "C",
+       "runs": [
+        {
+         "t": "(C) charging by induction",
+         "b": 1
+        }
+       ]
+      },
+      {
+       "k": "D",
+       "runs": [
+        {
+         "t": "(D) magnetic effect of current",
+         "b": 1
+        }
+       ]
+      }
+     ],
+     "src": [
+      "b0278"
+     ]
+    },
+    {
+     "t": "mcq",
+     "n": "59.",
+     "stem": [
+      {
+       "t": "The SI unit of electric power is",
+       "b": 1
+      }
+     ],
+     "options": [
+      {
+       "k": "A",
+       "runs": [
+        {
+         "t": "(A) joule",
+         "b": 1
+        }
+       ]
+      },
+      {
+       "k": "B",
+       "runs": [
+        {
+         "t": "(B) watt",
+         "b": 1
+        }
+       ]
+      },
+      {
+       "k": "C",
+       "runs": [
+        {
+         "t": "(C) volt",
+         "b": 1
+        }
+       ]
+      },
+      {
+       "k": "D",
+       "runs": [
+        {
+         "t": "(D) ampere",
+         "b": 1
+        }
+       ]
+      }
+     ],
+     "src": [
+      "b0279"
+     ]
+    },
+    {
+     "t": "mcq",
+     "n": "60.",
+     "stem": [
+      {
+       "t": "One unit of electricity (1 kWh) is equal to",
+       "b": 1
+      }
+     ],
+     "options": [
+      {
+       "k": "A",
+       "runs": [
+        {
+         "t": "(A) 3.6 × 10⁶ J",
+         "b": 1
+        }
+       ]
+      },
+      {
+       "k": "B",
+       "runs": [
+        {
+         "t": "(B) 1 × 10⁶ J",
+         "b": 1
+        }
+       ]
+      },
+      {
+       "k": "C",
+       "runs": [
+        {
+         "t": "(C) 3.6 × 10⁵ J",
+         "b": 1
+        }
+       ]
+      },
+      {
+       "k": "D",
+       "runs": [
+        {
+         "t": "(D) 1 × 10⁵ J",
+         "b": 1
+        }
+       ]
+      }
+     ],
+     "src": [
+      "b0280"
+     ]
+    },
+    {
+     "t": "mcq",
+     "n": "61.",
+     "stem": [
+      {
+       "t": "Which of the following is an example of the magnetic effect of electric current?",
+       "b": 1
+      }
+     ],
+     "options": [
+      {
+       "k": "A",
+       "runs": [
+        {
+         "t": "(A) Electric heater",
+         "b": 1
+        }
+       ]
+      },
+      {
+       "k": "B",
+       "runs": [
+        {
+         "t": "(B) Electric bell",
+         "b": 1
+        }
+       ]
+      },
+      {
+       "k": "C",
+       "runs": [
+        {
+         "t": "(C) Filament bulb",
+         "b": 1
+        }
+       ]
+      },
+      {
+       "k": "D",
+       "runs": [
+        {
+         "t": "(D) Electroplating",
+         "b": 1
+        }
+       ]
+      }
+     ],
+     "src": [
+      "b0281"
+     ]
+    },
+    {
+     "t": "p",
+     "runs": [
+      {
+       "t": "62. ",
+       "b": 1
+      },
+      {
+       "t": "Match the terms in Column I with their correct descriptions in Column II.",
+       "b": 1
+      }
+     ],
+     "src": [
+      "b0282"
+     ]
+    },
+    {
+     "t": "table",
+     "head": [
+      "Column I",
+      "Column II"
+     ],
+     "rows": [
+      [
+       "(a) Like charges",
+       "(i) Device used to detect charge"
+      ],
+      [
+       "(b) Charging by induction",
+       "(ii) Repel each other"
+      ],
+      [
+       "(c) Electroscope",
+       "(iii) Sudden discharge of charge in clouds"
+      ],
+      [
+       "(d) Lightning",
+       "(iv) Bringing a charged body near without touching"
+      ],
+      [
+       "(e) Lightning conductor",
+       "(v) Safely carries charge to the ground"
+      ]
+     ],
+     "widths": [
+      172,
+      343
+     ],
+     "src": [
+      "b0283"
+     ]
+    },
+    {
+     "t": "p",
+     "runs": [
+      {
+       "t": "63. ",
+       "b": 1
+      },
+      {
+       "t": "Match the devices/appliances in Column I with the effect of electric current they mainly work on in Column II.",
+       "b": 1
+      }
+     ],
+     "src": [
+      "b0284"
+     ]
+    },
+    {
+     "t": "table",
+     "head": [
+      "Column I",
+      "Column II"
+     ],
+     "rows": [
+      [
+       "(a) Electric iron / heater",
+       "(i) Chemical effect"
+      ],
+      [
+       "(b) Electric bell",
+       "(ii) Heating effect"
+      ],
+      [
+       "(c) Electromagnet",
+       "(iii) Magnetic effect"
+      ],
+      [
+       "(d) Electroplating",
+       "(iv) Converts mechanical energy to electrical energy"
+      ],
+      [
+       "(e) Electric generator",
+       "(v) Produces sound by repeated make and break"
+      ]
+     ],
+     "widths": [
+      172,
+      343
+     ],
+     "src": [
+      "b0285"
+     ]
+    }
+   ],
+   "section": "concept",
+   "cont": true
+  },
+  {
+   "kind": "concept",
+   "bg": "tint",
+   "pill": "CONCEPT APPLICATION",
+   "pageNo": 18,
+   "blocks": [
+    {
+     "t": "h",
+     "lvl": 3,
+     "text": "Level 2 - Conceptual Application",
+     "src": [
+      "b0286"
+     ]
+    },
+    {
+     "t": "note",
+     "runs": [
+      {
+       "t": "Directions for questions 64 to 68: For each of the questions, four choices have been provided. Select the correct alternative.",
+       "b": 1
+      }
+     ],
+     "src": [
+      "b0287"
+     ]
+    },
+    {
+     "t": "mcq",
+     "n": "64.",
+     "stem": [
+      {
+       "t": "Why is a fuse wire made of a material that has low melting point?",
+       "b": 1
+      }
+     ],
+     "options": [
+      {
+       "k": "A",
+       "runs": [
+        {
+         "t": "(A) So that it melts easily when current is low",
+         "b": 1
+        }
+       ]
+      },
+      {
+       "k": "B",
+       "runs": [
+        {
+         "t": "(B) So that it melts quickly when current exceeds the safe limit",
+         "b": 1
+        }
+       ]
+      },
+      {
+       "k": "C",
+       "runs": [
+        {
+         "t": "(C) So that it does not get heated",
+         "b": 1
+        }
+       ]
+      },
+      {
+       "k": "D",
+       "runs": [
+        {
+         "t": "(D) So that it increases the current",
+         "b": 1
+        }
+       ]
+      }
+     ],
+     "src": [
+      "b0288"
+     ]
+    },
+    {
+     "t": "mcq",
+     "n": "65.",
+     "stem": [
+      {
+       "t": "An electromagnet is made by winding wire on an iron rod. To increase its strength, the student should",
+       "b": 1
+      }
+     ],
+     "options": [
+      {
+       "k": "A",
+       "runs": [
+        {
+         "t": "(A) decrease the number of turns",
+         "b": 1
+        }
+       ]
+      },
+      {
+       "k": "B",
+       "runs": [
+        {
+         "t": "(B) decrease the current",
+         "b": 1
+        }
+       ]
+      },
+      {
+       "k": "C",
+       "runs": [
+        {
+         "t": "(C) increase the number of turns and current",
+         "b": 1
+        }
+       ]
+      },
+      {
+       "k": "D",
+       "runs": [
+        {
+         "t": "(D) use a wooden rod instead of iron",
+         "b": 1
+        }
+       ]
+      }
+     ],
+     "src": [
+      "b0289"
+     ]
+    },
+    {
+     "t": "mcq",
+     "n": "66.",
+     "stem": [
+      {
+       "t": "A lightning conductor has a sharp pointed top. This shape is used because",
+       "b": 1
+      }
+     ],
+     "options": [
+      {
+       "k": "A",
+       "runs": [
+        {
+         "t": "(A) it looks attractive",
+         "b": 1
+        }
+       ]
+      },
+      {
+       "k": "B",
+       "runs": [
+        {
+         "t": "(B) it easily allows charge to leak into the air and prevents lightning strike",
+         "b": 1
+        }
+       ]
+      },
+      {
+       "k": "C",
+       "runs": [
+        {
+         "t": "(C) it stores the charge",
+         "b": 1
+        }
+       ]
+      },
+      {
+       "k": "D",
+       "runs": [
+        {
+         "t": "(D) it melts during lightning",
+         "b": 1
+        }
+       ]
+      }
+     ],
+     "src": [
+      "b0290"
+     ]
+    },
+    {
+     "t": "mcq",
+     "n": "67.",
+     "stem": [
+      {
+       "t": "In an electric bell, the hammer keeps striking the gong repeatedly because",
+       "b": 1
+      }
+     ],
+     "options": [
+      {
+       "k": "A",
+       "runs": [
+        {
+         "t": "(A) the electromagnet remains magnetised all the time",
+         "b": 1
+        }
+       ]
+      },
+      {
+       "k": "B",
+       "runs": [
+        {
+         "t": "(B) the circuit is continuously made and broken",
+         "b": 1
+        }
+       ]
+      },
+      {
+       "k": "C",
+       "runs": [
+        {
+         "t": "(C) the battery keeps supplying more current",
+         "b": 1
+        }
+       ]
+      },
+      {
+       "k": "D",
+       "runs": [
+        {
+         "t": "(D) the gong is made of magnetic material",
+         "b": 1
+        }
+       ]
+      }
+     ],
+     "src": [
+      "b0291"
+     ]
+    },
+    {
+     "t": "mcq",
+     "n": "68.",
+     "stem": [
+      {
+       "t": "Which of the following is the best way to reduce electricity wastage at home?",
+       "b": 1
+      }
+     ],
+     "options": [
+      {
+       "k": "A",
+       "runs": [
+        {
+         "t": "(A) Using filament bulbs instead of CFLs",
+         "b": 1
+        }
+       ]
+      },
+      {
+       "k": "B",
+       "runs": [
+        {
+         "t": "(B) Using more appliances in series",
+         "b": 1
+        }
+       ]
+      },
+      {
+       "k": "C",
+       "runs": [
+        {
+         "t": "(C) Using CFLs/LEDs and switching off appliances when not in use",
+         "b": 1
+        }
+       ]
+      },
+      {
+       "k": "D",
+       "runs": [
+        {
+         "t": "(D) Connecting all appliances in series",
+         "b": 1
+        }
+       ]
+      }
+     ],
+     "src": [
+      "b0292"
+     ]
+    },
+    {
+     "t": "h",
+     "lvl": 3,
+     "text": "Directions: Answer the following questions briefly in 2–3 sentences.",
+     "src": [
+      "b0293"
+     ]
+    },
+    {
+     "t": "qcard",
+     "items": [
+      {
+       "label": "69.",
+       "lines": [
+        [
+         {
+          "t": "What is the difference between charging by conduction and charging by induction?",
+          "b": 1
+         }
+        ]
+       ]
+      },
+      {
+       "label": "70.",
+       "lines": [
+        [
+         {
+          "t": "Why are metals good conductors of electricity while plastic and wood are good insulators?",
+          "b": 1
+         }
+        ]
+       ]
+      },
+      {
+       "label": "71.",
+       "lines": [
+        [
+         {
+          "t": "Explain why a lightning conductor is always installed with a sharp pointed top on buildings.",
+          "b": 1
+         }
+        ]
+       ]
+      },
+      {
+       "label": "72.",
+       "lines": [
+        [
+         {
+          "t": "Explain the working of a fuse. Why is it considered a safety device?",
+          "b": 1
+         }
+        ]
+       ]
+      },
+      {
+       "label": "73.",
+       "lines": [
+        [
+         {
+          "t": "How does an MCB work? Mention one advantage of MCB over a traditional fuse.",
+          "b": 1
+         }
+        ]
+       ]
+      }
+     ],
+     "src": [
+      "b0294",
+      "b0295",
+      "b0296",
+      "b0297",
+      "b0298",
+      "b0299",
+      "b0300"
+     ]
+    }
+   ],
+   "section": "concept",
+   "cont": true
+  },
+  {
+   "kind": "concept",
+   "bg": "tint",
+   "pill": "CONCEPT APPLICATION",
+   "pageNo": 19,
+   "blocks": [
+    {
+     "t": "qcard",
+     "items": [
+      {
+       "label": "74.",
+       "lines": [
+        [
+         {
+          "t": "Describe the heating effect of electric current with one real-life example.",
+          "b": 1
+         }
+        ]
+       ]
+      },
+      {
+       "label": "75.",
+       "lines": [
+        [
+         {
+          "t": "Explain the magnetic effect of electric current with a simple experiment.",
+          "b": 1
+         }
+        ]
+       ]
+      }
+     ],
+     "src": [
+      "b0294",
+      "b0295",
+      "b0296",
+      "b0297",
+      "b0298",
+      "b0299",
+      "b0300"
+     ],
+     "cont": true
+    }
+   ],
+   "section": "concept",
+   "cont": true
+  },
+  {
+   "kind": "hints",
+   "bg": "tint",
+   "pill": "HINTS AND SOLUTIONS",
+   "pageNo": 20,
+   "blocks": [
+    {
+     "t": "title",
+     "eyebrow": "ANSWER KEY",
+     "text": "HINTS AND SOLUTIONS",
+     "gen_eyebrow": true,
+     "src": [
+      "b0301"
+     ]
+    },
+    {
+     "t": "h",
+     "lvl": 2,
+     "text": "TEST YOUR CONCEPTS",
+     "src": [
+      "b0302"
+     ]
+    },
+    {
+     "t": "h",
+     "lvl": 3,
+     "text": "Very Short Answer Type Questions",
+     "src": [
+      "b0303"
+     ]
+    },
+    {
+     "t": "h",
+     "lvl": 3,
+     "text": "(Fill in the Blanks)",
+     "src": [
+      "b0304"
+     ]
+    },
+    {
+     "t": "ans",
+     "items": [
+      {
+       "label": "1.",
+       "blocks": [
+        {
+         "t": "p",
+         "runs": [
+          {
+           "t": "Like charges repel",
+           "b": 1
+          },
+          {
+           "t": " each other while "
+          },
+          {
+           "t": "unlike charges attract",
+           "b": 1
+          },
+          {
+           "t": " each other. (This is the fundamental rule of electric charges.)"
+          }
+         ],
+         "src": [
+          "b0305"
+         ]
+        }
+       ]
+      },
+      {
+       "label": "2.",
+       "blocks": [
+        {
+         "t": "p",
+         "runs": [
+          {
+           "t": "The process of charging a body by rubbing it with another body is called charging by "
+          },
+          {
+           "t": "friction",
+           "b": 1
+          },
+          {
+           "t": ". (Example: Rubbing a plastic pen with silk cloth.)"
+          }
+         ],
+         "src": [
+          "b0306"
+         ]
+        }
+       ]
+      },
+      {
+       "label": "3.",
+       "blocks": [
+        {
+         "t": "p",
+         "runs": [
+          {
+           "t": "An "
+          },
+          {
+           "t": "electroscope",
+           "b": 1
+          },
+          {
+           "t": " is a device used to detect the presence and nature of charge on a body."
+          }
+         ],
+         "src": [
+          "b0307"
+         ]
+        }
+       ]
+      },
+      {
+       "label": "4.",
+       "blocks": [
+        {
+         "t": "p",
+         "runs": [
+          {
+           "t": "Materials that do not allow electric charges to pass through them are called "
+          },
+          {
+           "t": "insulators",
+           "b": 1
+          },
+          {
+           "t": " while materials that allow charges to flow easily are called "
+          },
+          {
+           "t": "conductors",
+           "b": 1
+          },
+          {
+           "t": ". (Examples: Insulators – wood, plastic; Conductors – copper, aluminium)"
+          }
+         ],
+         "src": [
+          "b0308"
+         ]
+        }
+       ]
+      },
+      {
+       "label": "5.",
+       "blocks": [
+        {
+         "t": "p",
+         "runs": [
+          {
+           "t": "Lightning is a natural phenomenon caused by the sudden "
+          },
+          {
+           "t": "discharge",
+           "b": 1
+          },
+          {
+           "t": " of huge electric charge accumulated in the clouds."
+          }
+         ],
+         "src": [
+          "b0309"
+         ]
+        }
+       ]
+      },
+      {
+       "label": "6.",
+       "blocks": [
+        {
+         "t": "p",
+         "runs": [
+          {
+           "t": "A lightning "
+          },
+          {
+           "t": "conductor",
+           "b": 1
+          },
+          {
+           "t": " is used to safely carry the charge from lightning into the ground and protect buildings."
+          }
+         ],
+         "src": [
+          "b0310"
+         ]
+        }
+       ]
+      },
+      {
+       "label": "7.",
+       "blocks": [
+        {
+         "t": "p",
+         "runs": [
+          {
+           "t": "The combination of two or more cells joined together is called a "
+          },
+          {
+           "t": "battery",
+           "b": 1
+          },
+          {
+           "t": "."
+          }
+         ],
+         "src": [
+          "b0311"
+         ]
+        }
+       ]
+      }
+     ],
+     "src": [
+      "b0305",
+      "b0306",
+      "b0307",
+      "b0308",
+      "b0309",
+      "b0310",
+      "b0311"
+     ]
+    },
+    {
+     "t": "h",
+     "lvl": 3,
+     "text": "SECTION-A: MULTIPLE CHOICE QUESTIONS (MCQs)",
+     "src": [
+      "b0312"
+     ]
+    },
+    {
+     "t": "ans",
+     "items": [
+      {
+       "label": "8.",
+       "blocks": [
+        {
+         "t": "p",
+         "runs": [
+          {
+           "t": "Materials like wood, plastic and rubber are"
+          }
+         ],
+         "src": [
+          "b0313"
+         ]
+        },
+        {
+         "t": "p",
+         "runs": [
+          {
+           "t": "Correct Answer: (B) good insulators of electricity",
+           "b": 1
+          }
+         ],
+         "src": [
+          "b0314"
+         ]
+        },
+        {
+         "t": "p",
+         "runs": [
+          {
+           "t": "Explanation:",
+           "b": 1
+          },
+          {
+           "t": " These materials do not allow electric charges to flow through them easily, so they are called insulators."
+          }
+         ],
+         "src": [
+          "b0315"
+         ]
+        }
+       ]
+      },
+      {
+       "label": "9.",
+       "blocks": [
+        {
+         "t": "p",
+         "runs": [
+          {
+           "t": "Lightning is a natural phenomenon caused due to"
+          }
+         ],
+         "src": [
+          "b0316"
+         ]
+        },
+        {
+         "t": "p",
+         "runs": [
+          {
+           "t": "Correct Answer: (B) sudden discharge of huge electric charge accumulated in clouds",
+           "b": 1
+          }
+         ],
+         "src": [
+          "b0317"
+         ]
+        },
+        {
+         "t": "p",
+         "runs": [
+          {
+           "t": "Explanation:",
+           "b": 1
+          },
+          {
+           "t": " When opposite charges in clouds become very strong, the air insulation breaks and a huge spark (lightning) occurs."
+          }
+         ],
+         "src": [
+          "b0318"
+         ]
+        }
+       ]
+      },
+      {
+       "label": "10.",
+       "blocks": [
+        {
+         "t": "p",
+         "runs": [
+          {
+           "t": "A lightning conductor protects buildings by"
+          }
+         ],
+         "src": [
+          "b0319"
+         ]
+        },
+        {
+         "t": "p",
+         "runs": [
+          {
+           "t": "Correct Answer: (B) safely carrying the lightning charge into the ground",
+           "b": 1
+          }
+         ],
+         "src": [
+          "b0320"
+         ]
+        },
+        {
+         "t": "p",
+         "runs": [
+          {
+           "t": "Explanation:",
+           "b": 1
+          },
+          {
+           "t": " It provides an easy path for the charge to flow into the earth, preventing damage to the building."
+          }
+         ],
+         "src": [
+          "b0321"
+         ]
+        }
+       ]
+      }
+     ],
+     "src": [
+      "b0313",
+      "b0314",
+      "b0315",
+      "b0316",
+      "b0317",
+      "b0318",
+      "b0319",
+      "b0320",
+      "b0321",
+      "b0322",
+      "b0323",
+      "b0324",
+      "b0325",
+      "b0326",
+      "b0327",
+      "b0328",
+      "b0329",
+      "b0330"
+     ]
+    }
+   ],
+   "section": "hints",
+   "cont": false
+  },
+  {
+   "kind": "hints",
+   "bg": "tint",
+   "pill": "HINTS AND SOLUTIONS",
+   "pageNo": 21,
+   "blocks": [
+    {
+     "t": "ans",
+     "items": [
+      {
+       "label": "11.",
+       "blocks": [
+        {
+         "t": "p",
+         "runs": [
+          {
+           "t": "The safety device that automatically turns off when current exceeds the safe limit is"
+          }
+         ],
+         "src": [
+          "b0322"
+         ]
+        },
+        {
+         "t": "p",
+         "runs": [
+          {
+           "t": "Correct Answer: (B) miniature circuit breaker (MCB)",
+           "b": 1
+          }
+         ],
+         "src": [
+          "b0323"
+         ]
+        },
+        {
+         "t": "p",
+         "runs": [
+          {
+           "t": "Explanation:",
+           "b": 1
+          },
+          {
+           "t": " MCB is a modern, reusable switch that trips automatically on overload or short circuit."
+          }
+         ],
+         "src": [
+          "b0324"
+         ]
+        }
+       ]
+      },
+      {
+       "label": "12.",
+       "blocks": [
+        {
+         "t": "p",
+         "runs": [
+          {
+           "t": "The working of an electric iron and electric heater is based on"
+          }
+         ],
+         "src": [
+          "b0325"
+         ]
+        },
+        {
+         "t": "p",
+         "runs": [
+          {
+           "t": "Correct Answer: (C) heating effect of current",
+           "b": 1
+          }
+         ],
+         "src": [
+          "b0326"
+         ]
+        },
+        {
+         "t": "p",
+         "runs": [
+          {
+           "t": "Explanation:",
+           "b": 1
+          },
+          {
+           "t": " When current passes through the heating element (nichrome wire), electrical energy is converted into heat energy."
+          }
+         ],
+         "src": [
+          "b0327"
+         ]
+        }
+       ]
+      },
+      {
+       "label": "13.",
+       "blocks": [
+        {
+         "t": "p",
+         "runs": [
+          {
+           "t": "Electric generators in power plants convert"
+          }
+         ],
+         "src": [
+          "b0328"
+         ]
+        },
+        {
+         "t": "p",
+         "runs": [
+          {
+           "t": "Correct Answer: (B) mechanical energy into electrical energy",
+           "b": 1
+          }
+         ],
+         "src": [
+          "b0329"
+         ]
+        },
+        {
+         "t": "p",
+         "runs": [
+          {
+           "t": "Explanation:",
+           "b": 1
+          },
+          {
+           "t": " The turbine rotates the dynamo, which converts mechanical energy (from water or steam) into electrical energy."
+          }
+         ],
+         "src": [
+          "b0330"
+         ]
+        }
+       ]
+      }
+     ],
+     "src": [
+      "b0313",
+      "b0314",
+      "b0315",
+      "b0316",
+      "b0317",
+      "b0318",
+      "b0319",
+      "b0320",
+      "b0321",
+      "b0322",
+      "b0323",
+      "b0324",
+      "b0325",
+      "b0326",
+      "b0327",
+      "b0328",
+      "b0329",
+      "b0330"
+     ],
+     "cont": true
+    },
+    {
+     "t": "h",
+     "lvl": 3,
+     "text": "SECTION-C: MATCH THE FOLLOWING",
+     "src": [
+      "b0331"
+     ]
+    },
+    {
+     "t": "p",
+     "runs": [
+      {
+       "t": "(a) Copper → "
+      },
+      {
+       "t": "(ii)",
+       "b": 1
+      },
+      {
+       "t": " Good conductor of electricity"
+      }
+     ],
+     "src": [
+      "b0332"
+     ]
+    },
+    {
+     "t": "p",
+     "runs": [
+      {
+       "t": "(b) Plastic → "
+      },
+      {
+       "t": "(i)",
+       "b": 1
+      },
+      {
+       "t": " Insulator"
+      }
+     ],
+     "src": [
+      "b0333"
+     ]
+    },
+    {
+     "t": "p",
+     "runs": [
+      {
+       "t": "(c) Lightning conductor → "
+      },
+      {
+       "t": "(iii)",
+       "b": 1
+      },
+      {
+       "t": " Protects buildings from lightning damage"
+      }
+     ],
+     "src": [
+      "b0334"
+     ]
+    },
+    {
+     "t": "p",
+     "runs": [
+      {
+       "t": "(d) Fuse / MCB → "
+      },
+      {
+       "t": "(iv)",
+       "b": 1
+      },
+      {
+       "t": " Safety device to prevent excess current"
+      }
+     ],
+     "src": [
+      "b0335"
+     ]
+    },
+    {
+     "t": "p",
+     "runs": [
+      {
+       "t": "(e) Dry cell → "
+      },
+      {
+       "t": "(v)",
+       "b": 1
+      },
+      {
+       "t": " Source of electric current"
+      }
+     ],
+     "src": [
+      "b0336"
+     ]
+    },
+    {
+     "t": "h",
+     "lvl": 3,
+     "text": "Very Short Answer Type Questions",
+     "src": [
+      "b0337"
+     ]
+    },
+    {
+     "t": "note",
+     "runs": [
+      {
+       "t": "(Questions 24 to 27)",
+       "b": 1
+      }
+     ],
+     "src": [
+      "b0338"
+     ],
+     "muted": true
+    },
+    {
+     "t": "ans",
+     "items": [
+      {
+       "label": "14.",
+       "blocks": [
+        {
+         "t": "p",
+         "runs": [
+          {
+           "t": "What is the SI unit of electric charge?"
+          }
+         ],
+         "src": [
+          "b0339"
+         ]
+        },
+        {
+         "t": "p",
+         "runs": [
+          {
+           "t": "Answer:",
+           "b": 1
+          },
+          {
+           "t": " Coulomb (C)"
+          }
+         ],
+         "src": [
+          "b0340"
+         ]
+        }
+       ]
+      },
+      {
+       "label": "15.",
+       "blocks": [
+        {
+         "t": "p",
+         "runs": [
+          {
+           "t": "State the rule: “Like charges ________ and unlike charges ________.”"
+          }
+         ],
+         "src": [
+          "b0341"
+         ]
+        },
+        {
+         "t": "p",
+         "runs": [
+          {
+           "t": "Answer:",
+           "b": 1
+          },
+          {
+           "t": " Like charges "
+          },
+          {
+           "t": "repel",
+           "b": 1
+          },
+          {
+           "t": " and unlike charges "
+          },
+          {
+           "t": "attract",
+           "b": 1
+          },
+          {
+           "t": " each other."
+          }
+         ],
+         "src": [
+          "b0342"
+         ]
+        }
+       ]
+      },
+      {
+       "label": "16.",
+       "blocks": [
+        {
+         "t": "p",
+         "runs": [
+          {
+           "t": "Name the process of charging a body by rubbing it with another body."
+          }
+         ],
+         "src": [
+          "b0343"
+         ]
+        },
+        {
+         "t": "p",
+         "runs": [
+          {
+           "t": "Answer:",
+           "b": 1
+          },
+          {
+           "t": " Charging by friction."
+          }
+         ],
+         "src": [
+          "b0344"
+         ]
+        }
+       ]
+      },
+      {
+       "label": "17.",
+       "blocks": [
+        {
+         "t": "p",
+         "runs": [
+          {
+           "t": "What is an electroscope used for?"
+          }
+         ],
+         "src": [
+          "b0345"
+         ]
+        },
+        {
+         "t": "p",
+         "runs": [
+          {
+           "t": "Answer:",
+           "b": 1
+          },
+          {
+           "t": " An electroscope is used to detect the presence and nature (positive or negative) of charge on a body."
+          }
+         ],
+         "src": [
+          "b0346"
+         ]
+        }
+       ]
+      },
+      {
+       "label": "18.",
+       "blocks": [
+        {
+         "t": "p",
+         "runs": [
+          {
+           "t": "Give two examples of good conductors of electricity."
+          }
+         ],
+         "src": [
+          "b0347"
+         ]
+        },
+        {
+         "t": "p",
+         "runs": [
+          {
+           "t": "Answer:",
+           "b": 1
+          },
+          {
+           "t": " Copper and aluminium (or silver, iron, gold)."
+          }
+         ],
+         "src": [
+          "b0348"
+         ]
+        }
+       ]
+      },
+      {
+       "label": "19.",
+       "blocks": [
+        {
+         "t": "p",
+         "runs": [
+          {
+           "t": "Give two examples of good insulators of electricity."
+          }
+         ],
+         "src": [
+          "b0349"
+         ]
+        },
+        {
+         "t": "p",
+         "runs": [
+          {
+           "t": "Answer:",
+           "b": 1
+          },
+          {
+           "t": " Wood and plastic (or rubber, glass, air)."
+          }
+         ],
+         "src": [
+          "b0350"
+         ]
+        }
+       ]
+      }
+     ],
+     "src": [
+      "b0339",
+      "b0340",
+      "b0341",
+      "b0342",
+      "b0343",
+      "b0344",
+      "b0345",
+      "b0346",
+      "b0347",
+      "b0348",
+      "b0349",
+      "b0350",
+      "b0351",
+      "b0352",
+      "b0353",
+      "b0354",
+      "b0355",
+      "b0356",
+      "b0357",
+      "b0358",
+      "b0359",
+      "b0360",
+      "b0361",
+      "b0362",
+      "b0363",
+      "b0364"
+     ]
+    }
+   ],
+   "section": "hints",
+   "cont": true
+  },
+  {
+   "kind": "hints",
+   "bg": "tint",
+   "pill": "HINTS AND SOLUTIONS",
+   "pageNo": 22,
+   "blocks": [
+    {
+     "t": "ans",
+     "items": [
+      {
+       "label": "20.",
+       "blocks": [
+        {
+         "t": "p",
+         "runs": [
+          {
+           "t": "What is lightning?"
+          }
+         ],
+         "src": [
+          "b0351"
+         ]
+        },
+        {
+         "t": "p",
+         "runs": [
+          {
+           "t": "Answer:",
+           "b": 1
+          },
+          {
+           "t": " Lightning is a natural phenomenon caused by the sudden discharge of a huge amount of electric charge accumulated in the clouds."
+          }
+         ],
+         "src": [
+          "b0352"
+         ]
+        }
+       ]
+      },
+      {
+       "label": "21.",
+       "blocks": [
+        {
+         "t": "p",
+         "runs": [
+          {
+           "t": "What is the function of a lightning conductor?"
+          }
+         ],
+         "src": [
+          "b0353"
+         ]
+        },
+        {
+         "t": "p",
+         "runs": [
+          {
+           "t": "Answer:",
+           "b": 1
+          },
+          {
+           "t": " It safely carries the electric charge from lightning into the ground and protects buildings from damage."
+          }
+         ],
+         "src": [
+          "b0354"
+         ]
+        }
+       ]
+      },
+      {
+       "label": "22.",
+       "blocks": [
+        {
+         "t": "p",
+         "runs": [
+          {
+           "t": "What is the combination of two or more cells called?"
+          }
+         ],
+         "src": [
+          "b0355"
+         ]
+        },
+        {
+         "t": "p",
+         "runs": [
+          {
+           "t": "Answer:",
+           "b": 1
+          },
+          {
+           "t": " Battery."
+          }
+         ],
+         "src": [
+          "b0356"
+         ]
+        }
+       ]
+      },
+      {
+       "label": "23.",
+       "blocks": [
+        {
+         "t": "p",
+         "runs": [
+          {
+           "t": "Name the safety device that melts and breaks the circuit when excess current flows."
+          }
+         ],
+         "src": [
+          "b0357"
+         ]
+        },
+        {
+         "t": "p",
+         "runs": [
+          {
+           "t": "Answer:",
+           "b": 1
+          },
+          {
+           "t": " Electric fuse (or fuse).."
+          }
+         ],
+         "src": [
+          "b0358"
+         ]
+        }
+       ]
+      },
+      {
+       "label": "24.",
+       "blocks": [
+        {
+         "t": "p",
+         "runs": [
+          {
+           "t": "Name the modern safety device that automatically switches off when current exceeds the safe limit."
+          }
+         ],
+         "src": [
+          "b0359"
+         ]
+        },
+        {
+         "t": "p",
+         "runs": [
+          {
+           "t": "Answer:",
+           "b": 1
+          },
+          {
+           "t": " Miniature Circuit Breaker (MCB)."
+          }
+         ],
+         "src": [
+          "b0360"
+         ]
+        }
+       ]
+      },
+      {
+       "label": "25.",
+       "blocks": [
+        {
+         "t": "p",
+         "runs": [
+          {
+           "t": "On which effect of electric current does an electric iron work?"
+          }
+         ],
+         "src": [
+          "b0361"
+         ]
+        },
+        {
+         "t": "p",
+         "runs": [
+          {
+           "t": "Answer:",
+           "b": 1
+          },
+          {
+           "t": " Heating effect of electric current."
+          }
+         ],
+         "src": [
+          "b0362"
+         ]
+        }
+       ]
+      },
+      {
+       "label": "26.",
+       "blocks": [
+        {
+         "t": "p",
+         "runs": [
+          {
+           "t": "On which effect of electric current does an electric bell work?"
+          }
+         ],
+         "src": [
+          "b0363"
+         ]
+        },
+        {
+         "t": "p",
+         "runs": [
+          {
+           "t": "Answer:",
+           "b": 1
+          },
+          {
+           "t": " Magnetic effect of electric current."
+          }
+         ],
+         "src": [
+          "b0364"
+         ]
+        }
+       ]
+      }
+     ],
+     "src": [
+      "b0339",
+      "b0340",
+      "b0341",
+      "b0342",
+      "b0343",
+      "b0344",
+      "b0345",
+      "b0346",
+      "b0347",
+      "b0348",
+      "b0349",
+      "b0350",
+      "b0351",
+      "b0352",
+      "b0353",
+      "b0354",
+      "b0355",
+      "b0356",
+      "b0357",
+      "b0358",
+      "b0359",
+      "b0360",
+      "b0361",
+      "b0362",
+      "b0363",
+      "b0364"
+     ],
+     "cont": true
+    },
+    {
+     "t": "h",
+     "lvl": 3,
+     "text": "Short Answer Type Questions",
+     "src": [
+      "b0365"
+     ]
+    },
+    {
+     "t": "note",
+     "runs": [
+      {
+       "t": "(Questions 28 to 31)",
+       "b": 1
+      }
+     ],
+     "src": [
+      "b0366"
+     ],
+     "muted": true
+    },
+    {
+     "t": "ans",
+     "items": [
+      {
+       "label": "27.",
+       "blocks": [
+        {
+         "t": "p",
+         "runs": [
+          {
+           "t": "What are the three methods of charging a body? Give one example for each."
+          }
+         ],
+         "src": [
+          "b0367"
+         ]
+        },
+        {
+         "t": "p",
+         "runs": [
+          {
+           "t": "Answer:",
+           "b": 1
+          },
+          {
+           "t": " The three methods of charging a body are:"
+          }
+         ],
+         "src": [
+          "b0368"
+         ]
+        },
+        {
+         "t": "p",
+         "runs": [
+          {
+           "t": "(i) "
+          },
+          {
+           "t": "Charging by friction",
+           "b": 1
+          },
+          {
+           "t": " — Example: Rubbing a plastic pen with silk cloth."
+          }
+         ],
+         "src": [
+          "b0369"
+         ]
+        },
+        {
+         "t": "p",
+         "runs": [
+          {
+           "t": "(ii) "
+          },
+          {
+           "t": "Charging by conduction",
+           "b": 1
+          },
+          {
+           "t": " — Example: Touching an uncharged body with a charged body."
+          }
+         ],
+         "src": [
+          "b0370"
+         ]
+        },
+        {
+         "t": "p",
+         "runs": [
+          {
+           "t": "(iii) "
+          },
+          {
+           "t": "Charging by induction",
+           "b": 1
+          },
+          {
+           "t": " — Example: Bringing a charged rod near an uncharged body without touching it."
+          }
+         ],
+         "src": [
+          "b0371"
+         ]
+        }
+       ]
+      },
+      {
+       "label": "29.",
+       "blocks": [
+        {
+         "t": "p",
+         "runs": [
+          {
+           "t": "Distinguish between conductors and insulators. Give two examples of each."
+          }
+         ],
+         "src": [
+          "b0372"
+         ]
+        },
+        {
+         "t": "p",
+         "runs": [
+          {
+           "t": "Answer:",
+           "b": 1
+          },
+          {
+           "t": " Conductors are materials that allow electric charges to flow through them easily (e.g., copper, aluminium). Insulators are materials that do not allow electric charges to pass through them (e.g., wood, plastic). Conductors are used for making wires, while insulators are used for covering wires to prevent shocks."
+          }
+         ],
+         "src": [
+          "b0373"
+         ]
+        }
+       ]
+      },
+      {
+       "label": "30.",
+       "blocks": [
+        {
+         "t": "p",
+         "runs": [
+          {
+           "t": "What is lightning? How does a lightning conductor protect a building from damage?"
+          }
+         ],
+         "src": [
+          "b0374"
+         ]
+        },
+        {
+         "t": "p",
+         "runs": [
+          {
+           "t": "Answer:",
+           "b": 1
+          },
+          {
+           "t": " Lightning is a huge electric spark caused by the sudden discharge of a large amount of electric charge accumulated in the clouds. A lightning conductor is a thick metal strip with a sharp pointed top fixed on buildings. It provides an easy path for the charge to flow safely into the ground, protecting the building from damage."
+          }
+         ],
+         "src": [
+          "b0375"
+         ]
+        }
+       ]
+      }
+     ],
+     "src": [
+      "b0367",
+      "b0368",
+      "b0369",
+      "b0370",
+      "b0371",
+      "b0372",
+      "b0373",
+      "b0374",
+      "b0375",
+      "b0376",
+      "b0377"
+     ]
+    }
+   ],
+   "section": "hints",
+   "cont": true
+  },
+  {
+   "kind": "hints",
+   "bg": "tint",
+   "pill": "HINTS AND SOLUTIONS",
+   "pageNo": 23,
+   "blocks": [
+    {
+     "t": "ans",
+     "items": [
+      {
+       "label": "31.",
+       "blocks": [
+        {
+         "t": "p",
+         "runs": [
+          {
+           "t": "Explain the working of an electric fuse. Why is it called a safety device?"
+          }
+         ],
+         "src": [
+          "b0376"
+         ]
+        },
+        {
+         "t": "p",
+         "runs": [
+          {
+           "t": "Answer:",
+           "b": 1
+          },
+          {
+           "t": " An electric fuse contains a thin wire of low melting point. When current exceeds the safe limit, the wire gets heated, melts, and breaks the circuit. This stops the flow of excess current and protects the appliance and wiring from damage. It is called a safety device because it prevents fire and damage due to overloading or short circuit."
+          }
+         ],
+         "src": [
+          "b0377"
+         ]
+        }
+       ]
+      }
+     ],
+     "src": [
+      "b0367",
+      "b0368",
+      "b0369",
+      "b0370",
+      "b0371",
+      "b0372",
+      "b0373",
+      "b0374",
+      "b0375",
+      "b0376",
+      "b0377"
+     ],
+     "cont": true
+    },
+    {
+     "t": "h",
+     "lvl": 3,
+     "text": "Long Answer Type Questions / Essay Type Questions",
+     "src": [
+      "b0378"
+     ]
+    },
+    {
+     "t": "ans",
+     "items": [
+      {
+       "label": "32.",
+       "blocks": [
+        {
+         "t": "p",
+         "runs": [
+          {
+           "t": "(Diagram: Show electromagnet, soft iron strip with hammer, gong, contact screw and spring.)"
+          }
+         ],
+         "src": [
+          "b0379"
+         ]
+        },
+        {
+         "t": "p",
+         "runs": [
+          {
+           "t": "When the switch is pressed, current flows through the coil and the electromagnet attracts the soft iron strip. The hammer strikes the gong and produces sound. At the same time, the strip loses contact with the screw, breaking the circuit. The electromagnet loses its magnetism and the strip returns to its original position due to the spring. This again completes the circuit. The process repeats rapidly, so the bell keeps ringing continuously as long as the switch is pressed."
+          }
+         ],
+         "src": [
+          "b0380"
+         ]
+        }
+       ]
+      },
+      {
+       "label": "33.",
+       "blocks": [
+        {
+         "t": "p",
+         "runs": [
+          {
+           "t": "In power plants, electricity is generated by converting mechanical energy into electrical energy using an electric generator. Fast-flowing water (from dams) or high-pressure steam rotates a turbine at high speed. The turbine is connected to a dynamo. As the dynamo rotates, it converts mechanical energy into electrical energy."
+          }
+         ],
+         "src": [
+          "b0381"
+         ]
+        },
+        {
+         "t": "p",
+         "runs": [
+          {
+           "t": "This electricity is stepped up to high voltage and transmitted through thick cables and towers to cities and villages. Near our homes, it is stepped down by transformers and supplied through live and neutral wires."
+          }
+         ],
+         "src": [
+          "b0382"
+         ]
+        }
+       ]
+      },
+      {
+       "label": "34.",
+       "blocks": [
+        {
+         "t": "p",
+         "runs": [
+          {
+           "t": "Overloading occurs when too many appliances are connected to a single socket and draw more current than the circuit can handle. Short circuiting occurs when the live and neutral wires touch each other due to damaged insulation, causing a sudden huge flow of current."
+          }
+         ],
+         "src": [
+          "b0383"
+         ]
+        },
+        {
+         "t": "p",
+         "runs": [
+          {
+           "t": "Both a fuse and MCB protect the circuit. When current exceeds the safe limit, the fuse wire melts and breaks the circuit, while the MCB automatically switches off, stopping the dangerous current and preventing fire or damage to appliances."
+          }
+         ],
+         "src": [
+          "b0384"
+         ]
+        }
+       ]
+      },
+      {
+       "label": "35.",
+       "blocks": [
+        {
+         "t": "p",
+         "runs": [
+          {
+           "t": "When electric current passes through a wire, electrical energy is converted into heat energy. This is called the heating effect of electric current."
+          }
+         ],
+         "src": [
+          "b0385"
+         ]
+        },
+        {
+         "t": "p",
+         "runs": [
+          {
+           "t": "Filament bulbs waste more electricity because most of the energy is converted into heat instead of light. CFLs and LED bulbs produce very little heat and give more light, so they save electricity."
+          }
+         ],
+         "src": [
+          "b0386"
+         ]
+        },
+        {
+         "t": "p",
+         "runs": [
+          {
+           "t": "Two ways to reduce wastage at home: (i) Switch off lights, fans and appliances when not in use, (ii) Replace filament bulbs with CFLs or LED bulbs."
+          }
+         ],
+         "src": [
+          "b0387"
+         ]
+        }
+       ]
+      }
+     ],
+     "src": [
+      "b0379",
+      "b0380",
+      "b0381",
+      "b0382",
+      "b0383",
+      "b0384",
+      "b0385",
+      "b0386",
+      "b0387"
+     ]
+    },
+    {
+     "t": "h",
+     "lvl": 3,
+     "text": "True or False",
+     "src": [
+      "b0388"
+     ]
+    },
+    {
+     "t": "ans",
+     "items": [
+      {
+       "label": "36.",
+       "blocks": [
+        {
+         "t": "p",
+         "runs": [
+          {
+           "t": "False",
+           "b": 1
+          },
+          {
+           "t": " Unlike charges attract each other."
+          }
+         ],
+         "src": [
+          "b0389"
+         ]
+        }
+       ]
+      },
+      {
+       "label": "37.",
+       "blocks": [
+        {
+         "t": "p",
+         "runs": [
+          {
+           "t": "False",
+           "b": 1
+          },
+          {
+           "t": " A body can be charged by friction, conduction or induction."
+          }
+         ],
+         "src": [
+          "b0390"
+         ]
+        }
+       ]
+      },
+      {
+       "label": "38.",
+       "blocks": [
+        {
+         "t": "p",
+         "runs": [
+          {
+           "t": "True",
+           "b": 1
+          },
+          {
+           "t": " An electroscope detects both the presence and nature (positive or negative) of charge."
+          }
+         ],
+         "src": [
+          "b0391"
+         ]
+        }
+       ]
+      },
+      {
+       "label": "39.",
+       "blocks": [
+        {
+         "t": "p",
+         "runs": [
+          {
+           "t": "False",
+           "b": 1
+          },
+          {
+           "t": " Wood and plastic are good insulators of electricity."
+          }
+         ],
+         "src": [
+          "b0392"
+         ]
+        }
+       ]
+      }
+     ],
+     "src": [
+      "b0389",
+      "b0390",
+      "b0391",
+      "b0392",
+      "b0393",
+      "b0394",
+      "b0395"
+     ]
+    }
+   ],
+   "section": "hints",
+   "cont": true
+  },
+  {
+   "kind": "hints",
+   "bg": "tint",
+   "pill": "HINTS AND SOLUTIONS",
+   "pageNo": 24,
+   "blocks": [
+    {
+     "t": "ans",
+     "items": [
+      {
+       "label": "40.",
+       "blocks": [
+        {
+         "t": "p",
+         "runs": [
+          {
+           "t": "True",
+           "b": 1
+          },
+          {
+           "t": " Lightning conductor safely carries the charge to the ground."
+          }
+         ],
+         "src": [
+          "b0393"
+         ]
+        }
+       ]
+      },
+      {
+       "label": "41.",
+       "blocks": [
+        {
+         "t": "p",
+         "runs": [
+          {
+           "t": "True",
+           "b": 1
+          },
+          {
+           "t": " A fuse melts and breaks the circuit when current exceeds the safe limit."
+          }
+         ],
+         "src": [
+          "b0394"
+         ]
+        }
+       ]
+      },
+      {
+       "label": "42.",
+       "blocks": [
+        {
+         "t": "p",
+         "runs": [
+          {
+           "t": "False",
+           "b": 1
+          },
+          {
+           "t": " An electric bell works on the magnetic effect of electric current."
+          }
+         ],
+         "src": [
+          "b0395"
+         ]
+        }
+       ]
+      }
+     ],
+     "src": [
+      "b0389",
+      "b0390",
+      "b0391",
+      "b0392",
+      "b0393",
+      "b0394",
+      "b0395"
+     ],
+     "cont": true
+    },
+    {
+     "t": "h",
+     "lvl": 3,
+     "text": "Fill in the Blanks",
+     "src": [
+      "b0396"
+     ]
+    },
+    {
+     "t": "ans",
+     "items": [
+      {
+       "label": "43.",
+       "blocks": [
+        {
+         "t": "p",
+         "runs": [
+          {
+           "t": "The SI unit of electric current is "
+          },
+          {
+           "t": "ampere",
+           "b": 1
+          },
+          {
+           "t": " (A)."
+          }
+         ],
+         "src": [
+          "b0397"
+         ]
+        }
+       ]
+      },
+      {
+       "label": "44.",
+       "blocks": [
+        {
+         "t": "p",
+         "runs": [
+          {
+           "t": "A device that automatically switches off the circuit when current exceeds the safe limit is called "
+          },
+          {
+           "t": "MCB",
+           "b": 1
+          },
+          {
+           "t": " (Miniature Circuit Breaker)."
+          }
+         ],
+         "src": [
+          "b0398"
+         ]
+        }
+       ]
+      },
+      {
+       "label": "45.",
+       "blocks": [
+        {
+         "t": "p",
+         "runs": [
+          {
+           "t": "The process by which an uncharged body gets charged without actual contact with a charged body is called charging by "
+          },
+          {
+           "t": "induction",
+           "b": 1
+          },
+          {
+           "t": "."
+          }
+         ],
+         "src": [
+          "b0399"
+         ]
+        }
+       ]
+      },
+      {
+       "label": "46.",
+       "blocks": [
+        {
+         "t": "p",
+         "runs": [
+          {
+           "t": "The thin wire inside an electric bulb that becomes hot and glows is called "
+          },
+          {
+           "t": "filament",
+           "b": 1
+          },
+          {
+           "t": "."
+          }
+         ],
+         "src": [
+          "b0400"
+         ]
+        }
+       ]
+      },
+      {
+       "label": "47.",
+       "blocks": [
+        {
+         "t": "p",
+         "runs": [
+          {
+           "t": "A lightning conductor has a sharp pointed top made of "
+          },
+          {
+           "t": "copper",
+           "b": 1
+          },
+          {
+           "t": " to safely carry the charge to the ground."
+          }
+         ],
+         "src": [
+          "b0401"
+         ]
+        }
+       ]
+      },
+      {
+       "label": "48.",
+       "blocks": [
+        {
+         "t": "p",
+         "runs": [
+          {
+           "t": "The heating element in an electric iron or heater is usually made of "
+          },
+          {
+           "t": "nichrome",
+           "b": 1
+          },
+          {
+           "t": " wire."
+          }
+         ],
+         "src": [
+          "b0402"
+         ]
+        }
+       ]
+      }
+     ],
+     "src": [
+      "b0397",
+      "b0398",
+      "b0399",
+      "b0400",
+      "b0401",
+      "b0402"
+     ]
+    },
+    {
+     "t": "h",
+     "lvl": 3,
+     "text": "Multiple Choice Questions",
+     "src": [
+      "b0403"
+     ]
+    },
+    {
+     "t": "ans",
+     "items": [
+      {
+       "label": "49.",
+       "blocks": [
+        {
+         "t": "p",
+         "runs": [
+          {
+           "t": "(C)",
+           "b": 1
+          },
+          {
+           "t": " Like charges repel each other and unlike charges attract each other."
+          }
+         ],
+         "src": [
+          "b0404"
+         ]
+        }
+       ]
+      },
+      {
+       "label": "50.",
+       "blocks": [
+        {
+         "t": "p",
+         "runs": [
+          {
+           "t": "(C)",
+           "b": 1
+          },
+          {
+           "t": " charging by induction."
+          }
+         ],
+         "src": [
+          "b0405"
+         ]
+        }
+       ]
+      },
+      {
+       "label": "51.",
+       "blocks": [
+        {
+         "t": "p",
+         "runs": [
+          {
+           "t": "(C)",
+           "b": 1
+          },
+          {
+           "t": " Plastic."
+          }
+         ],
+         "src": [
+          "b0406"
+         ]
+        }
+       ]
+      },
+      {
+       "label": "52.",
+       "blocks": [
+        {
+         "t": "p",
+         "runs": [
+          {
+           "t": "(B)",
+           "b": 1
+          },
+          {
+           "t": " sudden discharge of huge electric charge in clouds."
+          }
+         ],
+         "src": [
+          "b0407"
+         ]
+        }
+       ]
+      },
+      {
+       "label": "53.",
+       "blocks": [
+        {
+         "t": "p",
+         "runs": [
+          {
+           "t": "(B)",
+           "b": 1
+          },
+          {
+           "t": " safely carrying the lightning charge into the ground."
+          }
+         ],
+         "src": [
+          "b0408"
+         ]
+        }
+       ]
+      },
+      {
+       "label": "54.",
+       "blocks": [
+        {
+         "t": "p",
+         "runs": [
+          {
+           "t": "(C)",
+           "b": 1
+          },
+          {
+           "t": " electric fuse."
+          }
+         ],
+         "src": [
+          "b0409"
+         ]
+        }
+       ]
+      },
+      {
+       "label": "55.",
+       "blocks": [
+        {
+         "t": "p",
+         "runs": [
+          {
+           "t": "(A)",
+           "b": 1
+          },
+          {
+           "t": " it can be easily reset."
+          }
+         ],
+         "src": [
+          "b0410"
+         ]
+        }
+       ]
+      },
+      {
+       "label": "56.",
+       "blocks": [
+        {
+         "t": "p",
+         "runs": [
+          {
+           "t": "(C)",
+           "b": 1
+          },
+          {
+           "t": " heating effect of current."
+          }
+         ],
+         "src": [
+          "b0411"
+         ]
+        }
+       ]
+      },
+      {
+       "label": "57.",
+       "blocks": [
+        {
+         "t": "p",
+         "runs": [
+          {
+           "t": "(B)",
+           "b": 1
+          },
+          {
+           "t": " magnetic effect of current."
+          }
+         ],
+         "src": [
+          "b0412"
+         ]
+        }
+       ]
+      },
+      {
+       "label": "58.",
+       "blocks": [
+        {
+         "t": "p",
+         "runs": [
+          {
+           "t": "(B)",
+           "b": 1
+          },
+          {
+           "t": " electroplating."
+          }
+         ],
+         "src": [
+          "b0413"
+         ]
+        }
+       ]
+      },
+      {
+       "label": "59.",
+       "blocks": [
+        {
+         "t": "p",
+         "runs": [
+          {
+           "t": "(B)",
+           "b": 1
+          },
+          {
+           "t": " watt."
+          }
+         ],
+         "src": [
+          "b0414"
+         ]
+        }
+       ]
+      },
+      {
+       "label": "60.",
+       "blocks": [
+        {
+         "t": "p",
+         "runs": [
+          {
+           "t": "(A)",
+           "b": 1
+          },
+          {
+           "t": " 3.6 × 10⁶ J."
+          }
+         ],
+         "src": [
+          "b0415"
+         ]
+        }
+       ]
+      },
+      {
+       "label": "61.",
+       "blocks": [
+        {
+         "t": "p",
+         "runs": [
+          {
+           "t": "(B)",
+           "b": 1
+          },
+          {
+           "t": " Electric bell."
+          }
+         ],
+         "src": [
+          "b0416"
+         ]
+        }
+       ]
+      }
+     ],
+     "src": [
+      "b0404",
+      "b0405",
+      "b0406",
+      "b0407",
+      "b0408",
+      "b0409",
+      "b0410",
+      "b0411",
+      "b0412",
+      "b0413",
+      "b0414",
+      "b0415",
+      "b0416",
+      "b0417",
+      "b0418",
+      "b0419",
+      "b0420",
+      "b0421",
+      "b0422",
+      "b0423",
+      "b0424",
+      "b0425",
+      "b0426",
+      "b0427",
+      "b0428",
+      "b0429",
+      "b0430",
+      "b0431",
+      "b0432",
+      "b0433",
+      "b0434",
+      "b0435",
+      "b0436",
+      "b0437",
+      "b0438",
+      "b0439",
+      "b0440",
+      "b0441",
+      "b0442",
+      "b0443"
+     ]
+    }
+   ],
+   "section": "hints",
+   "cont": true
+  },
+  {
+   "kind": "hints",
+   "bg": "tint",
+   "pill": "HINTS AND SOLUTIONS",
+   "pageNo": 25,
+   "blocks": [
+    {
+     "t": "ans",
+     "items": [
+      {
+       "label": "62.",
+       "blocks": [
+        {
+         "t": "p",
+         "runs": [
+          {
+           "t": "(a) (ii)"
+          }
+         ],
+         "src": [
+          "b0418"
+         ]
+        },
+        {
+         "t": "p",
+         "runs": [
+          {
+           "t": "(b) (iv)"
+          }
+         ],
+         "src": [
+          "b0419"
+         ]
+        },
+        {
+         "t": "p",
+         "runs": [
+          {
+           "t": "(c) (i)"
+          }
+         ],
+         "src": [
+          "b0420"
+         ]
+        },
+        {
+         "t": "p",
+         "runs": [
+          {
+           "t": "(d) (iii)"
+          }
+         ],
+         "src": [
+          "b0421"
+         ]
+        },
+        {
+         "t": "p",
+         "runs": [
+          {
+           "t": "(e) (v)"
+          }
+         ],
+         "src": [
+          "b0422"
+         ]
+        }
+       ]
+      },
+      {
+       "label": "63.",
+       "blocks": [
+        {
+         "t": "p",
+         "runs": [
+          {
+           "t": "(a) (ii)"
+          }
+         ],
+         "src": [
+          "b0424"
+         ]
+        },
+        {
+         "t": "p",
+         "runs": [
+          {
+           "t": "(b) (v)"
+          }
+         ],
+         "src": [
+          "b0425"
+         ]
+        },
+        {
+         "t": "p",
+         "runs": [
+          {
+           "t": "(c) (iii)"
+          }
+         ],
+         "src": [
+          "b0426"
+         ]
+        },
+        {
+         "t": "p",
+         "runs": [
+          {
+           "t": "(d) (i)"
+          }
+         ],
+         "src": [
+          "b0427"
+         ]
+        },
+        {
+         "t": "p",
+         "runs": [
+          {
+           "t": "(e) (iv)"
+          }
+         ],
+         "src": [
+          "b0428"
+         ]
+        },
+        {
+         "t": "p",
+         "runs": [
+          {
+           "t": "Multiple Choice Questions (Q64–68)"
+          }
+         ],
+         "src": [
+          "b0429"
+         ]
+        }
+       ]
+      },
+      {
+       "label": "64.",
+       "blocks": [
+        {
+         "t": "p",
+         "runs": [
+          {
+           "t": "(B) So that it melts quickly when current exceeds the safe limit"
+          }
+         ],
+         "src": [
+          "b0430"
+         ]
+        }
+       ]
+      },
+      {
+       "label": "65.",
+       "blocks": [
+        {
+         "t": "p",
+         "runs": [
+          {
+           "t": "(C) increase the number of turns and current"
+          }
+         ],
+         "src": [
+          "b0431"
+         ]
+        }
+       ]
+      },
+      {
+       "label": "66.",
+       "blocks": [
+        {
+         "t": "p",
+         "runs": [
+          {
+           "t": "(B) it easily allows charge to leak into the air and prevents lightning strike"
+          }
+         ],
+         "src": [
+          "b0432"
+         ]
+        }
+       ]
+      },
+      {
+       "label": "67.",
+       "blocks": [
+        {
+         "t": "p",
+         "runs": [
+          {
+           "t": "(B) the circuit is continuously made and broken"
+          }
+         ],
+         "src": [
+          "b0433"
+         ]
+        }
+       ]
+      },
+      {
+       "label": "68.",
+       "blocks": [
+        {
+         "t": "p",
+         "runs": [
+          {
+           "t": "(C) Using CFLs/LEDs and switching off appliances when not in use"
+          }
+         ],
+         "src": [
+          "b0434"
+         ]
+        },
+        {
+         "t": "p",
+         "runs": [
+          {
+           "t": "Multiple Choice Questions (Q64–68)"
+          }
+         ],
+         "src": [
+          "b0435"
+         ]
+        }
+       ]
+      },
+      {
+       "label": "69.",
+       "blocks": [
+        {
+         "t": "p",
+         "runs": [
+          {
+           "t": "Charging by conduction requires direct contact between a charged and an uncharged body. Charging by induction takes place without any contact — only by bringing a charged body near an uncharged body."
+          }
+         ],
+         "src": [
+          "b0436"
+         ]
+        }
+       ]
+      },
+      {
+       "label": "70.",
+       "blocks": [
+        {
+         "t": "p",
+         "runs": [
+          {
+           "t": "Metals are good conductors because they have free electrons that can move easily. Plastic and wood are good insulators because they do not have free electrons, so charges cannot flow through them."
+          }
+         ],
+         "src": [
+          "b0437"
+         ]
+        }
+       ]
+      },
+      {
+       "label": "71.",
+       "blocks": [
+        {
+         "t": "p",
+         "runs": [
+          {
+           "t": "The sharp pointed top of a lightning conductor allows electric charge to leak gradually into the air, reducing the chance of a sudden heavy lightning strike on the building."
+          }
+         ],
+         "src": [
+          "b0438"
+         ]
+        }
+       ]
+      },
+      {
+       "label": "72.",
+       "blocks": [
+        {
+         "t": "p",
+         "runs": [
+          {
+           "t": "A fuse is a thin wire of low melting point connected in series. When current exceeds the safe limit, the wire heats up, melts and breaks the circuit. It is a safety device because it protects appliances and wiring from damage due to overloading or short circuit."
+          }
+         ],
+         "src": [
+          "b0439"
+         ]
+        }
+       ]
+      },
+      {
+       "label": "73.",
+       "blocks": [
+        {
+         "t": "p",
+         "runs": [
+          {
+           "t": "An MCB is an automatic switch that turns off when current exceeds the safe limit. Advantage: It can be easily reset by flipping the switch, unlike a fuse which needs replacement."
+          }
+         ],
+         "src": [
+          "b0440"
+         ]
+        }
+       ]
+      },
+      {
+       "label": "74.",
+       "blocks": [
+        {
+         "t": "p",
+         "runs": [
+          {
+           "t": "When electric current passes through a wire, electrical energy is converted into heat energy. Example: The heating element in an electric iron or room heater becomes hot due to this effect."
+          }
+         ],
+         "src": [
+          "b0441"
+         ]
+        }
+       ]
+      }
+     ],
+     "src": [
+      "b0404",
+      "b0405",
+      "b0406",
+      "b0407",
+      "b0408",
+      "b0409",
+      "b0410",
+      "b0411",
+      "b0412",
+      "b0413",
+      "b0414",
+      "b0415",
+      "b0416",
+      "b0417",
+      "b0418",
+      "b0419",
+      "b0420",
+      "b0421",
+      "b0422",
+      "b0423",
+      "b0424",
+      "b0425",
+      "b0426",
+      "b0427",
+      "b0428",
+      "b0429",
+      "b0430",
+      "b0431",
+      "b0432",
+      "b0433",
+      "b0434",
+      "b0435",
+      "b0436",
+      "b0437",
+      "b0438",
+      "b0439",
+      "b0440",
+      "b0441",
+      "b0442",
+      "b0443"
+     ],
+     "cont": true
+    }
+   ],
+   "section": "hints",
+   "cont": true
+  },
+  {
+   "kind": "hints",
+   "bg": "tint",
+   "pill": "HINTS AND SOLUTIONS",
+   "pageNo": 26,
+   "blocks": [
+    {
+     "t": "ans",
+     "items": [
+      {
+       "label": "75.",
+       "blocks": [
+        {
+         "t": "p",
+         "runs": [
+          {
+           "t": "When current flows through a wire, the wire behaves like a magnet. Simple experiment: Wind insulated wire around a compass and connect to a cell. The compass needle deflects when current flows."
+          }
+         ],
+         "src": [
+          "b0442"
+         ]
+        },
+        {
+         "t": "p",
+         "runs": [
+          {
+           "t": "\\"
+          }
+         ],
+         "src": [
+          "b0443"
+         ]
+        }
+       ]
+      }
+     ],
+     "src": [
+      "b0404",
+      "b0405",
+      "b0406",
+      "b0407",
+      "b0408",
+      "b0409",
+      "b0410",
+      "b0411",
+      "b0412",
+      "b0413",
+      "b0414",
+      "b0415",
+      "b0416",
+      "b0417",
+      "b0418",
+      "b0419",
+      "b0420",
+      "b0421",
+      "b0422",
+      "b0423",
+      "b0424",
+      "b0425",
+      "b0426",
+      "b0427",
+      "b0428",
+      "b0429",
+      "b0430",
+      "b0431",
+      "b0432",
+      "b0433",
+      "b0434",
+      "b0435",
+      "b0436",
+      "b0437",
+      "b0438",
+      "b0439",
+      "b0440",
+      "b0441",
+      "b0442",
+      "b0443"
+     ],
+     "cont": true
+    }
+   ],
+   "section": "hints",
+   "cont": true
+  },
+  {
+   "kind": "mindmap",
+   "bg": "tint",
+   "pill": "MIND MAP",
+   "pageNo": 27,
+   "blocks": [
+    {
+     "t": "h",
+     "lvl": 3,
+     "text": "MIND MAP",
+     "src": [
+      "b0444"
+     ]
+    },
+    {
+     "t": "image",
+     "label": "Mind map image",
+     "w": 515,
+     "h": 343,
+     "src": [
+      "b0445"
+     ]
+    }
+   ],
+   "section": "mindmap",
+   "cont": false
+  },
+  {
+   "kind": "end",
+   "bg": "tint",
+   "pill": "ELECTRICITY",
+   "pageNo": 28,
+   "blocks": [
+    {
+     "t": "end",
+     "module": "2",
+     "chapter": "ELECTRICITY",
+     "grade": "7",
+     "subject": "Physics"
+    }
+   ],
+   "section": "end"
+  }
+ ],
+ "overflow": [],
+ "anchors": {
+  "syn1": 2,
+  "syn2": 7,
+  "test": 12,
+  "concept": 15,
+  "hints": 20,
+  "mind": 27
+ }
+}

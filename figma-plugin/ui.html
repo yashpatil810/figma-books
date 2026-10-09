@@ -1,0 +1,66 @@
+<!doctype html>
+<html><head><meta charset="utf-8"><style>
+  body{font:12px/1.4 Inter,system-ui,sans-serif;margin:0;padding:12px;color:#222}
+  h1{font-size:13px;margin:0 0 8px}
+  input,select{width:100%;box-sizing:border-box;padding:6px;margin:4px 0 8px;border:1px solid #ccc;border-radius:6px;font:inherit;background:#fff}
+  label{display:block;color:#555;margin-top:6px}
+  button{width:100%;padding:8px;border:0;border-radius:6px;background:#1E3A6E;color:#fff;font-weight:600;cursor:pointer}
+  button:disabled{opacity:.5;cursor:default}
+  .box{background:#f3f5f9;border-radius:6px;padding:8px;margin:8px 0}
+  .err{color:#b3261e}.ok{color:#1b6e3a}
+  #bar{height:6px;background:#e3e7ee;border-radius:3px;overflow:hidden;margin-top:6px}#bar i{display:block;height:100%;width:0;background:#1E3A6E}
+</style></head><body>
+<h1>Book Builder</h1>
+<label>App address</label>
+<input id="base" value="http://localhost:8765">
+<label>Book / chapter ready in the app</label>
+<select id="pick"></select>
+<div style="display:flex;gap:6px;margin:6px 0 8px"><button id="refresh" style="flex:0 0 90px;background:#fff;color:#1E3A6E;border:1px solid #1E3A6E">Refresh</button><button id="load">1. Load selected</button></div>
+<div class="box" id="info">Pick a book above and load it.</div>
+<button id="build" disabled>2. Build pages in this file</button>
+<div id="bar"><i></i></div>
+<div id="log" class="box" style="display:none"></div>
+<script>
+let job = null;
+const $ = id => document.getElementById(id);
+const log = (m, cls) => { const l = $('log'); l.style.display = 'block'; l.className = 'box ' + (cls || ''); l.textContent = m; };
+const base = () => $('base').value.replace(/\/$/, '');
+async function refresh() {
+  try {
+    const r = await fetch(base() + '/api/plugin/jobs');
+    const d = await r.json();
+    const sel = $('pick'); const keep = sel.value;
+    sel.innerHTML = '';
+    d.jobs.forEach(j => { const o = document.createElement('option'); o.value = j.project; o.textContent = j.name + (j.chapter ? ' (' + j.chapter + ')' : '') + ' · ' + j.pages + ' pages · ' + new Date(j.created * 1000).toLocaleString() + (j.state === 'built' ? ' · built' : ''); sel.appendChild(o); });
+    if (keep) sel.value = keep;
+    if (!d.jobs.length) $('info').textContent = 'Nothing ready. Press Generate in the app first.';
+  } catch (e) { $('info').innerHTML = '<span class="err">Cannot reach the app: ' + e.message + '. Is it running?</span>'; }
+}
+$('refresh').onclick = refresh;
+$('base').onchange = refresh;
+$('load').onclick = async () => {
+  try {
+    if (!$('pick').value) { $('info').textContent = 'Nothing to load. Press Generate in the app first.'; return; }
+    const r = await fetch(base() + '/api/plugin/job?project=' + encodeURIComponent($('pick').value));
+    const d = await r.json();
+    if (!d.job) { $('info').textContent = 'That book has no design waiting. Click Generate in the app first.'; return; }
+    job = d.job;
+    $('info').innerHTML = '<b>' + (job.spec.name || 'Book') + '</b><br>' + job.spec.pages.length + ' pages' + (job.spec.overflow.length ? '<br><span class="err">' + job.spec.overflow.length + ' blocks may overflow</span>' : '');
+    $('build').disabled = false;
+  } catch (e) { $('info').innerHTML = '<span class="err">Cannot reach the app: ' + e.message + '. Is it running?</span>'; }
+};
+refresh();
+$('build').onclick = () => { $('build').disabled = true; parent.postMessage({ pluginMessage: { type: 'build', job } }, '*'); };
+onmessage = async e => {
+  const m = e.data.pluginMessage; if (!m) return;
+  if (m.type === 'progress') { $('bar').firstChild.style.width = (100 * m.n / m.total) + '%'; log(m.text); }
+  if (m.type === 'error') { log(m.text, 'err'); $('build').disabled = false; }
+  if (m.type === 'done') {
+    try {
+      await fetch(base() + '/api/plugin/report', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(m.report) });
+      log('Built ' + m.report.pages.length + ' pages. Report sent to the app. Select the section, right-click > Copy link, and paste it in the app to verify.', 'ok');
+    } catch (err) { log('Built, but could not send the report to the app: ' + err.message, 'err'); }
+    $('build').disabled = false;
+  }
+};
+</script></body></html>

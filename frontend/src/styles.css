@@ -1,0 +1,56 @@
+:root{--ink:#1c2230;--muted:#667085;--line:#e3e7ee;--bg:#f5f7fa;--brand:#1E3A6E;--ok:#1b7a43;--warn:#b26a00;--err:#b3261e}
+*{box-sizing:border-box}
+body{margin:0;font:14px/1.45 -apple-system,BlinkMacSystemFont,'Segoe UI',Inter,sans-serif;color:var(--ink);background:var(--bg)}
+button{font:inherit;cursor:pointer}
+.top{display:flex;align-items:center;gap:16px;padding:10px 20px;background:#fff;border-bottom:1px solid var(--line);position:sticky;top:0;z-index:5}
+.top h1{font-size:16px;margin:0;color:var(--brand);cursor:pointer}
+.top .sp{flex:1}
+.wrap{max-width:1180px;margin:0 auto;padding:20px}
+.card{background:#fff;border:1px solid var(--line);border-radius:10px;padding:16px;margin-bottom:14px}
+.card h2{font-size:15px;margin:0 0 10px}
+.row{display:flex;gap:12px;flex-wrap:wrap;align-items:center}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+@media(max-width:800px){.grid2{grid-template-columns:1fr}}
+label{display:block;font-size:12px;color:var(--muted);margin:8px 0 3px}
+input[type=text],input[type=url],textarea,select{width:100%;padding:8px 10px;border:1px solid #cfd6e2;border-radius:7px;font:inherit;background:#fff}
+textarea{min-height:90px;resize:vertical}
+.btn{padding:8px 14px;border-radius:7px;border:1px solid #cfd6e2;background:#fff;color:var(--ink)}
+.btn:hover{background:#f0f3f8}
+.btn.primary{background:var(--brand);border-color:var(--brand);color:#fff}
+.btn.primary:hover{background:#17305b}
+.btn.ok{background:var(--ok);border-color:var(--ok);color:#fff}
+.btn.danger{color:var(--err)}
+.btn:disabled{opacity:.5;cursor:not-allowed}
+.steps{display:flex;gap:6px;margin:0 0 16px;flex-wrap:wrap}
+.step{padding:7px 12px;border-radius:20px;background:#fff;border:1px solid var(--line);color:var(--muted);cursor:pointer;font-size:13px}
+.step.on{background:var(--brand);color:#fff;border-color:var(--brand)}
+.step.done{color:var(--ok);border-color:#bfe3cd}
+.tag{display:inline-block;padding:1px 8px;border-radius:10px;font-size:11px;font-weight:600;background:#eef1f6;color:#475467}
+.tag.error{background:#fde7e5;color:var(--err)}.tag.question{background:#e8eefc;color:#2848a0}.tag.warning{background:#fff1d6;color:var(--warn)}.tag.info{background:#eef1f6}
+.muted{color:var(--muted)}.small{font-size:12px}
+.ok-t{color:var(--ok)}.err-t{color:var(--err)}.warn-t{color:var(--warn)}
+.banner{padding:10px 14px;border-radius:8px;margin-bottom:12px}
+.banner.err{background:#fde7e5;color:var(--err)}.banner.ok{background:#e4f5ea;color:var(--ok)}.banner.info{background:#e8eefc;color:#2848a0}.banner.warn{background:#fff1d6;color:var(--warn)}
+.finding{border:1px solid var(--line);border-left:4px solid var(--line);border-radius:8px;padding:12px;margin-bottom:10px;background:#fff}
+.finding.error{border-left-color:var(--err)}.finding.question{border-left-color:#2848a0}.finding.warning{border-left-color:#e0a030}
+.finding.resolved{opacity:.6}
+.ctx{background:#f6f8fb;border-radius:6px;padding:6px 9px;font-size:12px;margin:6px 0;white-space:pre-wrap;word-break:break-word}
+.thread .msg{padding:6px 9px;border-radius:6px;margin:4px 0;font-size:13px}
+.thread .app{background:#eef3fb}.thread .user{background:#f1f9f3}
+.pages{display:flex;gap:16px;flex-wrap:wrap}
+.pg{background:#fff;border:1px solid var(--line);border-radius:8px;padding:8px}
+.pg .cap{font-size:12px;color:var(--muted);margin:6px 2px 0}
+.swatch{display:flex;align-items:center;gap:8px;margin:4px 0}
+.swatch input[type=color]{width:34px;height:28px;padding:0;border:1px solid #ccc;border-radius:5px;background:none}
+.swatch input[type=text]{width:100px;font-family:ui-monospace,monospace}
+.swatch span{flex:1;font-size:12px}
+.score{font-size:44px;font-weight:700}
+table.t{border-collapse:collapse;width:100%;font-size:13px}
+table.t th,table.t td{border-bottom:1px solid var(--line);padding:6px 8px;text-align:left;vertical-align:top}
+.bar{height:8px;border-radius:4px;background:#e6eaf1;overflow:hidden}.bar i{display:block;height:100%;background:var(--brand)}
+.todo{display:flex;gap:10px;padding:8px 0;border-bottom:1px solid var(--line)}
+.todo.done{opacity:.55}
+pre.rules{white-space:pre-wrap;font:12px/1.5 ui-monospace,monospace;background:#f6f8fb;padding:12px;border-radius:8px;max-height:420px;overflow:auto}
+.tabs{display:flex;gap:4px;border-bottom:1px solid var(--line);margin-bottom:12px}
+.tab{padding:7px 12px;cursor:pointer;border-bottom:2px solid transparent;color:var(--muted)}
+.tab.on{color:var(--brand);border-color:var(--brand);font-weight:600}
