@@ -38,7 +38,7 @@ function Settings({ status, reload, onClose }) {
 }
 
 function NewProject({ mode, onCreated, onCancel }) {
-  const [f, setF] = useState({ name: '', doc_url: '', figma_url: '', subject: '', module: '' })
+  const [f, setF] = useState({ name: '', doc_url: '', figma_url: '', reference_url: '', subject: '', module: '' })
   const [err, setErr] = useState('')
   const [busy, setBusy] = useState(false)
   const set = k => e => setF({ ...f, [k]: e.target.value })
@@ -46,7 +46,10 @@ function NewProject({ mode, onCreated, onCancel }) {
     setBusy(true); setErr('')
     try {
       const p = await api('/projects', { method: 'POST', body: { name: f.name || (mode === 'audit' ? 'Audit' : 'New book'), mode, doc_url: f.doc_url, figma_url: f.figma_url, meta: { subject: f.subject, module: f.module } } })
-      await api(`/projects/${p.id}/fetch`, { method: 'POST' })
+      if (mode !== 'audit' && f.reference_url.trim()) {  // the reference design is read in the background while the doc is fetched
+        try { await api(`/projects/${p.id}/reference`, { method: 'PUT', body: { url: f.reference_url.trim() } }); await api(`/projects/${p.id}/reference/read`, { method: 'POST' }) } catch (e) { /* the book is created either way; the link can be fixed on Setup */ }
+      }
+      await api(`/projects/${p.id}/fetch`, { method: 'POST' })  // also starts Claude's reading of the doc's structure
       onCreated(p.id)
     } catch (e) { setErr(e.message) } finally { setBusy(false) }
   }
@@ -56,6 +59,8 @@ function NewProject({ mode, onCreated, onCancel }) {
       <label>Name</label><input type="text" value={f.name} onChange={set('name')} placeholder="e.g. Physics Grade 7 – Electricity" />
       <label>Google Doc link (set to “Anyone with the link can view”)</label><input type="url" value={f.doc_url} onChange={set('doc_url')} placeholder="https://docs.google.com/document/d/…" />
       {mode === 'audit' && <><label>Figma link (select the section or page in Figma → right-click → Copy link)</label><input type="url" value={f.figma_url} onChange={set('figma_url')} placeholder="https://www.figma.com/design/…?node-id=…" /></>}
+      {mode !== 'audit' && <><label>Reference design in Figma <span className="muted small">(optional)</span></label><input type="url" value={f.reference_url} onChange={set('reference_url')} placeholder="https://www.figma.com/design/…?node-id=…" />
+        <div className="muted small" style={{ marginTop: 4 }}>A Figma file, page or section that looks the way you want this book to look (select it in Figma → right-click → Copy link). The app reads its colours, fonts, text sizes and page styles once and uses them as your starting point. You can change everything on the next screens. Leave blank to use the default style.</div></>}
       <div className="grid2">
         <div><label>Subject (used in the footer, e.g. Physics)</label><input type="text" value={f.subject} onChange={set('subject')} /></div>
         <div><label>Module / chapter number (e.g. 2)</label><input type="text" value={f.module} onChange={set('module')} /></div>

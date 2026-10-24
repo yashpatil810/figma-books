@@ -1,4 +1,5 @@
 """FastAPI app: projects, scan/Q&A, preview/spec, plugin job exchange, verification reports."""
+import json
 import os
 import re
 import shutil
@@ -12,7 +13,7 @@ from fastapi.responses import FileResponse
 from fastapi.staticfiles import StaticFiles
 from pydantic import BaseModel
 
-from . import config, figma_api, gdoc, images, layout, llm, measure, rules, samples, scan, store, structure, verify
+from . import config, figma_api, gdoc, images, layout, llm, measure, rules, samples, scan, store, structure, structure_map, style_ref, verify
 
 app = FastAPI(title="Book Builder")
 app.add_middleware(CORSMiddleware, allow_origins=["*"], allow_methods=["*"], allow_headers=["*"])
@@ -31,6 +32,7 @@ def status():
     s = config.settings()
     return {
         "claude": llm.status(), "fonts": measure.fonts_available(), "figma_token": bool(config.figma_token()),
+        "plugin": {"version": plugin_version(), **figma_plugin_registration()},
         "models": s["models"], "port": s["port"],
     }
 
@@ -78,6 +80,10 @@ def create_project(p: ProjectIn):
 def get_project(pid: str):
     p = _p(pid)
     p["has_doc"] = store.read(pid, "blocks.json") is not None
+    blocks = store.read(pid, "blocks.json")
+    p["has_structure"] = bool(blocks) and structure_map.load(pid, blocks) is not None
+    p["structure_job"] = store.job_get(pid, "structure")
+    p["reference_job"] = store.job_get(pid, "reference")
     p["findings_count"] = len(store.read(pid, "findings.json", []))
     p["scan_job"] = store.job_get(pid, "scan")
     p["verify_job"] = store.job_get(pid, "verify")
@@ -124,7 +130,7 @@ def fetch_doc(pid: str):
     except Exception:
         store.write(pid, "pages.json", {})
     book = structure.build_book(blocks, _meta(p))
-    p["meta"].setdefault("grade", book["meta"].get("grade", ""))
+    p = store.load(pid)  # fresh copy: background jobs (reference design) may have saved meanwhile
     if not p["meta"].get("grade"):
         p["meta"]["grade"] = book["meta"].get("grade", "")
     p["meta"]["chapter_title"] = book["meta"].get("chapter_title", "")
@@ -132,6 +138,8 @@ def fetch_doc(pid: str):
     if p["stage"] == "setup":  # re-reading the doc must never move a project backwards
         p["stage"] = "theme" if p["mode"] == "create" else "scan"
     store.save(pid, p)
+    if p["mode"] == "create":
+        start_structure_read(pid, blocks)  # Claude reads the doc for meaning in the background
     return doc_summary(blocks, book)
 
 
@@ -151,6 +159,7 @@ def get_structure(pid: str):
     book = structure.build_book(blocks, _meta(p), _fixes(pid))
     by = {b["id"]: b for b in blocks}
     pages = store.read(pid, "pages.json", {})
+    sm = structure_map.load(pid, blocks)
     heads = []
     for d in book.get("dividers", []):
         heads.append({**d, "page": pages.get(d["src"]), "override": p.get("roles", {}).get(d["src"])})
@@ -164,12 +173,359 @@ def get_structure(pid: str):
             {"src": b["id"], "text": b["text"][:70], "level": b["level"], "page": pages.get(b["id"]), "role": p.get("roles", {}).get(b["id"])}
             for b in blocks if b["t"] == "h"
         ],
+        "job": store.job_get(pid, "structure"),
+        "map": ({"front": {k: (gdoc.block_text(by[v]) if v in by else None) for k, v in (sm.get("front") or {}).items()},
+                 "index_entries": len(sm.get("index_entries", [])), "headings": len(sm.get("headings", [])),
+                 "sections": [{**x, "page": pages.get(x["src"]), "override": p.get("roles", {}).get(x["src"]), "new_page_eff": p.get("page_breaks", {}).get(x["src"], x.get("new_page"))} for x in sm.get("sections", [])],
+                 "heading_breaks": [{"src": x["src"], "title": x["title"][:80], "level": x["level"], "page": pages.get(x["src"]), "new_page": p.get("page_breaks", {}).get(x["src"], bool(x.get("new_page")))} for x in sm.get("headings", [])]} if sm else None),
+        "checks": structure_checks(pid, book, blocks, sm),
+        "pages_est": None,
     }
+
+
+def laid_out(pid: str, blocks, sm: Optional[dict] = None):
+    """The book laid out exactly as the Preview lays it out (theme fonts and type scale, table pictures swapped in),
+    so page numbers quoted by the checks and the chat are the printed ones. Returns (book, pages-output)."""
+    p = store.load(pid)
+    measure.configure(p["theme"].get("fonts"))
+    layout.configure(rules.layout_of(p["theme"]), p["theme"].get("caseRules"))
+    meta = _meta(p)
+    if sm is not None:
+        meta["structure_map"] = sm
+    book = structure.build_book(blocks, meta, _fixes(pid))
+    book["theme"] = p["theme"]
+    tables_from_pictures(pid, book)
+    return book, layout.build_pages(book)
+
+
+def structure_checks(pid, book, blocks, sm):
+    """Plain-language sanity checks on how the doc is read. Each one is a question for the author, never a silent change."""
+    out = []
+    if not sm:
+        out.append({"severity": "info", "code": "map-missing", "message": "The document has not been read for meaning yet. Until then, sections are guessed from heading names."})
+        return out
+    book, out_pages = laid_out(pid, blocks, sm)
+    anchors = out_pages["anchors"]
+    n_pages = sum(1 for pg in out_pages["pages"] if pg["kind"] not in ("toc", "end")) or 1
+    secs = book.get("dividers", [])
+    starts = [(anchors.get(f"sec{i}"), d) for i, d in enumerate(secs)]
+    for i, (st, d) in enumerate(starts):
+        if st is None:
+            continue
+        nxt = next((x[0] for x in starts[i + 1:] if x[0]), None)
+        end = (nxt - 1) if nxt else max((pg["pageNo"] or 0) for pg in out_pages["pages"] if pg["kind"] != "end")
+        length = end - st + 1
+        limit = 70 if d["role"] == "exercise" else 90 if d["role"] == "body" else 30
+        if length > limit:
+            out.append({"severity": "question", "code": "section-long", "src": d["src"], "message": f"“{d['text'][:50]}” runs for {length} pages as {d['role']}. Is the whole stretch really one {d['role']} section, or did a later heading start something new?"})
+        if d["role"] in ("answers", "exercise") and length >= 0.45 * n_pages and any(x["role"] == "body" for x in secs):
+            out.append({"severity": "question", "code": "role-share", "src": d["src"], "message": f"“{d['text'][:50]}” is read as {d['role']} and takes {length} of {n_pages} pages. Please confirm it is not teaching content."})
+    by = {b["id"]: b for b in blocks}
+    for d in secs:
+        if d["role"] == "answers":
+            i0 = next((i for i, b in enumerate(blocks) if b["id"] == d["src"]), None)
+            peek = " ".join(gdoc.block_text(b) for b in blocks[i0 + 1:i0 + 12]) if i0 is not None else ""
+            if re.search(r"learning objectives|after completing this chapter|introduction to", peek, re.I):
+                out.append({"severity": "question", "code": "answers-look-like-body", "src": d["src"], "message": f"“{d['text'][:50]}” is read as an answer key, but the text right after it reads like chapter content (objectives or an introduction). Check its role."})
+    breaks = {**{x["src"]: x.get("new_page") for x in sm.get("sections", [])}, **{x["src"]: True for x in sm.get("headings", []) if x.get("new_page")}, **store.load(pid).get("page_breaks", {})}
+    by_src = {x["src"]: x["title"] for x in sm.get("sections", []) + sm.get("headings", [])}
+    prev_pg = None
+    for pg in out_pages["pages"]:
+        first = pg["blocks"][0] if pg["blocks"] else None
+        src0 = (first or {}).get("src", [None])[0] if first else None
+        if prev_pg and prev_pg["kind"] == pg["kind"] and src0 and breaks.get(src0) and first.get("t") in ("h", "title"):
+            fill = layout.page_used(prev_pg["blocks"]) / layout.AVAIL
+            if fill < 0.4:
+                out.append({"severity": "question", "code": "sparse-page", "src": src0, "message": f"Page {prev_pg['pageNo']} is only {round(fill * 100)}% full because “{by_src.get(src0, first.get('text', ''))[:50]}” starts a new page (page {pg['pageNo']}). Untick “new page” for it if it should continue on page {prev_pg['pageNo']}."})
+        prev_pg = pg
+    if not (sm.get("front") or {}).get("title"):
+        out.append({"severity": "info", "code": "no-title", "message": "No chapter title line was found at the top of the doc."})
+    if not any(x["role"] == "body" for x in sm.get("sections", [])):
+        out.append({"severity": "question", "code": "no-body", "message": "No teaching-content section was found. Is this doc only exercises or answers?"})
+    for i in book.get("issues", []):
+        if i.get("code") == "index-unmatched":
+            out.append({"severity": "info", "code": i["code"], "message": i["message"]})
+    if book.get("dropped"):
+        out.append({"severity": "warning", "code": "dropped", "message": f"{len(book['dropped'])} blocks of text are not used on any page."})
+    return out
+
+
+def sparse_page_starts(pid: str, blocks, sm: dict) -> list[dict]:
+    """Page starts (Claude's or the author's) that leave the page before them mostly empty, with the laid-out facts."""
+    p = store.load(pid)
+    book, out_pages = laid_out(pid, blocks, sm)
+    starts = {x["src"]: x for x in sm.get("sections", []) + sm.get("headings", [])}
+    overrides = p.get("page_breaks", {})
+    cases, prev_pg = [], None
+    pages = [pg for pg in out_pages["pages"] if pg["kind"] not in ("toc", "end")]
+    for i, pg in enumerate(pages):
+        first = pg["blocks"][0] if pg["blocks"] else None
+        src0 = (first.get("src") or [None])[0] if first else None
+        x = starts.get(src0)
+        if prev_pg and x and prev_pg["kind"] == pg["kind"] and first.get("t") in ("h", "title") and overrides.get(src0, x.get("new_page")):
+            fill = layout.page_used(prev_pg["blocks"]) / layout.AVAIL
+            if fill < 0.4:
+                nxt = next((j for j in range(i + 1, len(pages)) if pages[j]["blocks"] and (pages[j]["blocks"][0].get("src") or [None])[0] in starts and pages[j]["blocks"][0].get("t") in ("h", "title")), len(pages))
+                cases.append({"id": src0, "title": x["title"][:70], "kind": "section" if "role" in x else "heading", "prev_page": prev_pg["pageNo"], "prev_fill_pct": round(fill * 100),
+                              "part_pages": nxt - i, "last_page_fill_pct": round(100 * layout.page_used(pages[nxt - 1]["blocks"]) / layout.AVAIL), "author_fixed": src0 in overrides})
+        prev_pg = pg
+    return cases
+
+
+def refine_page_starts(pid: str, blocks, models: dict, prog=None, rounds: int = 2):
+    """Claude looks at its own page starts in the laid-out book (how empty the page before is, how long the part is)
+    and confirms or changes them. Only Claude's decisions change; the author's own ticks stay."""
+    sm = structure_map.load(pid, blocks)
+    if not sm:
+        return
+    for _ in range(rounds):
+        cases = [c for c in sparse_page_starts(pid, blocks, sm) if not c["author_fixed"]]
+        if not cases:
+            return
+        if prog:
+            prog(f"Claude is checking {len(cases)} page starts against the laid-out pages…", 0.9)
+        facts = "\n".join(f"- id {c['id']}: “{c['title']}” ({c['kind']}) starts a new page; the page before it ends {c['prev_fill_pct']}% full; the part then runs {c['part_pages']} page(s), the last of them {c['last_page_fill_pct']}% full." for c in cases)
+        reply = llm.ask_json(
+            "You earlier decided where new pages start in a school textbook chapter. The book has now been laid out, and these page starts leave the previous page mostly empty:\n"
+            + facts + "\n\nFor each one decide, as the book's designer, whether to keep the page start (true) or let that part continue below the previous text on the same page (false). "
+            'Reply with JSON only: {"decisions": [{"id": "b0123", "new_page": true|false}]}',
+            model=models.get("structure", "opus"), system=structure_map.SYSTEM)
+        dec = {d.get("id"): d.get("new_page") for d in llm.as_list(reply.get("decisions") if isinstance(reply, dict) else reply) if isinstance(d, dict) and isinstance(d.get("new_page"), bool)}
+        changed = False
+        for x in sm.get("sections", []) + sm.get("headings", []):
+            if x["src"] in dec and dec[x["src"]] != bool(x.get("new_page")):
+                x["new_page"] = dec[x["src"]]
+                changed = True
+        if not changed:
+            return
+        structure_map.save(pid, sm)
+
+
+def start_structure_read(pid: str, blocks, force: bool = False):
+    """Claude reads the whole doc for meaning and labels its structure (never its text). Runs as a background job;
+    nothing happens if the current map is still valid for this doc."""
+    models = config.settings()["models"]
+
+    def work(prog):
+        if not force and structure_map.load(pid, blocks):
+            prog("Already read", 1)
+            return
+        prog("Claude is reading the whole document for meaning (this takes a few minutes)…", 0.05)
+        m = structure_map.read_map(pid, blocks, models, prog)
+        structure_map.save(pid, m)
+        store.update(pid, roles={}, page_breaks={}, structure_changed=time.time())  # a fresh reading replaces earlier per-line overrides
+        refine_page_starts(pid, blocks, models, prog)
+
+    return store.job_run(pid, "structure", work)
+
+
+@app.post("/api/projects/{pid}/structure/read")
+def read_structure(pid: str, force: bool = False):
+    _p(pid)
+    return start_structure_read(pid, _blocks(pid), force)
+
+
+# ------------------------------------------------------------------ review export
+SEVERITY_TAGS = {"error": "Error", "warning": "Warning", "question": "Question", "info": "Info"}
+
+
+def clean_statement(msg: str) -> str:
+    """The finding's statement without internal block ids (b0003, b0003–b0005, (b0003)) or doubled spaces."""
+    t = re.sub(r"\(?\bb\d{4}(?:\s*[–\-,]\s*b\d{4})*\b\)?", "", msg or "")
+    t = re.sub(r"\s+([,.;:)])", r"\1", t)
+    return re.sub(r"[ \t]{2,}", " ", t).strip()
+
+
+@app.get("/api/projects/{pid}/findings.csv")
+def findings_csv(pid: str, severities: str = "", statuses: str = ""):
+    """The review comments as a CSV: Statement, Doc page, Tag. Filtered by severity (and status) if asked."""
+    import csv
+    import io
+
+    from fastapi.responses import Response
+
+    p = _p(pid)
+    fs = store.read(pid, "findings.json", [])
+    pages = store.read(pid, "pages.json", {})
+    sev = {x.strip() for x in severities.split(",") if x.strip()}
+    sts = {x.strip() for x in statuses.split(",") if x.strip()}
+    buf = io.StringIO()
+    w = csv.writer(buf)
+    w.writerow(["Statement", "Doc page", "Tag"])
+    rows = []
+    for f in fs:
+        if sev and f.get("severity") not in sev:
+            continue
+        if sts and f.get("status") not in sts:
+            continue
+        pg = [pages[b] for b in f.get("blocks", []) if b in pages]
+        rows.append((min(pg) if pg else 10**6, clean_statement(f.get("message", "")), str(min(pg)) if pg else "", SEVERITY_TAGS.get(f.get("severity"), f.get("severity", ""))))
+    for _, stmt, page, tag in sorted(rows, key=lambda r: r[0]):
+        w.writerow([stmt, page, tag])
+    name = re.sub(r"[^A-Za-z0-9]+", "-", p.get("name", "book")).strip("-")[:60] or "book"
+    return Response("\ufeff" + buf.getvalue(), media_type="text/csv; charset=utf-8", headers={"Content-Disposition": f'attachment; filename="{name}-review.csv"'})
+
+
+# ------------------------------------------------------------------ structure chat (requests in plain language)
+CHAT_SYSTEM = ("You help the author of a school textbook adjust how a chapter is split into sections and pages, and how its components look. "
+               "You can change three things: (3) the look of components, for the whole book (scope 'all') or for one section (scope = that section's id): "
+               "qcard = question cards (fill, radius, numberColor), mcq = MCQ cards (fill, radius, columns 1 or 2), ans = answer cards (fill, tabFill, radius), "
+               "table (headFill, headText, zebra true/false), callout (radius), formula (fill, text), bullets (markColor), page (bg: the page background; with scope 'all' give kind = index|body|exercise|worksheet|answers|mindmap). "
+               "(4) the book's colours: theme colours primary (the accent: header pill, bullets, numbers, table header, answer tabs), text (body text), strong (headings), tint (tinted page background / key-ideas box), white (teaching page background / cards), rule (header line), footerRule, tableAlt (zebra rows), tableBorder, onPrimary (text on the accent); "
+               "the callout boxes misc (Common Misconceptions), iit (IIT Foundation), dyk (Did You Know) each with bg and fg; and per page kind (index, body, exercise, worksheet, answers, mindmap) the page's bg, pillBg, pillFg, rule and fg (text colour on that page) — use component 'page' for those (scope 'all' + kind, or a section id). "
+               "Colour values: white, none (= no fill, no box), primary, tint, text, strong, onPrimary, or a #hex; theme colours themselves must be #hex. (1) the role of any line — a section start of kind body (teaching content), exercise, answers (answer key), mindmap, references or glossary, "
+               "or 'inline' (not a section: just a heading inside the page) or 'ignore' (leave the line and everything up to the next section out of the book); "
+               "(2) whether a section or heading starts a new page (true/false). You never change, add or remove text: every word comes from the author's document. "
+               "A change of page type (teaching → exercise → answer key) always starts a page because the page background changes; say so if asked otherwise. "
+               "qcard/mcq/ans also take textColor (the text inside the card; when unset it is automatic: the page's text colour if the card has no fill) and pad (the card's inner padding in points; 0 = none). "
+               "Make the result look right, as a book designer would, not just the literal change: when you remove a box (fill none) also remove its padding (pad 0) unless the author wants it kept, and make sure every text stays readable on the page background — "
+               "on a dark page use light text (textColor / numberColor such as white or onPrimary), on a light page dark text. Think through what else the change affects (contrast, alignment, consistency with the other sections of the same kind) and adjust it; say in the reply what you adjusted beyond the literal request and why. "
+               "Refer to pages by their printed page numbers. Be brief and concrete.")
+
+
+def structure_context(pid: str, blocks) -> dict:
+    """What Claude needs to understand a request: the sections, the laid-out pages and the headings."""
+    p = store.load(pid)
+    sm = structure_map.load(pid, blocks)
+    book, out = laid_out(pid, blocks)
+    anchors = out["anchors"]
+    breaks = p.get("page_breaks", {})
+    pages = []
+    for pg in out["pages"]:
+        if pg["kind"] in ("toc", "end"):
+            continue
+        first = pg["blocks"][0] if pg["blocks"] else {}
+        ft = first.get("text") or (" ".join(r.get("t", "") for r in first.get("runs", [])) if first.get("runs") else first.get("t", ""))
+        pages.append(f"p{pg['pageNo']} [{pg['kind']}] {round(100 * layout.page_used(pg['blocks']) / layout.AVAIL)}% full · starts: {str(ft)[:60]}")
+    secs = []
+    for i, d in enumerate(book.get("dividers", [])):
+        start = anchors.get(f"sec{i}")
+        secs.append(f"{d['src']} [{d['role']}] “{d['text'][:60]}” starts p{start} · new_page={breaks.get(d['src'], next((x.get('new_page') for x in (sm or {}).get('sections', []) if x['src'] == d['src']), True))}")
+    heads = [f"{h['src']} H{h['level']} p{anchors.get('h:' + h['src'], '?')} “{h['title'][:60]}”" + (" · new_page=true" if breaks.get(h["src"], h.get("new_page")) else "") for h in (sm or {}).get("headings", [])]
+    comps = rules.components_of(p["theme"])
+    th = p["theme"]
+    styles = ["theme colours: " + ", ".join(f"{k} {th.get(k)}" for k in rules.THEME_COLOR_KEYS) + "; callouts: " + ", ".join(f"{k} {th.get(k)}" for k in rules.CALLOUT_KEYS),
+              "page kinds: " + "; ".join(f"{k} {v}" for k, v in (th.get("pageTypes") or {}).items()),
+              "components everywhere: " + "; ".join(f"{c} {v}" for c, v in comps.items())]
+    for src, st in (p["theme"].get("sectionStyles") or {}).items():
+        styles.append(f"section {src}: {st}")
+    return {"pages": pages, "sections": secs, "headings": heads, "styles": styles, "overrides": {"roles": p.get("roles", {}), "page_breaks": breaks}}
+
+
+class ChatIn(BaseModel):
+    message: str
+
+
+@app.get("/api/projects/{pid}/structure/chat")
+def get_chat(pid: str):
+    _p(pid)
+    return {"turns": store.read(pid, "structure_chat.json", [])}
+
+
+@app.post("/api/projects/{pid}/structure/chat")
+def post_chat(pid: str, body: ChatIn):
+    """One request in plain language -> Claude answers and applies the changes it can (roles / page starts)."""
+    p = _p(pid)
+    blocks = _blocks(pid)
+    ids = {b["id"] for b in blocks}
+    turns = store.read(pid, "structure_chat.json", [])
+    ctx = structure_context(pid, blocks)
+    history = "\n".join(f"{'Author' if t['role'] == 'user' else 'You'}: {t['text'][:400]}" for t in turns[-8:])
+    prompt = (
+        "CURRENT PAGES (printed page numbers):\n" + "\n".join(ctx["pages"]) + "\n\nSECTIONS (id [role] title · start page · new_page):\n" + "\n".join(ctx["sections"])
+        + "\n\nHEADINGS INSIDE SECTIONS (id level page title):\n" + "\n".join(ctx["headings"])
+        + "\n\nCURRENT COMPONENT STYLES:\n" + "\n".join(ctx["styles"])
+        + (f"\n\nEARLIER CONVERSATION:\n{history}" if history else "")
+        + f"\n\nAUTHOR'S REQUEST: {body.message.strip()}\n\n"
+        'Reply with JSON only: {"reply": "one or two sentences to the author saying what you changed (with page numbers) or why you cannot", '
+        '"roles": {"<line id>": "body|exercise|answers|mindmap|references|glossary|inline|ignore"}, "page_breaks": {"<line id>": true|false}, '
+        '"styles": [{"scope": "all" or "<section id>", "component": "qcard|mcq|ans|table|callout|formula|bullets|page", "kind": "only for page with scope all", "set": {"property": value}}], '
+        '"theme": {"primary|text|strong|tint|white|rule|footerRule|tableAlt|tableBorder|onPrimary": "#hex", "misc|iit|dyk": {"bg": "#hex", "fg": "#hex"}}, '
+        '"show_pages": [printed page numbers worth looking at after the change, at most 4]}. '
+        "Use only ids from the lists above. Leave roles/page_breaks empty when nothing should change."
+    )
+    r = llm.ask_json(prompt, model=config.settings()["models"].get("structure", "opus"), system=CHAT_SYSTEM, timeout=600)
+    if not isinstance(r, dict):
+        raise HTTPException(500, "Claude did not answer in the expected form.")
+    roles = {k: v for k, v in (r.get("roles") or {}).items() if k in ids and v in ("body", "exercise", "answers", "mindmap", "references", "glossary", "inline", "ignore")}
+    breaks = {k: bool(v) for k, v in (r.get("page_breaks") or {}).items() if k in ids and isinstance(v, bool)}
+    sm = structure_map.load(pid, blocks) or {}
+    section_ids = {x["src"] for x in sm.get("sections", [])} | set(p.get("roles", {}).keys())
+    theme = json.loads(json.dumps(p["theme"]))
+    style_changes = []
+    for it in (llm.as_list(r.get("styles")) if r.get("styles") else []):
+        if not isinstance(it, dict):
+            continue
+        comp, scope = it.get("component"), it.get("scope") or "all"
+        vals = rules.clean_style(comp, it.get("set"))
+        if comp not in rules.COMPONENT_SCHEMA or not vals or (scope != "all" and scope not in section_ids):
+            continue
+        label = rules.COMPONENT_LABELS[comp]
+        if comp == "page":
+            hexvals = {k: (rules.resolve_color(theme, v) or theme.get("white")) for k, v in vals.items()}
+            desc = ", ".join(f"{k} {v}" for k, v in hexvals.items())
+            if scope == "all":
+                kind = it.get("kind")
+                if kind not in rules.PAGE_KIND_KEYS:
+                    continue
+                theme.setdefault("pageTypes", {}).setdefault(kind, {}).update(hexvals)
+                style_changes.append(f"{kind} pages: {desc}")
+            else:
+                theme.setdefault("sectionStyles", {}).setdefault(scope, {}).setdefault("page", {}).update(hexvals)
+                style_changes.append(f"“{gdoc.block_text(next(b for b in blocks if b['id'] == scope))[:40]}” pages: {desc}")
+            continue
+        if scope == "all":
+            theme.setdefault("components", {}).setdefault(comp, {}).update(vals)
+            style_changes.append(f"{label} everywhere: " + ", ".join(f"{k} = {v}" for k, v in vals.items()))
+        else:
+            theme.setdefault("sectionStyles", {}).setdefault(scope, {}).setdefault(comp, {}).update(vals)
+            style_changes.append(f"{label} in “{gdoc.block_text(next(b for b in blocks if b['id'] == scope))[:40]}”: " + ", ".join(f"{k} = {v}" for k, v in vals.items()))
+    for k, v in (r.get("theme") or {}).items() if isinstance(r.get("theme"), dict) else []:
+        if k in rules.THEME_COLOR_KEYS and isinstance(v, str) and re.fullmatch(r"#[0-9a-fA-F]{6}", v):
+            theme[k] = v.upper()
+            style_changes.append(f"colour “{k}” → {v.upper()}")
+        elif k in rules.CALLOUT_KEYS and isinstance(v, dict):
+            pair = {kk: vv.upper() for kk, vv in v.items() if kk in ("bg", "fg") and isinstance(vv, str) and re.fullmatch(r"#[0-9a-fA-F]{6}", vv)}
+            if pair:
+                theme[k] = {**(theme.get(k) or {}), **pair}
+                style_changes.append(f"callout “{k}”: " + ", ".join(f"{kk} {vv}" for kk, vv in pair.items()))
+    before = {"roles": dict(p.get("roles", {})), "page_breaks": dict(p.get("page_breaks", {})), "theme": {k: json.loads(json.dumps(p["theme"].get(k))) for k in ("components", "sectionStyles", "pageTypes") + rules.THEME_COLOR_KEYS + rules.CALLOUT_KEYS}}
+    if roles or breaks or style_changes:
+        store.update(pid, roles={**p.get("roles", {}), **roles}, page_breaks={**p.get("page_breaks", {}), **breaks}, theme=theme, structure_changed=time.time())
+    by = {b["id"]: gdoc.block_text(b)[:50] for b in blocks}
+    changes = [f"“{by.get(k, k)}” → {v}" for k, v in roles.items()] + [f"“{by.get(k, k)}” → {'new page' if v else 'continues on the previous page'}" for k, v in breaks.items()] + style_changes
+    turns.append({"role": "user", "text": body.message.strip(), "ts": time.time()})
+    turns.append({"role": "assistant", "text": str(r.get("reply", "")).strip(), "changes": changes, "before": before, "show_pages": [int(x) for x in (r.get("show_pages") or []) if isinstance(x, (int, float))][:4], "ts": time.time()})
+    store.write(pid, "structure_chat.json", turns)
+    return {"turns": turns, "applied": bool(roles or breaks or style_changes)}
+
+
+@app.post("/api/projects/{pid}/structure/chat/undo")
+def undo_chat(pid: str):
+    """Put the overrides back as they were before the last chat change."""
+    _p(pid)
+    turns = store.read(pid, "structure_chat.json", [])
+    last = next((t for t in reversed(turns) if t.get("role") == "assistant" and t.get("changes")), None)
+    if not last:
+        raise HTTPException(400, "Nothing to undo.")
+    p = store.load(pid)
+    theme = dict(p["theme"])
+    for k, v in (last["before"].get("theme") or {}).items():
+        if v is None:
+            theme.pop(k, None)
+        else:
+            theme[k] = v
+    store.update(pid, roles=last["before"]["roles"], page_breaks=last["before"]["page_breaks"], theme=theme, structure_changed=time.time())
+    last["changes"] = []
+    last["undone"] = True
+    store.write(pid, "structure_chat.json", turns)
+    return {"turns": turns}
 
 
 class StructureIn(BaseModel):
     profile: Optional[str] = None
     roles: Optional[Dict[str, str]] = None
+    page_breaks: Optional[Dict[str, bool]] = None
     end_page: Optional[str] = None
 
 
@@ -182,10 +538,66 @@ def put_structure(pid: str, body: StructureIn):
         p["profile"] = body.profile
     if body.roles is not None:
         p["roles"] = {k: v for k, v in body.roles.items() if v}
+    if body.page_breaks is not None:  # the screen sends only the lines the author changed
+        p["page_breaks"] = {**p.get("page_breaks", {}), **body.page_breaks}
+    p["structure_changed"] = time.time()
     if body.end_page is not None:
         p["meta"]["end_page"] = body.end_page
     store.save(pid, p)
     return get_structure(pid)
+
+
+# ------------------------------------------------------------------ reference Figma (style)
+class RefIn(BaseModel):
+    url: str
+
+
+@app.put("/api/projects/{pid}/reference")
+def set_reference(pid: str, body: RefIn):
+    p = _p(pid)
+    url = body.url.strip()
+    if url:
+        try:
+            figma_api.parse_url(url)
+        except figma_api.FigmaError as e:
+            raise HTTPException(400, str(e))
+    ref = p.get("reference") or {}
+    if url != ref.get("url"):
+        p["reference"] = {"url": url} if url else None
+    store.save(pid, p)
+    return {"reference": p["reference"]}
+
+
+@app.post("/api/projects/{pid}/reference/read")
+def read_reference(pid: str):
+    """Read the reference Figma once: colours, capitalisation, typography. The author can change everything afterwards."""
+    p = _p(pid)
+    url = (p.get("reference") or {}).get("url")
+    if not url:
+        raise HTTPException(400, "Paste a Figma link first.")
+    models = config.settings()["models"]
+
+    def work(prog):
+        ref = style_ref.read_reference(pid, url, models, prog)
+        p2 = store.load(pid)
+        theme = dict(p2["theme"])
+        theme.update(ref["theme"])
+        theme["caseRules"] = {**rules.DEFAULT_CASE, **ref["case"]}
+        theme["pageTypes"] = ref.get("page_types") or {}
+        theme["fonts"] = ref.get("fonts") or {}
+        theme["layout"] = ref.get("layout") or rules.DEFAULT_LAYOUT
+        if ref.get("page_types", {}).get("body", {}).get("bg"):
+            theme["white"] = ref["page_types"]["body"]["bg"]
+        theme["name"] = "From reference: " + (ref.get("name") or "Figma file")[:60]
+        store.update(pid, reference=ref, theme=theme, samples_approved=False)  # colours changed: look at the samples again
+
+    return store.job_run(pid, "reference", work)
+
+
+@app.get("/api/projects/{pid}/reference")
+def get_reference(pid: str):
+    p = _p(pid)
+    return {"reference": p.get("reference"), "job": store.job_get(pid, "reference"), "case_labels": rules.CASE_LABELS, "case_defaults": rules.DEFAULT_CASE}
 
 
 # ------------------------------------------------------------------ pictures & diagrams
@@ -196,7 +608,7 @@ def get_images(pid: str):
     inv = images.inventory(pid, blocks, store.read(pid, "pages.json", {}))
     gen_jobs = {k.split(":img-", 1)[1]: v for k, v in store.JOBS.items() if k.startswith(f"{pid}:img-")}
     return {"images": inv, "job": store.job_get(pid, "images"), "gen_job": store.job_get(pid, "imggen"), "gen_jobs": gen_jobs, "chrome": bool(images.chrome_bin()), "needs_media": any(not e["has_media"] for e in inv if not e["tiny"]) or any(b["t"] == "img" and not b.get("hash") for b in blocks),
-            "summary": {"total": len(inv), "tiny": sum(1 for e in inv if e["tiny"]), "diagrams": sum(1 for e in inv if e["mode"] == "generate"), "generated": sum(1 for e in inv if e["has_svg"])}}
+            "summary": {"total": len(inv), "tiny": sum(1 for e in inv if e["tiny"]), "diagrams": sum(1 for e in inv if e["mode"] in ("generate", "table")), "generated": sum(1 for e in inv if e["has_svg"] or e["has_table"])}}
 
 
 @app.post("/api/projects/{pid}/images/analyse")
@@ -214,8 +626,8 @@ class ImgIn(BaseModel):
 @app.patch("/api/projects/{pid}/images/{h}")
 def patch_image(pid: str, h: str, body: ImgIn):
     _p(pid)
-    if body.mode not in ("generate", "placeholder"):
-        raise HTTPException(400, "mode must be generate or placeholder")
+    if body.mode not in ("generate", "table", "placeholder"):
+        raise HTTPException(400, "mode must be generate, table or placeholder")
     images.set_mode(pid, h, body.mode)
     return {"ok": True}
 
@@ -223,7 +635,10 @@ def patch_image(pid: str, h: str, body: ImgIn):
 def _gen_one(pid, h, prog):
     p = store.load(pid)
     try:
-        images.generate(pid, h, p["theme"], config.settings()["models"], prog)
+        if store.read(pid, "images.json", {}).get(h, {}).get("mode") == "table":
+            images.extract_table(pid, h, config.settings()["models"])
+        else:
+            images.generate(pid, h, p["theme"], config.settings()["models"], prog)
     except Exception as e:
         st = store.read(pid, "images.json", {})
         st.setdefault(h, {}).update({"status": "failed", "error": str(e)[:300]})
@@ -246,15 +661,49 @@ def generate_all(pid: str, only_missing: bool = True):
 
     def work(prog):
         inv = images.inventory(pid, blocks, store.read(pid, "pages.json", {}))
-        todo = [e for e in inv if e["mode"] == "generate" and (not only_missing or not e["has_svg"])]
+        todo = [e for e in inv if e["mode"] in ("generate", "table") and (not only_missing or not (e["has_table"] if e["mode"] == "table" else e["has_svg"]))]
         for i, e in enumerate(todo):
-            prog(f"Drawing diagram {i + 1} of {len(todo)}", i / max(1, len(todo)))
+            prog(f"Drawing picture {i + 1} of {len(todo)}", i / max(1, len(todo)))
             try:
                 _gen_one(pid, e["hash"], None)
             except Exception:
                 pass
 
     return store.job_run(pid, "imggen", work)
+
+
+@app.post("/api/projects/{pid}/tables/prepare")
+def prepare_tables(pid: str):
+    """Before the Preview: find the pictures that are tables and read them into real tables (so pages are laid out correctly)."""
+    _p(pid)
+    blocks = _blocks(pid)
+    models = config.settings()["models"]
+
+    def work(prog):
+        images.classify(pid, blocks, models, lambda m, f=0: prog("Looking at the pictures… " + m, f * 0.4))
+        inv = images.inventory(pid, blocks, store.read(pid, "pages.json", {}))
+        st = store.read(pid, "images.json", {})
+        todo = [e for e in inv if e["class"] == "table" and not st.get(e["hash"], {}).get("mode_user") and not e["has_table"]]
+        for e in todo:
+            st.setdefault(e["hash"], {})["mode"] = "table"
+        store.write(pid, "images.json", st)
+        for i, e in enumerate(todo):
+            prog(f"Reading table {i + 1} of {len(todo)}…", 0.4 + 0.6 * i / max(1, len(todo)))
+            try:
+                images.extract_table(pid, e["hash"], models)
+            except Exception as ex:  # a table that cannot be read stays a placeholder
+                st2 = store.read(pid, "images.json", {})
+                st2.setdefault(e["hash"], {}).update({"status": "failed", "error": str(ex)[:300], "mode": "placeholder", "mode_user": True})
+                store.write(pid, "images.json", st2)
+        prog("Done", 1)
+
+    return store.job_run(pid, "tables", work)
+
+
+@app.get("/api/projects/{pid}/tables")
+def tables_status(pid: str):
+    _p(pid)
+    return {"job": store.job_get(pid, "tables")}
 
 
 @app.get("/api/projects/{pid}/media/{h}")
@@ -283,7 +732,7 @@ def diagram_file(pid: str, h: str):
 @app.get("/api/projects/{pid}/rules")
 def get_rules(pid: str):
     p = _p(pid)
-    return {"prompt": p.get("rules") or rules.rules_prompt(p["theme"]), "custom": bool(p.get("rules")), "labels": rules.THEME_LABELS}
+    return {"prompt": p.get("rules") or rules.rules_prompt(p["theme"]), "custom": bool(p.get("rules")), "labels": rules.THEME_LABELS, "layout_default": rules.DEFAULT_LAYOUT, "type_labels": rules.TYPE_LABELS, "layout": rules.layout_of(p["theme"])}
 
 
 class RulesIn(BaseModel):
@@ -313,6 +762,8 @@ def put_theme(pid: str, theme: Dict[str, Any] = Body(...)):
 @app.get("/api/projects/{pid}/samples")
 def get_samples(pid: str):
     p = _p(pid)
+    measure.configure(p["theme"].get("fonts"))
+    layout.configure(rules.layout_of(p["theme"]), p["theme"].get("caseRules"))
     s = samples.sample_pages(p["meta"])
     s["theme"] = p["theme"]
     return s
@@ -331,7 +782,13 @@ def approve(pid: str, approved: bool = True):
 # ------------------------------------------------------------------ scan & Q&A
 def _meta(p):
     """Project meta plus the reading profile and the user's per-heading role overrides."""
-    return dict(p["meta"], profile=p.get("profile", "auto"), roles=p.get("roles", {}))
+    m = dict(p["meta"], profile=p.get("profile", "auto"), roles=p.get("roles", {}), page_breaks=p.get("page_breaks", {}))
+    if p.get("use_structure_map", True):
+        blocks = store.read(p["id"], "blocks.json")
+        sm = structure_map.load(p["id"], blocks) if blocks else None
+        if sm:
+            m["structure_map"] = sm
+    return m
 
 
 def _blocks(pid):
@@ -466,9 +923,10 @@ def attach_diagrams(pid, spec):
         if not h or st.get(h, {}).get("mode") != "generate":
             return
         if h not in svgs:
-            svgs[h] = images.svg_for(pid, h)
+            svgs[h] = images.drawing_for(pid, h)
         if svgs[h]:
-            it["svg"] = svgs[h]
+            it["svg"] = svgs[h]["svg"]
+            it["labels"] = svgs[h]["labels"]
             n += 1
 
     def walk(o):
@@ -490,18 +948,118 @@ def attach_diagrams(pid, spec):
     spec["diagrams"] = n
 
 
+def tables_from_pictures(pid, book):
+    """A picture of a table becomes a real table block (house style) before pagination, so page heights are right."""
+    st = store.read(pid, "images.json", {})
+    cache: dict = {}
+
+    def table_of(h):
+        if h not in cache:
+            t = images.table_for(pid, h) if st.get(h, {}).get("mode") == "table" else None
+            cache[h] = structure.table_block({"rows": ([t["head"]] if t["head"] else []) + t["rows"], "src": None}) if t and t["rows"] else None
+            if cache[h] and t["head"]:
+                cache[h]["head"], cache[h]["rows"] = t["head"], t["rows"]  # an explicit header row from the picture wins over the guess
+        return cache[h]
+
+    def walk(o):
+        if isinstance(o, dict):
+            for k, v in list(o.items()):
+                if isinstance(v, list):
+                    o[k] = [dict(table_of(x["hash"]), src=x.get("src"), from_pic=True) if isinstance(x, dict) and x.get("t") == "image" and x.get("hash") and table_of(x["hash"]) else x for x in v]
+                    for x in o[k]:
+                        walk(x)
+                elif isinstance(v, dict):
+                    walk(v)
+        elif isinstance(o, list):
+            for x in o:
+                walk(x)
+
+    walk(book)
+
+
+ACRONYM_DEFAULTS = {"IIT", "NEET", "CBSE", "ICSE", "JEE", "DNA", "RNA", "ATP", "NCERT", "MCQ", "MCQS", "HOT", "IUPAC", "PVC", "LPG", "CNG", "UV"}
+
+
+def doc_acronyms(blocks) -> list[str]:
+    """Short all-caps words that appear in capitals inside ordinary (mixed-case) text are acronyms: capitalisation rules never lower them."""
+    found = set(ACRONYM_DEFAULTS)
+    for b in blocks:
+        t = gdoc.block_text(b)
+        if len(t) < 12 or t == t.upper():
+            continue
+        for m in re.finditer(r"\b([A-Z]{2,6})(s?)\b", t):
+            found.add(m.group(1))
+            if m.group(2):
+                found.add(m.group(1) + "S")
+    return sorted(found)
+
+
+PLUGIN_DIR = config.ROOT / "figma-plugin"
+
+
+def figma_plugin_registration() -> dict:
+    """Which folder Figma desktop runs the Book Builder plugin from (its settings file lists development plugins)."""
+    f = Path(os.path.expanduser("~/Library/Application Support/Figma/settings.json"))
+    ours = str(PLUGIN_DIR / "manifest.json")
+    if not f.exists():
+        return {"known": False, "ok": None, "path": None, "expected": ours}
+    try:
+        paths = sorted(set(re.findall(r'"[^"]*?([^"]*figma-plugin/manifest\.json)"', f.read_text())))
+    except Exception:
+        return {"known": False, "ok": None, "path": None, "expected": ours}
+    paths = ["/" + x.lstrip("/") for x in paths]
+    if not paths:
+        return {"known": False, "ok": None, "path": None, "expected": ours}
+    ok = any(os.path.realpath(x) == os.path.realpath(ours) for x in paths)
+    return {"known": True, "ok": ok, "path": paths[-1], "expected": ours}
+
+
+def plugin_stale_error(version) -> Optional[str]:
+    """None when the calling plugin is current; otherwise what to tell the person running it."""
+    cur = plugin_version()
+    try:
+        v = int(version) if version not in (None, "") else 0
+    except ValueError:
+        v = 0
+    if v == cur:
+        return None
+    reg = figma_plugin_registration()
+    where = f" Figma is running the plugin from {reg['path']}, but this app's plugin is {reg['expected']}." if reg.get("known") and not reg.get("ok") else ""
+    return (f"This copy of the plugin is out of date (version {v}, the app needs version {cur}).{where} "
+            f"In Figma: Plugins → Development → Import plugin from manifest… and pick {reg['expected']}, then run Book Builder again.")
+
+
+def plugin_version() -> int:
+    """The spec contract number declared in figma-plugin/code.js (so the app and the file on disk can never disagree)."""
+    m = re.search(r"PLUGIN_VERSION = (\d+)", (config.ROOT / "figma-plugin" / "code.js").read_text())
+    return int(m.group(1)) if m else 0
+
+
 def build_spec(pid):
     p = _p(pid)
+    measure.configure(p["theme"].get("fonts"))
+    layout.configure(rules.layout_of(p["theme"]), p["theme"].get("caseRules"))
     blocks = _blocks(pid)
     book = structure.build_book(blocks, _meta(p), _fixes(pid))
     book["theme"] = p["theme"]
+    tables_from_pictures(pid, book)
     meta = book["meta"]
     meta["footer"] = p["meta"].get("footer") or f"Grade {meta.get('grade', '')} - {meta.get('subject', '')} - Module {meta.get('module', '')}".replace("-  -", "-")
     spec = layout.build_pages(book)
     attach_diagrams(pid, spec)
     spec["meta"] = meta
-    spec["theme"] = p["theme"]
+    # a document read for meaning keeps its capitalisation exactly as written (no Title Case restyling of headings)
+    spec["theme"] = {**p["theme"], "caseRules": {**rules.DEFAULT_CASE, **(p["theme"].get("caseRules") or {})}, "acronyms": doc_acronyms(blocks), "layout": rules.layout_of(p["theme"]), "components": rules.components_of(p["theme"])}
+    sstyles = p["theme"].get("sectionStyles") or {}
+    for pg in spec["pages"]:  # a section with its own look carries the merged styles on each of its pages
+        src = pg.get("sectionSrc")
+        if src and src in sstyles:
+            pg["components"] = rules.components_of(p["theme"], src)
+            if sstyles[src].get("page"):
+                pg["pageStyle"] = dict(sstyles[src]["page"])
     spec["name"] = p["name"]
+    spec["pluginVersion"] = plugin_version()
+    spec["font_warnings"] = list(measure.warnings)
     return spec, book
 
 
@@ -531,12 +1089,16 @@ def generate(pid: str):
     (config.DATA / "plugin_job.json").write_text(__import__("json").dumps(job, ensure_ascii=False))
     p["stage"] = "generated"
     p["last_job"] = job["id"]
+    p["generated_at"] = time.time()
     store.save(pid, p)
     return {"job": job["id"], "pages": len(spec["pages"]), "overflow": spec["overflow"]}
 
 
 @app.get("/api/plugin/jobs")
-def plugin_jobs():
+def plugin_jobs(plugin: Optional[str] = None):
+    err = plugin_stale_error(plugin)
+    if err:  # an old plugin shows this as the only "book" in its list, so the message reaches it
+        return {"jobs": [{"project": "", "name": "⚠ PLUGIN OUT OF DATE — " + err, "chapter": "", "pages": 0, "created": time.time(), "state": "stale"}], "error": err}
     """Every book with a generated design, newest first, for the plugin's dropdown."""
     out = []
     for d in config.PROJECTS.iterdir():
@@ -556,7 +1118,10 @@ def plugin_jobs():
 
 
 @app.get("/api/plugin/job")
-def plugin_job(project: Optional[str] = None):
+def plugin_job(project: Optional[str] = None, plugin: Optional[str] = None):
+    err = plugin_stale_error(plugin)
+    if err:
+        return {"job": None, "error": err}
     if project:
         try:
             return {"job": store.read(project, "job.json")}

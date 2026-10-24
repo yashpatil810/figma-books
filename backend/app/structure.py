@@ -21,6 +21,8 @@ CALLOUTS = {
 }
 Q_RE = re.compile(r"^\s*(\d+)\s*([.)])\s*")
 MCQ_RE = re.compile(r"\(\s*([A-D])\s*\)")
+QNUM_RE = re.compile(r"^\s*(\d{1,3})\s{2,}\S")  # "01  Stem…" (number, then spaces, no punctuation)
+OPT_RE = re.compile(r"^\s*([A-D])[.)]\s+\S")      # "A. option" on its own line
 RANGE_RE = re.compile(r"^\(\s*Questions?\b.*\)$", re.I)
 
 
@@ -172,8 +174,26 @@ def table_block(a):
     head, body = (rows[0], rows[1:]) if looks_like_header else ([], rows)
     lens = [max(len(r[c]) for r in rows) for c in range(n)]
     tot = sum(max(l, 8) for l in lens)
-    ws = [round(515 * max(l, 8) / tot) for l in lens]
-    ws[-1] = 515 - sum(ws[:-1])
+    from . import layout as _lay
+
+    W = _lay.CONTENT_W
+    ws = [W * max(l, 8) / tot for l in lens]
+    # a column is never narrower than its longest word (cell padding is 18px, ~6.4px per character at 11pt)
+    floor = [min(200, max(len(w) for r in rows for w in r[c].split() or [""]) * 6.4 + 22) for c in range(n)]
+    for _ in range(3):
+        short = [c for c in range(n) if ws[c] < floor[c]]
+        if not short:
+            break
+        need = sum(floor[c] - ws[c] for c in short)
+        rest = [c for c in range(n) if c not in short]
+        room = sum(ws[c] - floor[c] for c in rest if ws[c] > floor[c])
+        for c in short:
+            ws[c] = floor[c]
+        for c in rest:
+            if room > 0 and ws[c] > floor[c]:
+                ws[c] -= need * (ws[c] - floor[c]) / room
+    ws = [round(w) for w in ws]
+    ws[-1] = W - sum(ws[:-1])
     return {"t": "table", "head": head, "rows": body, "widths": ws, "src": [a["src"]]}
 
 
@@ -357,9 +377,25 @@ def qstream(atoms, mode, issues):
         cur["items"].append(item)
         cur["src"].append(src)
 
+    skip_to = 0
     for idx, a in enumerate(atoms):
+        if idx < skip_to:
+            continue
         k = a["k"]
         txt = atom_text(a) if k != "img" else ""
+        if mode == "q" and k == "p" and QNUM_RE.match(txt):  # a question typed as "01  stem" + A./B./C./D. lines
+            j, opts = idx + 1, []
+            while j < len(atoms) and atoms[j]["k"] == "p" and OPT_RE.match(atom_text(atoms[j]).strip()):
+                opts.append(atoms[j])
+                j += 1
+            if len(opts) >= 2:
+                flush()
+                lead = re.match(r"^\s*(\d{1,3})\s+", rtext(a["runs"]))
+                out.append({"t": "mcq", "n": lead.group(1), "stem": unb(trim(lstrip_runs(a["runs"], lead.end()))),
+                            "options": [{"k": atom_text(o).strip()[0], "runs": unb(trim(o["runs"]))} for o in opts],
+                            "src": [a["src"]] + [o["src"] for o in opts]})
+                skip_to = j
+                continue
         # numbering: auto label, or typed "29. text"
         label, runs, src = None, None, a["src"]
         if k == "li" and not a["bullet"]:
@@ -651,15 +687,20 @@ def detect_profile(blocks: list[dict]) -> str:
 
 
 def build_book(blocks: list[dict], meta: dict, fixes: list[dict] | None = None) -> dict:
-    """Pick the reading profile (meta['profile']: auto | synopsis | generic) and build the book model."""
+    """Build the book model. With a structure map (Claude's reading of the doc) the generic engine follows the map and
+    no template is guessed; the synopsis template and keyword rules are only a fallback when no map exists."""
+    from .structure_generic import build_book_generic
+
+    if meta.get("structure_map"):
+        book = build_book_generic(blocks, meta, fixes, meta.get("roles") or {})
+        book["profile"] = "map"
+        return book
     prof = (meta.get("profile") or "auto").lower()
     if prof == "auto":
         prof = detect_profile(blocks)
     if prof == "synopsis":
         book = build_book_synopsis(blocks, meta, fixes)
     else:
-        from .structure_generic import build_book_generic
-
         book = build_book_generic(blocks, meta, fixes, meta.get("roles") or {})
     book["profile"] = prof
     return book

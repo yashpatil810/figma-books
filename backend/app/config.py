@@ -31,7 +31,7 @@ load_env()
 
 DEFAULT_SETTINGS = {
     # Opus for anything that judges accuracy, Sonnet for mechanical/structural work.
-    "models": {"rules": "sonnet", "structure": "sonnet", "scan": "opus", "judge": "opus", "spelling": "sonnet"},
+    "models": {"rules": "sonnet", "structure": "opus", "scan": "opus", "judge": "opus", "spelling": "sonnet"},  # structure: reading the doc for meaning needs the strongest model
     "claude_bin": "",
     "figma_token": "",
     "port": 8765,

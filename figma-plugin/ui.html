@@ -25,10 +25,13 @@ let job = null;
 const $ = id => document.getElementById(id);
 const log = (m, cls) => { const l = $('log'); l.style.display = 'block'; l.className = 'box ' + (cls || ''); l.textContent = m; };
 const base = () => $('base').value.replace(/\/$/, '');
+let PLUGIN_VERSION = 0;  // set by code.js on startup
+const q = () => '&plugin=' + PLUGIN_VERSION;
 async function refresh() {
   try {
-    const r = await fetch(base() + '/api/plugin/jobs');
+    const r = await fetch(base() + '/api/plugin/jobs?plugin=' + PLUGIN_VERSION);
     const d = await r.json();
+    if (d.error) { $('info').innerHTML = '<span class="err">' + d.error + '</span>'; }
     const sel = $('pick'); const keep = sel.value;
     sel.innerHTML = '';
     d.jobs.forEach(j => { const o = document.createElement('option'); o.value = j.project; o.textContent = j.name + (j.chapter ? ' (' + j.chapter + ')' : '') + ' · ' + j.pages + ' pages · ' + new Date(j.created * 1000).toLocaleString() + (j.state === 'built' ? ' · built' : ''); sel.appendChild(o); });
@@ -41,18 +44,19 @@ $('base').onchange = refresh;
 $('load').onclick = async () => {
   try {
     if (!$('pick').value) { $('info').textContent = 'Nothing to load. Press Generate in the app first.'; return; }
-    const r = await fetch(base() + '/api/plugin/job?project=' + encodeURIComponent($('pick').value));
+    const r = await fetch(base() + '/api/plugin/job?project=' + encodeURIComponent($('pick').value) + q());
     const d = await r.json();
+    if (d.error) { $('info').innerHTML = '<span class="err">' + d.error + '</span>'; return; }
     if (!d.job) { $('info').textContent = 'That book has no design waiting. Click Generate in the app first.'; return; }
     job = d.job;
     $('info').innerHTML = '<b>' + (job.spec.name || 'Book') + '</b><br>' + job.spec.pages.length + ' pages' + (job.spec.overflow.length ? '<br><span class="err">' + job.spec.overflow.length + ' blocks may overflow</span>' : '');
     $('build').disabled = false;
   } catch (e) { $('info').innerHTML = '<span class="err">Cannot reach the app: ' + e.message + '. Is it running?</span>'; }
 };
-refresh();
 $('build').onclick = () => { $('build').disabled = true; parent.postMessage({ pluginMessage: { type: 'build', job } }, '*'); };
 onmessage = async e => {
   const m = e.data.pluginMessage; if (!m) return;
+  if (m.type === 'hello') { PLUGIN_VERSION = m.version; refresh(); return; }
   if (m.type === 'progress') { $('bar').firstChild.style.width = (100 * m.n / m.total) + '%'; log(m.text); }
   if (m.type === 'error') { log(m.text, 'err'); $('build').disabled = false; }
   if (m.type === 'done') {

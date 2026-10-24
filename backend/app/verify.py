@@ -9,7 +9,7 @@ import hashlib
 import re
 import unicodedata
 
-from . import figma_api, llm
+from . import figma_api, llm, rules
 from .gdoc import block_text
 
 HEADER_Y, FOOTER_Y = 58, 792
@@ -58,6 +58,8 @@ def extract_page(frame: dict, idx: int) -> dict:
         data = sp(n)
         if data.get("diagram") or re.match(r"(?i)diagram \(generated", n.get("name", "")):
             diagrams.append({"id": n["id"], "src": [x for x in (data.get("src") or "").split(",") if x], **rel})
+            return
+        if data.get("pic_table"):  # a table rebuilt from a picture: its text is not in the doc as text
             return
         is_ph = data.get("placeholder") or re.match(r"(?i)image placeholder", n.get("name", ""))
         if is_ph:
@@ -281,22 +283,27 @@ def anomalies(pages, theme):
         nm = p["name"]
         if p["role"] in ("cover", "cover/empty"):
             continue
-        if (p["w"], p["h"]) != (595, 842):
-            out.append({"kind": "page-size", "page": p["idx"], "node": p["id"], "msg": f"{nm}: page size is {p['w']}×{p['h']} (expected 595×842)."})
+        lay = rules.layout_of(theme)
+        if (p["w"], p["h"]) != (lay["page"]["w"], lay["page"]["h"]):
+            out.append({"kind": "page-size", "page": p["idx"], "node": p["id"], "msg": f"{nm}: page size is {p['w']}×{p['h']} (expected {lay['page']['w']}×{lay['page']['h']})."})
         fonts = {}
+        allowed = set(ALLOWED_FONTS)
+        tf = (theme or {}).get("fonts") or {}
+        if tf:  # a style with its own fonts: those are the fonts of the book
+            allowed = {x["family"] for x in (tf.get("text"), tf.get("display")) if x and x.get("family")} or allowed
         for t in p["texts"]:
             fam = t["family"]
-            if fam and fam not in ALLOWED_FONTS:
+            if fam and fam not in allowed:
                 fonts.setdefault(fam, t)
         for fam, t in fonts.items():
-            out.append({"kind": "font", "page": p["idx"], "node": t["id"], "msg": f"{nm}: uses font “{fam}” (e.g. “{t['text'][:30]}”). The book uses Avenir and DIN Condensed only."})
+            out.append({"kind": "font", "page": p["idx"], "node": t["id"], "msg": f"{nm}: uses font “{fam}” (e.g. “{t['text'][:30]}”). The book uses {' and '.join(sorted(allowed))} only."})
         seen = set()
         for t in p["texts"]:
             if t["color"] and not near(t["color"]) and t["color"] not in seen:
                 seen.add(t["color"])
                 out.append({"kind": "color", "page": p["idx"], "node": t["id"], "msg": f"{nm}: text colour {t['color']} is not in the colour scheme (e.g. “{t['text'][:30]}”)."})
         for t in p["texts"]:
-            if t["zone"] == "body" and alnum_set(t["text"]) and (t["y"] + t["h"] > FOOTER_Y + 6 or t["x"] + t["w"] > 595 - 30):
+            if t["zone"] == "body" and alnum_set(t["text"]) and (t["y"] + t["h"] > FOOTER_Y + 6 or t["x"] + t["w"] > rules.layout_of(theme)["page"]["w"] - 30):
                 out.append({"kind": "overflow", "page": p["idx"], "node": t["id"], "msg": f"{nm}: “{t['text'][:40]}…” runs into the footer or margin. Move it to the next page or resize."})
                 break
         if p["role"] == "content" and not [t for t in p["texts"] if t["zone"] == "body"]:
@@ -408,6 +415,9 @@ def judge(diffs, blocks, models, rules_prompt, prog=None):
 
 
 def run(file_url: str, blocks: list[dict], ignored: list[dict], meta: dict, theme: dict, models: dict, rules_prompt: str, prog, node_id: str | None = None, use_llm=True, accepted=None):
+    global HEADER_Y, FOOTER_Y
+    lay = rules.layout_of(theme)  # the style's own page geometry, not a fixed one
+    HEADER_Y, FOOTER_Y = lay["col"]["top"] - 6, lay["col"]["bottom"] + 6
     key_, node = figma_api.parse_url(file_url)
     node = node_id or node
     prog("Reading the Figma file…", 0.1)

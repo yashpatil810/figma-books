@@ -6,47 +6,51 @@ function usePoll(fn, active, ms = 1500) {
   useEffect(() => { if (!active) return; const t = setInterval(fn, ms); return () => clearInterval(t) }, [active, fn, ms])
 }
 
-const ROLE_LABEL = { body: 'Normal content (new page)', exercise: 'Exercise / questions', answers: 'Answers / solutions', mindmap: 'Mind map', references: 'References', glossary: 'Glossary', inline: 'Just a heading (no new page)', ignore: 'Leave out' }
-
-function StructurePanel({ p, reload }) {
-  const [st, setSt] = useState(null)
-  const [roles, setRoles] = useState({})
-  const [busy, setBusy] = useState(false)
-  const [open, setOpen] = useState(false)
-  const load = useCallback(async () => { const d = await api(`/projects/${p.id}/structure`); setSt(d); setRoles(Object.fromEntries(d.candidates.filter(c => c.role).map(c => [c.src, c.role]))) }, [p.id])
+// ------------------------------------------------------------------ Reference Figma (style source)
+function ReferenceCard({ p, reload }) {
+  const [url, setUrl] = useState(p.reference?.url || '')
+  const [d, setD] = useState(null)
+  const [err, setErr] = useState('')
+  const load = useCallback(async () => { const x = await api(`/projects/${p.id}/reference`); setD(x); return x }, [p.id])
   useEffect(() => { load().catch(() => {}) }, [load])
-  if (!st) return null
-  const save = async (extra = {}) => { setBusy(true); try { setSt(await api(`/projects/${p.id}/structure`, { method: 'PUT', body: { roles, ...extra } })); reload() } finally { setBusy(false) } }
-  const pg = x => x ? <span className="tag" style={{ background: '#fff4d6', color: '#7a5200' }}>doc p.{x}</span> : null
+  const running = d?.job?.state === 'running'
+  usePoll(async () => { const x = await load(); if (x.job?.state !== 'running') reload() }, running, 2000)
+  const ref = d?.reference
+  const go = async () => { setErr(''); try { await api(`/projects/${p.id}/reference`, { method: 'PUT', body: { url } }); await api(`/projects/${p.id}/reference/read`, { method: 'POST' }); await load() } catch (e) { setErr(e.message) } }
+  const clear = async () => { setErr(''); try { await api(`/projects/${p.id}/reference`, { method: 'PUT', body: { url: '' } }); setUrl(''); await load(); reload() } catch (e) { setErr(e.message) } }
+  const swatches = ref?.theme ? Object.entries(ref.theme) : []
   return (
     <div className="card">
-      <h2>How I read your document</h2>
-      <div className="muted small" style={{ marginBottom: 8 }}>Your documents don't all share one layout. Sections like synopsis, key ideas or tests are only used when the doc has them. Check this reading and correct anything that looks off.</div>
-      <div className="row">
-        <label style={{ margin: 0 }}>Layout</label>
-        <select style={{ width: 300 }} value={st.chosen} onChange={e => save({ profile: e.target.value })}>
-          <option value="auto">Auto-detect (found: {st.detected === 'synopsis' ? 'synopsis template' : 'generic chapter'})</option>
-          <option value="synopsis">Synopsis template (key ideas, synopses, tests)</option>
-          <option value="generic">Generic chapter (follows your headings)</option>
-        </select>
-        <span className="tag">{st.profile === 'synopsis' ? 'reading as: synopsis template' : 'reading as: generic chapter'}</span>
+      <h2>Reference design <span className="muted small">(optional)</span></h2>
+      <div className="muted small" style={{ marginBottom: 8 }}>Paste a link to a Figma file, page or section that looks the way you want the book to look (select it in Figma, right-click, Copy link). The app reads its colours, text styles and capitalisation once and uses them as your starting point on the next screen, where you can change anything. Without a link, the default style is used.</div>
+      <div className="row" style={{ gap: 8 }}>
+        <input type="url" style={{ flex: 1 }} value={url} onChange={e => setUrl(e.target.value)} placeholder="https://www.figma.com/design/…?node-id=…" />
+        <button className="btn primary" disabled={running || !url.trim()} onClick={go}>{running ? 'Reading…' : ref?.pages_read ? '↻ Read again' : 'Read the reference'}</button>
+        {ref && <button className="btn" disabled={running} onClick={clear}>Remove</button>}
       </div>
-      <h3 style={{ fontSize: 13, margin: '14px 0 6px' }}>Sections found</h3>
-      {st.outline.map((o, i) => <div key={i} className="row" style={{ padding: '4px 0', borderBottom: '1px solid var(--line)', gap: 8 }}><span className="tag">{o.kind}</span><b style={{ flex: 1 }}>{o.title}</b>{pg(o.page)}<span className="muted small">{o.blocks} blocks</span></div>)}
-      {st.outline.length === 0 && <div className="muted small">Sections come from the synopsis template reading.</div>}
-      {st.notes.length > 0 && <div style={{ marginTop: 10 }}>{st.notes.map((n, i) => <div key={i} className="small" style={{ margin: '3px 0' }}><span className={`tag ${n.severity === 'question' ? 'question' : 'info'}`}>{n.severity}</span> {n.message}</div>)}</div>}
-      {st.ignored.length > 0 && <div className="small muted" style={{ marginTop: 8 }}>Left out of the pages: {st.ignored.slice(0, 6).map(x => `“${x.text || x.id}” (${x.reason})`).join('; ')}{st.ignored.length > 6 ? '…' : ''}</div>}
-      <div style={{ marginTop: 10 }}><button className="btn" onClick={() => setOpen(!open)}>{open ? 'Hide' : 'Adjust'} how headings are read ({st.candidates.length} headings)</button></div>
-      {open && <div style={{ marginTop: 8 }}>
-        <table className="t"><thead><tr><th>Heading</th><th>Level</th><th>Doc page</th><th>Treat it as</th></tr></thead><tbody>
-          {st.candidates.map(c => <tr key={c.src}><td>{c.text}</td><td>H{c.level}</td><td>{c.page || ''}</td><td>
-            <select value={roles[c.src] || ''} onChange={e => setRoles({ ...roles, [c.src]: e.target.value })}>
-              <option value="">Automatic{(st.dividers.find(d => d.src === c.src)?.role) ? ` (${ROLE_LABEL[st.dividers.find(d => d.src === c.src).role]})` : ' (heading inside the page)'}</option>
-              {st.roles.map(r => <option key={r} value={r}>{ROLE_LABEL[r]}</option>)}
-            </select></td></tr>)}
-        </tbody></table>
-        <div className="row" style={{ marginTop: 8 }}><button className="btn primary" disabled={busy} onClick={() => save()}>{busy ? 'Applying…' : 'Apply'}</button><span className="muted small">Page and section order update right away. Re-scan the doc afterwards.</span></div>
+      {running && <div style={{ marginTop: 8 }}><div className="small muted">{d.job.message}</div><div className="bar"><i style={{ width: `${Math.max(5, (d.job.progress || 0) * 100)}%` }} /></div></div>}
+      {err && <div className="banner err" style={{ marginTop: 8 }}>{err}</div>}
+      {d?.job?.state === 'failed' && <div className="banner err" style={{ marginTop: 8 }}>{d.job.error || d.job.message}</div>}
+      {ref?.pages_read > 0 && <div style={{ marginTop: 10 }}>
+        <div className="small"><b>Read {ref.pages_read} pages</b> from “{ref.name}”. {ref.page_size ? `Page ${ref.page_size[0]}×${ref.page_size[1]}. ` : ''}Colours found:</div>
+        <div className="row" style={{ gap: 6, margin: '6px 0', flexWrap: 'wrap' }}>{swatches.map(([k, v]) => <span key={k} className="small" style={{ display: 'inline-flex', alignItems: 'center', gap: 4 }}><i style={{ width: 14, height: 14, background: v, border: '1px solid #0002', borderRadius: 3, display: 'inline-block' }} />{k}</span>)}</div>
+        {ref.notes?.map((n, i) => <div key={i} className="small muted">• {n}</div>)}
+        <div className="small muted" style={{ marginTop: 4 }}>Next: Colours &amp; samples shows these colours so you can adjust them.</div>
       </div>}
+    </div>)
+}
+
+// Progress of Claude's automatic reading of the document (starts as soon as the doc is fetched)
+function StructureStatus({ p, reload, goto }) {
+  const j = p.structure_job || {}
+  usePoll(reload, j.state === 'running', 2500)
+  return (
+    <div className="card">
+      <h2>Reading the document</h2>
+      {j.state === 'running' && <><div className="small muted">{j.message}</div><div className="bar"><i style={{ width: `${Math.max(5, (j.progress || 0) * 100)}%` }} /></div></>}
+      {j.state === 'failed' && <div className="banner err">Claude could not read the document: {j.error || j.message}. <button className="btn" style={{ marginLeft: 8 }} onClick={() => api(`/projects/${p.id}/structure/read?force=true`, { method: 'POST' }).then(reload)}>Try again</button></div>}
+      {j.state !== 'running' && j.state !== 'failed' && p.has_structure && <div className="small">Claude has read the whole document and worked out its structure (index, sections, exercises, answer keys). <button className="btn" style={{ marginLeft: 8 }} onClick={() => goto('structure')}>See the structure</button></div>}
+      {j.state !== 'running' && j.state !== 'failed' && !p.has_structure && <div className="small muted">Not read yet. <button className="btn" style={{ marginLeft: 8 }} onClick={() => api(`/projects/${p.id}/structure/read`, { method: 'POST' }).then(reload)}>Read now</button></div>}
     </div>)
 }
 
@@ -80,12 +84,16 @@ function Setup({ p, reload, goto }) {
         <button className="btn" disabled={busy} onClick={refetch}>{busy ? 'Reading…' : 'Re-read the doc'}</button>
       </div>
     </div>
-    {p.has_doc && <StructurePanel p={p} reload={reload} />}
+    {p.mode !== 'audit' && <ReferenceCard p={p} reload={reload} />}
+    {p.has_doc && p.mode !== 'audit' && <StructureStatus p={p} reload={reload} goto={goto} />}
     </>)
 }
 
 // ------------------------------------------------------------------ Design (colours + samples)
 const KEYS = ['primary', 'text', 'strong', 'tint', 'white', 'rule', 'footerRule', 'tableAlt', 'tableBorder', 'onPrimary']
+const PAGE_TYPES = [['index', 'Index'], ['body', 'Teaching content'], ['exercise', 'Exercise'], ['worksheet', 'Worksheet'], ['answers', 'Answer key'], ['mindmap', 'Mind map'], ['references', 'References'], ['glossary', 'Glossary'], ['end', 'End page']]
+const CASE_LABELS = { eyebrow: 'Eyebrow (small line above a title)', title: 'Page and section titles', h2: 'Heading 2', h3: 'Heading 3', toc: 'Index entries', pill: 'Header pill' }
+const CASE_DEFAULTS = { eyebrow: 'ORIGINAL', title: 'TITLE', h2: 'ORIGINAL', h3: 'TITLE', toc: 'TITLE', pill: 'UPPER' }
 const PAIRS = [['misc', 'Common Misconceptions'], ['iit', 'IIT Foundation'], ['dyk', 'Did You Know?']]
 
 function Sw({ theme, setC, k, label, sub }) {
@@ -109,12 +117,18 @@ function Design({ p, reload, goto }) {
   const [approved, setApproved] = useState(p.samples_approved)
   const [edit, setEdit] = useState('')
   const [labels, setLabels] = useState({})
-  useEffect(() => { api(`/projects/${p.id}/samples`).then(setSamples); api(`/projects/${p.id}/rules`).then(r => { setRules(r); setEdit(r.prompt); setLabels(r.labels) }) }, [p.id])
+  const [lay, setLay] = useState(null)
+  const refRunning = p.reference_job?.state === 'running'
+  usePoll(reload, refRunning, 2500)
+  useEffect(() => { api(`/projects/${p.id}/samples`).then(setSamples); api(`/projects/${p.id}/rules`).then(r => { setRules(r); setEdit(r.prompt); setLabels(r.labels); setLay({ def: r.layout_default, names: r.type_labels, cur: r.layout }) }) }, [p.id, p.theme?.name])
+  useEffect(() => { if (!dirty) { setTheme(p.theme); setApproved(p.samples_approved) } }, [p.theme?.name, p.reference?.pages_read])
   const setC = (k, v, sub) => { setDirty(true); setApproved(false); setTheme(sub ? { ...theme, [k]: { ...theme[k], [sub]: v } } : { ...theme, [k]: v }) }
   const save = async () => { await api(`/projects/${p.id}/theme`, { method: 'PUT', body: theme }); setDirty(false); const r = await api(`/projects/${p.id}/rules`); setRules(r); setEdit(r.prompt); reload() }
   const approve = async () => { if (dirty) await save(); await api(`/projects/${p.id}/approve-samples?approved=true`, { method: 'POST' }); setApproved(true); reload() }
   return (
     <div>
+      {refRunning && <div className="banner info" style={{ marginBottom: 10 }}>Reading your reference design… {p.reference_job.message} The colours, fonts and page styles below will update when it finishes.<div className="bar"><i style={{ width: `${Math.max(5, (p.reference_job.progress || 0) * 100)}%` }} /></div></div>}
+      {!refRunning && p.reference?.pages_read > 0 && <div className="banner info" style={{ marginBottom: 10 }}>Starting point taken from your reference design “{p.reference.name}”. Change anything below; to read the reference again go back to Setup.</div>}
       <div className="card">
         <h2>Colour scheme</h2>
         <div className="grid2">
@@ -127,6 +141,48 @@ function Design({ p, reload, goto }) {
           <button className="btn" disabled={!dirty} onClick={save}>Save colours</button>
           <button className="btn" onClick={() => { setTheme(p.theme); setDirty(false) }}>Revert</button>
         </div>
+      </div>
+      <div className="card">
+        <h2>Page types</h2>
+        <div className="muted small" style={{ marginBottom: 8 }}>Each kind of page can have its own background. Header pill, header line and text colours adjust automatically on dark backgrounds.</div>
+        <div className="grid2">{PAGE_TYPES.map(([k, l]) => {
+          const v = theme.pageTypes?.[k]?.bg || (k === 'body' ? theme.white : theme.tint)
+          return <div key={k} className="swatch"><input type="color" value={v} onChange={e => { setDirty(true); setApproved(false); setTheme({ ...theme, pageTypes: { ...(theme.pageTypes || {}), [k]: { ...(theme.pageTypes?.[k] || {}), bg: e.target.value.toUpperCase() } } }) }} /><input type="text" value={v} readOnly /><span>{l}</span></div>
+        })}</div>
+      </div>
+      {lay && <div className="card">
+        <h2>Type scale and spacing</h2>
+        <div className="muted small" style={{ marginBottom: 8 }}>Text sizes and line heights (in points) and the spacing between blocks. {p.reference?.pages_read > 0 ? 'Measured from your reference design; change any number.' : 'The app\'s defaults; change any number.'} Pages are laid out with these numbers.</div>
+        {(() => {
+          const L = { ...lay.cur, ...(theme.layout || {}), type: { ...lay.cur.type, ...(theme.layout?.type || {}) }, gap: { ...lay.cur.gap, ...(theme.layout?.gap || {}) } }
+          const setT = (k, f, v) => { setDirty(true); setApproved(false); setTheme({ ...theme, layout: { ...L, type: { ...L.type, [k]: { ...L.type[k], [f]: parseFloat(v) || 0 } } } }) }
+          const setG = (k, v) => { setDirty(true); setApproved(false); setTheme({ ...theme, layout: { ...L, gap: { ...L.gap, [k]: parseFloat(v) || 0 } } }) }
+          const GAPN = { para: 'Between paragraphs', afterHeading: 'After a heading', beforeHeading: 'Before a large heading', beforeLabel: 'Before a small label', block: 'Around cards and tables', image: 'Around small pictures' }
+          return <>
+            <table className="t"><thead><tr><th>Text</th><th>Size</th><th>Line height</th></tr></thead><tbody>{Object.entries(lay.names).map(([k, n]) => <tr key={k}><td>{n}</td><td><input type="number" step="0.5" style={{ width: 70 }} value={L.type[k].size} onChange={e => setT(k, 'size', e.target.value)} /></td><td><input type="number" step="0.1" style={{ width: 70 }} value={L.type[k].lh} onChange={e => setT(k, 'lh', e.target.value)} /></td></tr>)}</tbody></table>
+            <div className="grid2" style={{ marginTop: 10 }}>{Object.entries(GAPN).map(([k, n]) => <div key={k}><label>{n}</label><input type="number" step="1" style={{ width: 80 }} value={L.gap[k]} onChange={e => setG(k, e.target.value)} /></div>)}</div>
+            <div className="small muted" style={{ marginTop: 8 }}>Page {L.page.w}×{L.page.h} · text column x {L.col.x}, width {L.col.w}, from y {L.col.top} to {L.col.bottom} · header line y {L.header.ruleY}, pill {L.header.pillW}×{L.header.pillH} · footer line y {L.footer.ruleY}</div>
+            <div className="row" style={{ marginTop: 8 }}><button className="btn" onClick={() => { setDirty(true); setApproved(false); setTheme({ ...theme, layout: null }); setLay({ ...lay, cur: lay.def }) }}>Use the app's defaults</button></div>
+          </>
+        })()}
+      </div>}
+      <div className="card">
+        <h2>Fonts</h2>
+        <div className="muted small" style={{ marginBottom: 8 }}>The fonts used on the pages. Google Fonts are available in Figma by default. Leave blank to use the app's default fonts (Avenir and DIN Condensed). Page lengths are measured with the real fonts, so the font names must be spelled exactly as in Figma.</div>
+        <div className="grid2">
+          <div><label>Text font</label><input type="text" placeholder="Avenir (default)" value={theme.fonts?.text?.family || ''} onChange={e => { setDirty(true); setApproved(false); const f = { ...(theme.fonts || {}) }; if (e.target.value) f.text = { medium: 500, heavy: 800, black: 900, ...(f.text || {}), family: e.target.value }; else delete f.text; setTheme({ ...theme, fonts: f }) }} /></div>
+          <div><label>Display font (titles)</label><input type="text" placeholder="DIN Condensed (default)" value={theme.fonts?.display?.family || ''} onChange={e => { setDirty(true); setApproved(false); const f = { ...(theme.fonts || {}) }; if (e.target.value) f.display = { weight: 700, ...(f.display || {}), family: e.target.value }; else delete f.display; setTheme({ ...theme, fonts: f }) }} /></div>
+        </div>
+      </div>
+      <div className="card">
+        <h2>Capitalisation</h2>
+        <div className="muted small" style={{ marginBottom: 8 }}>How each kind of text is capitalised on the pages. The app applies this itself, so it still looks right if the doc is typed differently. Acronyms (IIT, NEET…) are never lowered. Only letter case changes, never the wording.</div>
+        <div className="grid2">{Object.entries(CASE_LABELS).map(([k, l]) => <div key={k}><label>{l}</label>
+          <select value={(theme.caseRules || {})[k] || CASE_DEFAULTS[k]} onChange={e => { setDirty(true); setApproved(false); setTheme({ ...theme, caseRules: { ...(theme.caseRules || {}), [k]: e.target.value } }) }}>
+            <option value="ORIGINAL">Keep as typed in the doc</option><option value="TITLE">Title Case</option><option value="UPPER">UPPERCASE</option><option value="LOWER">lowercase</option>
+          </select></div>)}</div>
+        {p.reference?.typography?.length > 0 && <div style={{ marginTop: 12 }}><div className="small muted">Text styles found in the reference (for your information; the pages use the app's own fonts):</div>
+          <table className="t"><thead><tr><th>Text</th><th>Font</th><th>Weight</th><th>Size</th></tr></thead><tbody>{p.reference.typography.map((x, i) => <tr key={i}><td>{x.role}</td><td>{x.font}</td><td>{x.weight}</td><td>{x.size}</td></tr>)}</tbody></table></div>}
       </div>
       <div className="tabs"><div className={'tab' + (tab === 'samples' ? ' on' : '')} onClick={() => setTab('samples')}>Sample pages</div><div className={'tab' + (tab === 'rules' ? ' on' : '')} onClick={() => setTab('rules')}>Design rules (prompt)</div></div>
       {tab === 'rules' && rules && <div className="card">
@@ -182,6 +238,29 @@ function FindingCard({ f, pid, onChange }) {
     </div>)
 }
 
+// Export the review comments as CSV (Statement, Doc page, Tag), filtered by kind.
+function ExportCsv({ p, counts }) {
+  const KINDS = [['error', 'Errors'], ['warning', 'Warnings'], ['question', 'Questions'], ['info', 'Info']]
+  const [open, setOpen] = useState(false)
+  const [sel, setSel] = useState(new Set(KINDS.map(k => k[0])))
+  const all = sel.size === KINDS.length
+  const toggle = k => { const n = new Set(sel); n.has(k) ? n.delete(k) : n.add(k); setSel(n) }
+  const href = `/api/projects/${p.id}/findings.csv` + (all ? '' : `?severities=${[...sel].join(',')}`)
+  const total = KINDS.filter(k => sel.has(k[0])).reduce((n, k) => n + (counts[k[0]] || 0), 0)
+  return (
+    <div style={{ position: 'relative' }}>
+      <button className="btn" onClick={() => setOpen(!open)}>Export CSV ▾</button>
+      {open && <div className="card" style={{ position: 'absolute', zIndex: 5, top: '110%', right: 0, minWidth: 220, padding: 10 }}>
+        <label className="small" style={{ margin: 0, display: 'block' }}><input type="checkbox" checked={all} onChange={() => setSel(all ? new Set() : new Set(KINDS.map(k => k[0])))} /> All</label>
+        {KINDS.map(([k, l]) => <label key={k} className="small" style={{ margin: 0, display: 'block' }}><input type="checkbox" checked={sel.has(k)} onChange={() => toggle(k)} /> {l} <span className="muted">({counts[k] || 0})</span></label>)}
+        <div className="row" style={{ marginTop: 8 }}>
+          <a className="btn primary" href={sel.size ? href : undefined} download onClick={() => setOpen(false)} style={{ textDecoration: 'none', opacity: sel.size ? 1 : 0.5, pointerEvents: sel.size ? 'auto' : 'none' }}>Download ({total})</a>
+        </div>
+        <div className="muted small" style={{ marginTop: 6 }}>Columns: statement, doc page, tag. No suggestions or internal ids.</div>
+      </div>}
+    </div>)
+}
+
 function Review({ p, reload, goto }) {
   const [data, setData] = useState(null)
   const [filter, setFilter] = useState('open')
@@ -206,6 +285,7 @@ function Review({ p, reload, goto }) {
         <div className="row">
           <button className="btn primary" disabled={running} onClick={() => scan(true)}>{scanned ? '↻ Re-scan the doc' : 'Scan the doc'}</button>
           <button className="btn" disabled={running} onClick={() => scan(false)} title="Only the free rule-based checks">Quick check (no AI)</button>
+          {fs.length > 0 && <ExportCsv p={p} counts={fs.reduce((m, f) => (m[f.severity] = (m[f.severity] || 0) + 1, m), {})} />}
           {running && <div style={{ flex: 1, minWidth: 200 }}><div className="small muted">{data.job.message}</div><div className="bar"><i style={{ width: `${Math.max(5, (data.job.progress || 0) * 100)}%` }} /></div></div>}
           {data.job?.state === 'error' && <span className="err-t">{data.job.message}</span>}
         </div>
@@ -213,7 +293,7 @@ function Review({ p, reload, goto }) {
         {err && <div className="banner err" style={{ marginTop: 8 }}>{err}</div>}
       </div>
       {scanned && (openB === 0
-        ? <div className="banner ok"><b>All clear.</b> Nothing blocking is left, so you can continue. {p.mode === 'create' ? <button className="btn ok" style={{ marginLeft: 10 }} onClick={() => goto('images')}>Continue to Images →</button> : <button className="btn ok" style={{ marginLeft: 10 }} onClick={() => goto('report')}>Continue to the report →</button>}</div>
+        ? <div className="banner ok"><b>All clear.</b> Nothing blocking is left, so you can continue. {p.mode === 'create' ? <button className="btn ok" style={{ marginLeft: 10 }} onClick={() => goto('structure')}>Continue to Structure →</button> : <button className="btn ok" style={{ marginLeft: 10 }} onClick={() => goto('report')}>Continue to the report →</button>}</div>
         : <div className="banner err"><b>{openB} item{openB > 1 ? 's' : ''} still need{openB > 1 ? '' : 's'} your answer.</b> Fix them in the doc and re-scan, or answer them below.{p.mode === 'create' && <button className="btn" style={{ marginLeft: 10 }} onClick={proceed}>Proceed anyway…</button>}</div>)}
       {scanned && <div className="tabs">{[['open', `Open (${fs.filter(f => f.status === 'open').length})`], ['resolved', `Resolved (${fs.filter(f => f.status !== 'open').length})`], ['all', 'All']].map(([k, l]) => <div key={k} className={'tab' + (filter === k ? ' on' : '')} onClick={() => setFilter(k)}>{l}</div>)}<div style={{ flex: 1 }} /><label style={{ margin: 0, alignSelf: 'center' }}><input type="checkbox" checked={byPage} onChange={e => setByPage(e.target.checked)} /> Order by doc page</label></div>}
       {shown.map(f => <FindingCard key={f.id} f={f} pid={p.id} onChange={load} />)}
@@ -221,6 +301,137 @@ function Review({ p, reload, goto }) {
     </div>)
 }
 
+
+// Plain-language requests about the structure ("let Part 10 continue on page 57", "the worksheet is an exercise").
+// Claude turns them into the same overrides as the checkboxes above, so the text on the pages never changes.
+function StructureChat({ p, onChanged, version }) {
+  const [turns, setTurns] = useState([])
+  const [msg, setMsg] = useState('')
+  const [busy, setBusy] = useState(false)
+  const [err, setErr] = useState('')
+  const [spec, setSpec] = useState(null)
+  const endRef = useRef(null)
+  useEffect(() => { api(`/projects/${p.id}/structure/chat`).then(d => setTurns(d.turns)).catch(() => {}) }, [p.id])
+  const wanted = [...new Set(turns.filter(t => t.role === 'assistant' && !t.undone).flatMap(t => t.show_pages || []))]
+  useEffect(() => { if (wanted.length) api(`/projects/${p.id}/spec`).then(setSpec).catch(() => {}) }, [turns.length, p.id, version])
+  useEffect(() => { endRef.current?.scrollIntoView({ block: 'nearest' }) }, [turns.length, busy])
+  const send = async () => {
+    const text = msg.trim(); if (!text || busy) return
+    setBusy(true); setErr(''); setMsg('')
+    setTurns(t => [...t, { role: 'user', text }])
+    try { const d = await api(`/projects/${p.id}/structure/chat`, { method: 'POST', body: { message: text } }); setTurns(d.turns); if (d.applied) await onChanged() }
+    catch (e) { setErr(e.message) } finally { setBusy(false) }
+  }
+  const undo = async () => { setBusy(true); setErr(''); try { const d = await api(`/projects/${p.id}/structure/chat/undo`, { method: 'POST' }); setTurns(d.turns); await onChanged() } catch (e) { setErr(e.message) } finally { setBusy(false) } }
+  const lastChange = [...turns].reverse().find(t => t.role === 'assistant' && t.changes?.length)
+  const pageOf = n => spec?.pages?.find(pg => pg.pageNo === n)
+  return (
+    <div style={{ marginTop: 16 }}>
+      <h3 style={{ fontSize: 13, margin: '0 0 4px' }}>Ask for changes</h3>
+      <div className="muted small" style={{ marginBottom: 8 }}>Describe what you want in plain language and refer to pages by their numbers in the Preview — e.g. “let Part 10 continue on page 57”, “start each Topic on a new page”, “the worksheet is an exercise, not teaching content”. Claude applies it to the sections and page starts above (never to the text) and shows the pages it touched.</div>
+      <div style={{ maxHeight: 420, overflowY: 'auto', border: '1px solid var(--line)', borderRadius: 8, padding: 10, background: '#fff' }}>
+        {turns.length === 0 && <div className="muted small">No requests yet.</div>}
+        {turns.map((t, i) => t.role === 'user'
+          ? <div key={i} style={{ margin: '6px 0', textAlign: 'right' }}><span style={{ display: 'inline-block', background: 'var(--tint, #eef2f8)', borderRadius: 10, padding: '6px 10px', maxWidth: '80%', textAlign: 'left' }}>{t.text}</span></div>
+          : <div key={i} style={{ margin: '6px 0' }}>
+              <div style={{ display: 'inline-block', border: '1px solid var(--line)', borderRadius: 10, padding: '6px 10px', maxWidth: '90%' }}>
+                <div>{t.text}</div>
+                {t.changes?.length > 0 && <ul className="small" style={{ margin: '6px 0 0', paddingLeft: 18 }}>{t.changes.map((c, j) => <li key={j}>{c}</li>)}</ul>}
+                {t.undone && <div className="small muted" style={{ marginTop: 4 }}>Undone.</div>}
+                {t === lastChange && <button className="btn" style={{ marginTop: 6 }} disabled={busy} onClick={undo}>Undo this change</button>}
+              </div>
+              {t.show_pages?.length > 0 && !t.undone && spec && <div className="row" style={{ gap: 10, marginTop: 6, flexWrap: 'wrap', alignItems: 'flex-start' }}>
+                {t.show_pages.map(n => pageOf(n) ? <div key={n}><div className="small muted">Page {n}</div><Page page={pageOf(n)} theme={spec.theme} meta={spec.meta} scale={0.42} /></div> : null)}
+              </div>}
+            </div>)}
+        {busy && <div className="muted small" style={{ margin: '6px 0' }}>Claude is reading the current pages and your request…</div>}
+        <div ref={endRef} />
+      </div>
+      {err && <div className="banner err" style={{ marginTop: 8 }}>{err}</div>}
+      <div className="row" style={{ marginTop: 8, gap: 8 }}>
+        <input type="text" style={{ flex: 1 }} value={msg} disabled={busy} placeholder="What should change?" onChange={e => setMsg(e.target.value)} onKeyDown={e => { if (e.key === 'Enter') send() }} />
+        <button className="btn primary" disabled={busy || !msg.trim()} onClick={send}>Send</button>
+      </div>
+    </div>)
+}
+
+// ------------------------------------------------------------------ Structure (Claude reads the doc for meaning)
+function StructureStep({ p, reload, goto }) {
+  const [st, setSt] = useState(null)
+  const [err, setErr] = useState('')
+  const [roles, setRoles] = useState({})
+  const [breaks, setBreaks] = useState({})
+  const [showHeads, setShowHeads] = useState(false)
+  const [ver, setVer] = useState(0)
+  const load = useCallback(async () => { const d = await api(`/projects/${p.id}/structure`); setSt(d); setVer(v => v + 1); return d }, [p.id])
+  useEffect(() => { load().catch(e => setErr(e.message)) }, [load])
+  const running = st?.job?.state === 'running'
+  usePoll(load, running, 2000)
+  const [tjob, setTjob] = useState(null)
+  const [wait, setWait] = useState(false)
+  const loadT = useCallback(async () => { const x = await api(`/projects/${p.id}/tables`); setTjob(x.job); return x.job }, [p.id])
+  usePoll(async () => { const j = await loadT(); if (j.state === 'done' || j.state === 'failed') { setWait(false); if (j.state === 'done') goto('generate') } }, wait, 2000)
+  const proceed = async () => { try { setTjob(await api(`/projects/${p.id}/tables/prepare`, { method: 'POST' })); setWait(true) } catch (e) { setErr(e.message) } }
+  const act = async fn => { setErr(''); try { await fn(); await load() } catch (e) { setErr(e.message) } }
+  const read = force => act(() => api(`/projects/${p.id}/structure/read${force ? '?force=true' : ''}`, { method: 'POST' }))
+  // hooks must all run before any early return (React keeps them in order between renders)
+  useEffect(() => { if (st && !st.map && st.job?.state !== 'running' && st.job?.state !== 'failed') read(false) }, [st?.map, st?.job?.state])
+  if (!st) return <div className="muted">Loading…</div>
+  const apply = () => act(async () => { await api(`/projects/${p.id}/structure`, { method: 'PUT', body: { roles: { ...Object.fromEntries((st.map?.sections || []).filter(x => x.override).map(x => [x.src, x.override])), ...roles }, page_breaks: breaks } }); setRoles({}); setBreaks({}); reload() })
+  const m = st.map
+  const pg = x => x ? <span className="tag" style={{ background: '#fff4d6', color: '#7a5200' }}>doc p.{x}</span> : null
+  const ROLE_NAMES = { body: 'Teaching content', exercise: 'Exercise', answers: 'Answer key', mindmap: 'Mind map', references: 'References', glossary: 'Glossary' }
+  return (
+    <div className="card">
+      <h2>Structure</h2>
+      <div className="muted small" style={{ marginBottom: 8 }}>Claude reads the whole document for meaning (no fixed template) and decides what is the index, where each part really starts, and what each part is (teaching content, exercise, answer key…). It only labels lines: every word on the pages still comes straight from your doc. Check the result, fix anything that looks off, then continue.</div>
+      <div className="row" style={{ gap: 8 }}>
+        <button className="btn primary" disabled={running} onClick={() => read(!!m)}>{m ? '↻ Read again' : 'Read the document'}</button>
+        {running && <div style={{ flex: 1, minWidth: 220 }}><div className="small muted">{st.job.message}</div><div className="bar"><i style={{ width: `${Math.max(5, (st.job.progress || 0) * 100)}%` }} /></div></div>}
+        {st.job?.state === 'failed' && <span className="err-t small">{st.job.error || st.job.message}</span>}
+      </div>
+      {err && <div className="banner err" style={{ marginTop: 8 }}>{err}</div>}
+      {!m && !running && st.job?.state === 'failed' && <div className="banner warn" style={{ marginTop: 8 }}>Claude could not read the document, so sections are guessed from heading names for now. Try again, or continue with the guess.</div>}
+      {m && <>
+        <div className="small" style={{ margin: '12px 0 4px' }}><b>Front matter:</b> {m.front.eyebrow ? `“${m.front.eyebrow}” · ` : ''}{m.front.title ? <>title “{m.front.title}”</> : 'no title found'}{m.front.index_heading ? <> · index “{m.front.index_heading}” with {m.index_entries} lines</> : ''}</div>
+        <h3 style={{ fontSize: 13, margin: '12px 0 6px' }}>Sections ({m.sections.length}) · {m.headings} headings inside them</h3>
+        <div className="muted small" style={{ marginBottom: 6 }}>“New page” is Claude's decision for where a part begins at the top of a fresh page; untick it to let a part continue below the previous text. A part whose page type differs from the one before it (teaching content → exercise, exercise → answer key) always starts a page, because the page background changes.</div>
+        {m.sections.map((x, i) => {
+          const effRole = y => roles[y.src] ?? y.override ?? y.role
+          const canFlow = i > 0 && effRole(m.sections[i - 1]) === effRole(x) && !['inline', 'ignore'].includes(effRole(x))
+          const on = canFlow ? (breaks[x.src] ?? (x.new_page_eff ?? effRole(x) !== 'body')) : true
+          return (
+          <div key={x.src} className="row" style={{ padding: '4px 0', borderBottom: '1px solid var(--line)', gap: 8 }}>
+            <select style={{ width: 170 }} value={effRole(x)} onChange={e => setRoles({ ...roles, [x.src]: e.target.value })}>
+              {Object.entries(ROLE_NAMES).map(([k, v]) => <option key={k} value={k}>{v}</option>)}
+              <option value="inline">Not a section (heading only)</option>
+              <option value="ignore">Leave out</option>
+            </select>
+            <b style={{ flex: 1 }}>{x.title}</b>
+            <label className="small" style={{ margin: 0, whiteSpace: 'nowrap', opacity: canFlow ? 1 : 0.5 }} title={canFlow ? '' : 'The page type changes here, so this always starts a page'}><input type="checkbox" checked={on} disabled={!canFlow} onChange={e => setBreaks({ ...breaks, [x.src]: e.target.checked })} /> new page</label>
+            {pg(x.page)}
+          </div>)
+        })}
+        {m.heading_breaks?.length > 0 && <div style={{ marginTop: 10 }}>
+          <button className="btn" onClick={() => setShowHeads(!showHeads)}>{showHeads ? 'Hide' : 'Show'} page starts inside sections ({m.heading_breaks.filter(h => breaks[h.src] ?? h.new_page).length} of {m.heading_breaks.length} headings start a new page)</button>
+          {showHeads && <table className="t" style={{ marginTop: 6 }}><thead><tr><th>Heading</th><th>Level</th><th>Doc page</th><th>New page</th></tr></thead><tbody>
+            {m.heading_breaks.map(h => <tr key={h.src}><td>{h.title}</td><td>H{h.level}</td><td>{h.page || ''}</td><td><input type="checkbox" checked={breaks[h.src] ?? h.new_page} onChange={e => setBreaks({ ...breaks, [h.src]: e.target.checked })} /></td></tr>)}
+          </tbody></table>}
+        </div>}
+        <div className="row" style={{ marginTop: 8 }}><button className="btn" disabled={!Object.keys(roles).length && !Object.keys(breaks).length} onClick={apply}>Apply changes</button><span className="muted small">Pages update straight away.</span></div>
+      </>}
+      {st.checks.length > 0 && <div style={{ marginTop: 14 }}><h3 style={{ fontSize: 13, margin: '0 0 6px' }}>Things to check</h3>{st.checks.map((c, i) => <div key={i} className="small" style={{ margin: '4px 0' }}><span className={`tag ${c.severity === 'question' ? 'question' : c.severity === 'warning' ? 'warning' : 'info'}`}>{c.severity}</span> {c.message}</div>)}</div>}
+      {st.checks.length === 0 && m && <div className="ok-t small" style={{ marginTop: 12 }}>No structural problems found.</div>}
+      {m && <StructureChat p={p} onChanged={load} version={ver} />}
+      {tjob?.state === 'running' && <div style={{ marginTop: 12 }}><div className="small muted">{tjob.message}</div><div className="bar"><i style={{ width: `${Math.max(5, (tjob.progress || 0) * 100)}%` }} /></div></div>}
+      {tjob?.state === 'failed' && <div className="banner err" style={{ marginTop: 8 }}>{tjob.error || tjob.message} You can still continue; table pictures stay placeholders.</div>}
+      <div className="row" style={{ marginTop: 14 }}>
+        <button className="btn ok" disabled={!m || tjob?.state === 'running'} onClick={proceed}>{tjob?.state === 'running' ? 'Reading tables…' : 'Continue to Preview →'}</button>
+        {!m && st.job?.state === 'failed' && <button className="btn" onClick={() => goto('generate')}>Continue with the guess</button>}
+        <span className="muted small">Pictures of tables are read into real tables first, so the Preview is laid out correctly.</span>
+      </div>
+    </div>)
+}
 
 // ------------------------------------------------------------------ Images & diagrams
 function ImagesStep({ p, goto }) {
@@ -234,30 +445,33 @@ function ImagesStep({ p, goto }) {
   const act = async (fn) => { setErr(''); try { await fn(); load() } catch (e) { setErr(e.message) } }
   if (!d) return <div className="muted">Loading…</div>
   const im = d.images
-  const diagrams = im.filter(e => e.class === 'diagram' || (e.mode === 'generate' && !e.tiny))
-  const others = im.filter(e => !diagrams.includes(e) && !e.tiny)
+  const tables = im.filter(e => !e.tiny && (e.class === 'table' || e.mode === 'table'))
+  const diagrams = im.filter(e => !tables.includes(e) && (['diagram', 'equation'].includes(e.class) || (e.mode !== 'placeholder' && !e.tiny)))
+  const others = im.filter(e => !diagrams.includes(e) && !tables.includes(e) && !e.tiny)
   const tiny = im.filter(e => e.tiny)
   const analysed = im.some(e => e.class && e.class !== 'inline')
   const pgTxt = e => e.pages?.length ? `doc p.${e.pages.slice(0, 3).join(', ')}${e.pages.length > 3 ? '…' : ''}` : ''
-  const toggle = e => act(() => api(`/projects/${p.id}/images/${e.hash}`, { method: 'PATCH', body: { mode: e.mode === 'generate' ? 'placeholder' : 'generate' } }))
+  const toggle = e => act(() => api(`/projects/${p.id}/images/${e.hash}`, { method: 'PATCH', body: { mode: e.mode !== 'placeholder' ? 'placeholder' : e.class === 'table' ? 'table' : 'generate' } }))
   const gen = e => act(() => api(`/projects/${p.id}/images/${e.hash}/generate`, { method: 'POST' }))
   const Card = ({ e }) => {
     const j = d.gen_jobs?.[e.hash]
     const working = j?.state === 'running'
     return (
-      <div className="finding" style={{ borderLeftColor: e.mode === 'generate' ? '#2848a0' : undefined }}>
+      <div className="finding" style={{ borderLeftColor: e.mode !== 'placeholder' ? '#2848a0' : undefined }}>
         <div className="row" style={{ gap: 8, marginBottom: 6 }}>
           <span className="tag">{e.class || 'not analysed'}</span>{e.complexity && <span className="tag">{e.complexity}</span>}<span className="muted small">{pgTxt(e)} · used {e.count}×</span>
           {e.status === 'generated' && e.match != null && <span className={'tag ' + (e.match >= 92 ? '' : 'warning')} style={e.match >= 92 ? { background: '#e4f5ea', color: 'var(--ok)' } : {}}>{e.match}% match</span>}
           <div style={{ flex: 1 }} />
-          <label style={{ margin: 0 }}><input type="checkbox" checked={e.mode === 'generate'} onChange={() => toggle(e)} /> Draw as a diagram</label>
+          <label style={{ margin: 0 }}><input type="checkbox" checked={e.mode !== 'placeholder'} onChange={() => toggle(e)} /> {e.class === 'table' ? 'Build as a table' : e.class === 'equation' ? 'Rebuild as text + vector' : 'Draw as a diagram'}</label>
         </div>
         <div className="muted small" style={{ marginBottom: 6 }}>{e.reason}</div>
         <div className="row" style={{ alignItems: 'flex-start', gap: 14 }}>
           <div><div className="small muted">Original</div><img src={`/api/projects/${p.id}/media/${e.hash}`} style={{ maxWidth: 260, maxHeight: 220, border: '1px solid var(--line)', borderRadius: 6, background: '#fff' }} /></div>
+          {e.table && <div style={{ maxWidth: 420, overflow: 'auto' }}><div className="small muted">Table as read (built in the theme)</div><table style={{ borderCollapse: 'collapse', fontSize: 11, background: '#fff' }}>{e.table.head.length > 0 && <thead><tr>{e.table.head.map((c, i) => <th key={i} style={{ border: '1px solid #D9D9D9', padding: '3px 6px', background: '#1E3A6E', color: '#fff' }}>{c}</th>)}</tr></thead>}<tbody>{e.table.rows.map((r, ri) => <tr key={ri}>{r.map((c, i) => <td key={i} style={{ border: '1px solid #D9D9D9', padding: '3px 6px', background: ri % 2 ? '#DCE6F4' : '#fff' }}>{c}</td>)}</tr>)}</tbody></table></div>}
           {e.has_svg && <div><div className="small muted">Generated drawing</div><img src={`/api/projects/${p.id}/diagrams/${e.hash}`} style={{ maxWidth: 260, maxHeight: 220, border: '1px solid var(--line)', borderRadius: 6, background: '#fff' }} /></div>}
           <div style={{ flex: 1, minWidth: 200 }}>
-            {e.mode === 'generate' && <button className="btn" disabled={working || !d.chrome && false} onClick={() => gen(e)}>{working ? (j.message || 'Drawing…') : e.has_svg ? '↻ Redraw' : 'Generate drawing'}</button>}
+            {e.mode !== 'placeholder' && <button className="btn" disabled={working} onClick={() => gen(e)}>{working ? (j.message || 'Working…') : (e.has_svg || e.has_table) ? '↻ Redo' : e.mode === 'table' ? 'Read table' : 'Generate drawing'}</button>}
+            {e.has_table && <div className="small muted" style={{ marginTop: 6 }}>Table read; it appears as a real table in the Preview.</div>}
             {e.status === 'failed' && <div className="err-t small" style={{ marginTop: 6 }}>{e.error}</div>}
             {e.issues?.length > 0 && <div className="small" style={{ marginTop: 8 }}><b>Notes from the check</b><ul style={{ margin: '4px 0 0', paddingLeft: 18 }}>{e.issues.map((x, i) => <li key={i}>{x}</li>)}</ul></div>}
           </div>
@@ -268,10 +482,10 @@ function ImagesStep({ p, goto }) {
     <div>
       <div className="card">
         <h2>Pictures and diagrams</h2>
-        <div className="muted small" style={{ marginBottom: 8 }}>Real diagrams (geometric figures, graphs, circuits, experiment set-ups…) are drawn for you as editable vector shapes in Figma. Everything else (equations, photos, artwork) stays a labelled placeholder that you replace by hand. You can switch any picture either way.</div>
+        <div className="muted small" style={{ marginBottom: 8 }}>Diagrams and equation pictures are rebuilt in Figma as editable text on top of vector shapes (lettering is never turned into vector). Tables have their own section below and are built as real tables in the theme. Only photos and artwork stay labelled placeholders. You can switch any picture either way.</div>
         <div className="row">
           <button className="btn primary" disabled={busy} onClick={() => act(() => api(`/projects/${p.id}/images/analyse`, { method: 'POST' }))}>{analysed ? '↻ Analyse new pictures' : 'Analyse the pictures'}</button>
-          {analysed && <button className="btn" disabled={busy} onClick={() => act(() => api(`/projects/${p.id}/images/generate-all`, { method: 'POST' }))}>Draw all missing diagrams</button>}
+          {analysed && <button className="btn" disabled={busy} onClick={() => act(() => api(`/projects/${p.id}/images/generate-all`, { method: 'POST' }))}>Rebuild all missing pictures</button>}
           {busy && <div style={{ flex: 1, minWidth: 220 }}><div className="small muted">{d.job?.state === 'running' ? d.job.message : d.gen_job?.state === 'running' ? d.gen_job.message : 'Drawing…'}</div><div className="bar"><i style={{ width: `${Math.max(5, ((d.job?.state === 'running' ? d.job.progress : d.gen_job?.progress) || 0.1) * 100)}%` }} /></div></div>}
         </div>
         <div className="small muted" style={{ marginTop: 8 }}>{d.summary.total} distinct pictures · {d.summary.tiny} tiny inline symbols (always placeholders) · {d.summary.diagrams} to be drawn · {d.summary.generated} drawn</div>
@@ -280,36 +494,45 @@ function ImagesStep({ p, goto }) {
         {err && <div className="banner err" style={{ marginTop: 8 }}>{err}</div>}
         {!analysed && !busy && <div className="banner info" style={{ marginTop: 8 }}>Not analysed yet. If you skip this, every picture becomes a placeholder.</div>}
       </div>
-      {diagrams.length > 0 && <><h3 style={{ margin: '14px 0 8px' }}>Diagrams ({diagrams.length})</h3>{diagrams.map(e => <Card key={e.hash} e={e} />)}</>}
+      {tables.length > 0 && <><h3 style={{ margin: '14px 0 4px' }}>Tables ({tables.length})</h3><div className="muted small" style={{ marginBottom: 8 }}>These pictures are not treated as images or diagrams. Each one is read into cell text and built in Figma as a real, editable table in the theme (header colour, zebra rows, borders). Check the text read from the picture below.</div>{tables.map(e => <Card key={e.hash} e={e} />)}</>}
+      {diagrams.length > 0 && <><h3 style={{ margin: '14px 0 8px' }}>Diagrams & equations ({diagrams.length})</h3>{diagrams.map(e => <Card key={e.hash} e={e} />)}</>}
       {others.length > 0 && <div className="card">
-        <div className="row"><b>Other pictures ({others.length}): placeholders</b><span className="muted small">equations, photos, artwork</span><div style={{ flex: 1 }} /><button className="btn" onClick={() => setShowAll(!showAll)}>{showAll ? 'Hide' : 'Review them'}</button></div>
+        <div className="row"><b>Other pictures ({others.length}): placeholders</b><span className="muted small">photos, artwork</span><div style={{ flex: 1 }} /><button className="btn" onClick={() => setShowAll(!showAll)}>{showAll ? 'Hide' : 'Review them'}</button></div>
         {showAll && <div className="row" style={{ marginTop: 10, gap: 10, alignItems: 'flex-start' }}>
-          {others.slice(0, 80).map(e => <div key={e.hash} style={{ width: 150 }}><img src={`/api/projects/${p.id}/media/${e.hash}`} style={{ maxWidth: 150, maxHeight: 90, border: '1px solid var(--line)', background: '#fff' }} /><div className="small muted">{e.class} {pgTxt(e)}</div><label className="small" style={{ margin: 0 }}><input type="checkbox" checked={e.mode === 'generate'} onChange={() => toggle(e)} /> draw as diagram</label></div>)}
+          {others.slice(0, 80).map(e => <div key={e.hash} style={{ width: 150 }}><img src={`/api/projects/${p.id}/media/${e.hash}`} style={{ maxWidth: 150, maxHeight: 90, border: '1px solid var(--line)', background: '#fff' }} /><div className="small muted">{e.class} {pgTxt(e)}</div><label className="small" style={{ margin: 0 }}><input type="checkbox" checked={e.mode !== 'placeholder'} onChange={() => toggle(e)} /> rebuild</label></div>)}
           {others.length > 80 && <div className="muted small">…and {others.length - 80} more</div>}
         </div>}
       </div>}
       {tiny.length > 0 && <div className="muted small" style={{ margin: '8px 0' }}>{tiny.length} tiny inline pictures (symbols or equation pieces) are always placeholders.</div>}
-      <div className="row" style={{ marginTop: 12 }}><button className="btn ok" onClick={() => goto('generate')}>Continue to Generate →</button></div>
+      <div className="row" style={{ marginTop: 12 }}><button className="btn ok" onClick={() => goto('report')}>Continue to Report →</button></div>
     </div>)
 }
 
 // ------------------------------------------------------------------ Generate
-function Generate({ p, reload, goto }) {
+function Generate({ p, reload, goto, status }) {
   const [spec, setSpec] = useState(null)
   const [err, setErr] = useState('')
   const [res, setRes] = useState(null)
   const [rep, setRep] = useState(null)
   useEffect(() => { api(`/projects/${p.id}/spec`).then(setSpec).catch(e => setErr(e.message)) }, [p.id])
   const poll = useCallback(async () => setRep(await api(`/projects/${p.id}/plugin-report`)), [p.id])
-  usePoll(poll, !!res && !rep?.sectionId, 2000)
+  const [genBusy, setGenBusy] = useState(false)
+  // the plugin report belongs to the job it names: a report from an earlier Generate is not this job's result
+  const built = rep?.sectionId && (!res || rep.job === res.job)
+  const waiting = !!res && !built
+  usePoll(poll, waiting, 2000)
   useEffect(() => { poll() }, [poll])
-  const gen = async () => { setErr(''); try { setRes(await api(`/projects/${p.id}/generate`, { method: 'POST' })); reload() } catch (e) { setErr(e.message) } }
+  const gen = async () => { setErr(''); setGenBusy(true); try { const r = await api(`/projects/${p.id}/generate`, { method: 'POST' }); setRes(r); reload() } catch (e) { setErr(e.message) } finally { setGenBusy(false) } }
   if (err && !spec) return <div className="banner err">{err}</div>
   if (!spec) return <div className="muted">Laying out the book…</div>
   const issues = spec.issues || []
   return (
     <div>
       <div className="card">
+        {spec.font_warnings?.length > 0 && <div className="banner warn" style={{ marginBottom: 8 }}>{spec.font_warnings.map((w, i) => <div key={i}>{w}</div>)}</div>}
+        {status?.plugin?.known && status.plugin.ok === false && <div className="banner err" style={{ marginBottom: 8 }}>Figma runs the Book Builder plugin from <code>{status.plugin.path}</code>, which is not this app's plugin. In Figma: Plugins → Development → Import plugin from manifest… and pick <code>{status.plugin.expected}</code>, then run it again.</div>}
+        {rep?.sectionId && spec.pluginVersion != null && rep.pluginVersion !== spec.pluginVersion && <div className="banner err" style={{ marginBottom: 8 }}>The last build in Figma was made by an older copy of the plugin ({rep.pluginVersion != null ? `version ${rep.pluginVersion}` : 'no version'}; the app is at version {spec.pluginVersion}). Import <code>figma-plugin/manifest.json</code> from this project in Figma (Plugins → Development → Import plugin from manifest…), run it again, then Load and Build.</div>}
+        {p.generated_at && p.structure_changed > p.generated_at && <div className="banner warn" style={{ marginBottom: 8 }}>The structure changed after the last Generate. This preview is up to date, but the pages built in Figma are not: click Generate again and rebuild with the plugin.</div>}
         <h2>Preview: {spec.pages.length} pages{spec.diagrams ? ` · ${spec.diagrams} generated diagram${spec.diagrams > 1 ? 's' : ''}` : ''}</h2>
         <div className="muted small">Exactly what will be built. Content comes straight from your doc{spec.dropped.length ? '' : ' (nothing dropped)'}. Images are placeholders.</div>
         {spec.dropped.length > 0 && <div className="banner err" style={{ marginTop: 8 }}>{spec.dropped.length} doc blocks could not be placed: {spec.dropped.slice(0, 8).join(', ')}</div>}
@@ -324,9 +547,9 @@ function Generate({ p, reload, goto }) {
           <li>In your Figma file run <b>Plugins → Development → Book Builder</b>, press <b>Load</b>, then <b>Build pages</b>.</li>
         </ol>
         {err && <div className="banner err">{err}</div>}
-        <div className="row"><button className="btn primary" onClick={gen}>Generate</button>
-          {res && !rep?.sectionId && <span className="muted">Design ready ({res.pages} pages). Waiting for the plugin to build it in Figma…</span>}
-          {rep?.sectionId && <span className="ok-t">✓ Built {rep.pages.length} pages in Figma{rep.pages.some(x => x.overflow) ? ` — ${rep.pages.filter(x => x.overflow).length} page(s) overflow` : ''}{rep.errors?.length ? `, ${rep.errors.length} errors` : ''}.</span>}
+        <div className="row"><button className="btn primary" disabled={genBusy} onClick={gen}>{genBusy ? 'Laying out…' : res ? '↻ Generate again' : 'Generate'}</button>
+          {waiting && <span className="ok-t">Design ready: {res.pages} pages{res.overflow?.length ? `, ${res.overflow.length} block(s) taller than a page` : ''}. Now in Figma: run the plugin, press <b>Load</b>, then <b>Build pages</b> — this page updates when it finishes.</span>}
+          {built && <span className="ok-t">✓ Built {rep.pages.length} pages in Figma{rep.pages.some(x => x.overflow) ? ` — ${rep.pages.filter(x => x.overflow).length} page(s) overflow` : ''}{rep.errors?.length ? `, ${rep.errors.length} errors` : ''}.</span>}
         </div>
         {rep?.sectionId && <div style={{ marginTop: 10 }}><button className="btn ok" onClick={() => goto('report')}>Continue to analysis →</button></div>}
       </div>
@@ -401,10 +624,10 @@ export default function Project({ id, status, onExit, initialStep }) {
   const [p, setP] = useState(null)
   const [step, setStep] = useState(null)
   const reload = useCallback(async () => { const x = await api('/projects/' + id); setP(x); return x }, [id])
-  useEffect(() => { reload().then(x => setStep(s => s || initialStep || ({ setup: 'setup', theme: 'design', samples: 'design', scan: 'review', generated: 'generate', built: 'generate', report: 'report' }[x.stage] || 'setup'))).catch(() => onExit()) }, [id])
+  useEffect(() => { reload().then(x => setStep(s => s || initialStep || (x.reference_job?.state === 'running' ? 'setup' : ({ setup: 'setup', theme: 'design', samples: 'design', scan: 'review', generated: 'generate', built: 'generate', report: 'report' }[x.stage] || 'setup')))).catch(() => onExit()) }, [id])
   if (!p || !step) return <div className="muted">Loading…</div>
-  const steps = p.mode === 'audit' ? [['setup', 'Setup'], ['review', 'Review doc'], ['report', 'Report']] : [['setup', 'Setup'], ['design', 'Colours & samples'], ['review', 'Review doc'], ['images', 'Images & diagrams'], ['generate', 'Generate'], ['report', 'Report']]
-  const doneMap = { setup: p.has_doc, design: p.samples_approved, review: !!p.last_scan, generate: ['built', 'report'].includes(p.stage), report: p.stage === 'report' }
+  const steps = p.mode === 'audit' ? [['setup', 'Setup'], ['review', 'Review doc'], ['report', 'Report']] : [['setup', 'Setup'], ['design', 'Colours & samples'], ['review', 'Review doc'], ['structure', 'Structure'], ['generate', 'Preview & build'], ['images', 'Images & diagrams (optional)'], ['report', 'Report']]
+  const doneMap = { setup: p.has_doc, design: p.samples_approved, review: !!p.last_scan, structure: !!p.has_structure, generate: ['built', 'report'].includes(p.stage), report: p.stage === 'report' }
   return (
     <>
       <div className="row" style={{ marginBottom: 10 }}><button className="btn" onClick={onExit}>← All books</button><h2 style={{ margin: 0 }}>{p.name}</h2><span className="tag">{p.mode === 'audit' ? 'audit mode' : 'book'}</span></div>
@@ -412,8 +635,9 @@ export default function Project({ id, status, onExit, initialStep }) {
       {step === 'setup' && <Setup p={p} reload={reload} goto={setStep} />}
       {step === 'design' && <Design p={p} reload={reload} goto={setStep} />}
       {step === 'review' && <Review p={p} reload={reload} goto={setStep} />}
+      {step === 'structure' && <StructureStep p={p} reload={reload} goto={setStep} />}
       {step === 'images' && <ImagesStep p={p} goto={setStep} />}
-      {step === 'generate' && <Generate p={p} reload={reload} goto={setStep} />}
+      {step === 'generate' && <Generate p={p} reload={reload} goto={setStep} status={status} />}
       {step === 'report' && <Report p={p} reload={reload} />}
     </>)
 }
