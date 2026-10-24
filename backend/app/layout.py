@@ -390,8 +390,8 @@ def build_pages(book: dict) -> dict:
         for ti, topic in enumerate(sec["topics"]):
             pill = topic.get("pill") or sec["pill"]
             last = pages[-1] if pages else None
-            continuing = ti == 0 and sec.get("flow_on") and last and last["kind"] == kind and last["bg"] == sec["bg"] and last["pill"] == pill and last["blocks"]
-            if continuing:
+            continuing = bool(ti == 0 and sec.get("flow_on") and last and last["kind"] == kind and last["bg"] == sec["bg"] and last["pill"] == pill and last["blocks"])
+            if continuing and last is not None:
                 room = AVAIL - page_used(last["blocks"])
                 tpages, ov = paginate_blocks(topic["blocks"], room, AVAIL, prev0=last["blocks"][-1])
                 if tpages and tpages[0]:
