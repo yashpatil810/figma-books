@@ -8,9 +8,9 @@ pkill -f "uvicorn app.main" 2>/dev/null
 lsof -ti tcp:$PORT 2>/dev/null | xargs kill 2>/dev/null
 sleep 1
 
-[ -d .venv ] || { echo "• First run: creating Python environment…"; python3 -m venv .venv && .venv/bin/pip install -q fastapi "uvicorn[standard]" python-docx lxml httpx pyspellchecker pydantic pillow pypdf; }
+[ -d .venv ] || { echo "• First run: creating Python environment…"; python3 -m venv .venv && .venv/bin/pip install -q fastapi "uvicorn[standard]" python-docx lxml httpx pyspellchecker pydantic pillow openpyxl pypdf; }
 .venv/bin/pip install -q -r /dev/null 2>/dev/null
-.venv/bin/pip install -q pypdf pillow 2>/dev/null
+.venv/bin/pip install -q pypdf pillow openpyxl 2>/dev/null
 
 echo "• Rebuilding the web UI…"
 (cd frontend && { [ -d node_modules ] || npm install --no-audit --no-fund; } && npm run build) || { echo "UI build failed"; exit 1; }

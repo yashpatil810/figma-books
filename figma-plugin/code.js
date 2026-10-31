@@ -2,7 +2,7 @@
 // PLUGIN_VERSION is the spec contract. The app reads this number from this file and stamps it on every job; the plugin
 // refuses a job stamped with another number, which means Figma is still running an older copy of this code
 // (close the plugin and run it again). Bump it whenever the spec format or the rendering changes.
-const PLUGIN_VERSION = 8;
+const PLUGIN_VERSION = 9;
 // Text is only ever set from the spec (copied from the Google Doc by the app) - never generated here.
 figma.showUI(__html__, { width: 340, height: 400 });
 figma.ui.postMessage({ type: 'hello', version: PLUGIN_VERSION });  // the UI sends this version with every request to the app
@@ -34,11 +34,17 @@ const FONTS = {
 };
 
 const WEIGHT_NAMES = { 100: 'Thin', 200: 'ExtraLight', 300: 'Light', 400: 'Regular', 500: 'Medium', 600: 'SemiBold', 700: 'Bold', 800: 'ExtraBold', 900: 'Black' };
-// A style from a reference design names its own fonts: try the usual Figma style spellings ("SemiBold" / "Semi Bold").
+// Style names that count as each weight, best first: families name their weights differently (Avenir has no "ExtraBold";
+// its 800 is "Heavy" and its 900 "Black"; Avenir Next's 700 is "Bold", its 600 "Demi Bold"). The app measures pages with
+// the same choice (backend/app/measure.py STYLE_NAMES), so what is built is what was paginated.
+const WEIGHT_ALIASES = {
+  100: ['Thin', 'Hairline'], 200: ['ExtraLight', 'Extra Light', 'UltraLight', 'Ultra Light'], 300: ['Light'],
+  400: ['Regular', 'Book', 'Roman', 'Normal'], 500: ['Medium'], 600: ['SemiBold', 'Semi Bold', 'DemiBold', 'Demi Bold'],
+  700: ['Bold'], 800: ['ExtraBold', 'Extra Bold', 'Heavy', 'UltraBold', 'Ultra Bold'], 900: ['Black', 'Heavy', 'ExtraBlack', 'Extra Black', 'UltraBlack'],
+};
 async function pickFont(family, weight, italic) {
-  const base = WEIGHT_NAMES[weight] || 'Regular';
-  const names = [base, base.replace(/([a-z])([A-Z])/, '$1 $2')];
-  if (italic) { const it = []; for (const n of names) { it.push(n === 'Regular' ? 'Italic' : n + ' Italic'); } names.length = 0; names.push.apply(names, it.concat(['Italic'])); }
+  let names = (WEIGHT_ALIASES[weight] || [WEIGHT_NAMES[weight] || 'Regular']).slice();
+  if (italic) { const it = []; for (const n of names) { it.push(n === 'Regular' ? 'Italic' : n + ' Italic'); it.push(n === 'Regular' ? 'Oblique' : n + ' Oblique'); } names = it.concat(['Italic', 'Oblique']); }
   for (const style of names) { try { await figma.loadFontAsync({ family, style }); return { family, style }; } catch (e) {} }
   return null;
 }
@@ -416,7 +422,7 @@ async function buildBlock(b, parent, ctx) {
     }
     case 'mcq': {
       const ms = comp(ctx, 'mcq');
-      const ncol = b.columns || ms.columns || 2;
+      const ncol = b.columns || (Number.isInteger(ms.columns) ? ms.columns : 2);
       const f = frame('MCQ', { gap: 3, pad: padOf(ms, 12, 2 / 3), fill: colorOf(ms.fill, T.white), radius: ms.radius != null ? ms.radius : 8 });
       const mtext = cardText(ctx, ms, T.text);
       add(parent, f, { fill: true });
@@ -429,7 +435,7 @@ async function buildBlock(b, parent, ctx) {
           const t = runsText(o.runs, { src: b.src, color: mtext });
           add(row, t); t.layoutSizingHorizontal = 'FILL';
         }
-        if (ncol === 2 && b.options.slice(i, i + 2).length === 1) { const sp = frame('spacer', { dir: 'H' }); add(row, sp); sp.layoutSizingHorizontal = 'FILL'; }
+        for (let k = b.options.slice(i, i + ncol).length; k < ncol; k++) { const sp = frame('spacer', { dir: 'H' }); add(row, sp); sp.layoutSizingHorizontal = 'FILL'; }  // empty slots keep the columns aligned
       }
       return f;
     }
@@ -456,7 +462,7 @@ async function buildBlock(b, parent, ctx) {
       if (!b.cont) {
         if (b.eyebrow) add(f, text(b.eyebrow, { font: 'din', size: L.type.eyebrow.size, lh: L.type.eyebrow.lh, color: T.primary, case: 'ORIGINAL', role: 'eyebrow', name: 'eyebrow' }), { fill: true });
         add(f, text(b.title, { font: 'din', size: L.type.title.size, lh: L.type.title.lh, color: (ctx && ctx.style && ctx.style.dark) ? T.strong : '#000000', case: 'TITLE', role: 'title', src }), { fill: true });
-        add(f, text(b.chapter_line || ('Chapter ' + (b.chapter_no ? b.chapter_no + ' - ' : '') + b.chapter), { font: 'din', size: L.type.eyebrow.size, lh: L.type.eyebrow.lh, color: (ctx && ctx.style && ctx.style.dark) ? T.strong : '#000000', case: 'TITLE', role: 'toc', name: 'chapter (generated)' }), { fill: true });
+        if (b.chapter_line !== '') add(f, text(b.chapter_line || ('Chapter ' + (b.chapter_no ? b.chapter_no + ' - ' : '') + b.chapter), { font: 'din', size: L.type.eyebrow.size, lh: L.type.eyebrow.lh, color: (ctx && ctx.style && ctx.style.dark) ? T.strong : '#000000', case: 'TITLE', role: 'toc', name: 'chapter (generated)' }), { fill: true });  // '' = the doc's own title already heads the page
       }
       for (const e of b.entries) {
         const box = frame('Entry', { gap: 4, pad: b.compact ? [4, 0, 4, 0] : [8, 0, 8, 0], stroke: T.rule });

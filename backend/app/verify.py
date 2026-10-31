@@ -311,6 +311,45 @@ def anomalies(pages, theme):
     return out
 
 
+def header_footer_check(pages):
+    """Header/footer present on the pages that should have one. Only enforced when most such pages have it,
+    so a style without a running header does not flag every page."""
+    app_ = [p for p in pages if p["role"] not in ("cover", "cover/empty")]
+    out = []
+    if len(app_) < 3:
+        return out
+    for zone, label in (("header", "header"), ("footer", "footer")):
+        has = {p["idx"]: any(t["zone"] == zone and alnum_set(t["text"]) for t in p["texts"]) for p in app_}
+        if sum(has.values()) < len(app_) / 2:
+            continue
+        for p in app_:
+            if not has[p["idx"]]:
+                where = f" (page {p['page_no']})" if p["page_no"] else ""
+                out.append({"kind": f"missing-{label}", "page": p["idx"], "node": p["id"], "msg": f"{p['name']}{where}: page has no {label}, but most pages do."})
+    return out
+
+
+def numbering_check(pages):
+    """Printed page numbers (digits in the footer) should run in sequence, one per page, without gaps or repeats."""
+    app_ = [p for p in pages if p["role"] not in ("cover", "cover/empty")]
+    out = []
+    if sum(p["page_no"] is not None for p in app_) < len(app_) / 2:
+        return out  # the style does not print page numbers
+    prev = None
+    for p in app_:
+        n = p["page_no"]
+        if n is None:
+            out.append({"kind": "page-number", "page": p["idx"], "node": p["id"], "msg": f"{p['name']}: page number is missing" + (f" (expected {prev['page_no'] + 1})." if prev else ".")})
+            if prev:
+                prev = {**prev, "page_no": prev["page_no"] + 1}
+            continue
+        if prev is not None and n != prev["page_no"] + 1:
+            what = "repeats the previous page's number" if n == prev["page_no"] else "skips ahead" if n > prev["page_no"] else "goes backwards"
+            out.append({"kind": "page-number", "page": p["idx"], "node": p["id"], "msg": f"{p['name']}: page number {n} {what}; expected {prev['page_no'] + 1}."})
+        prev = p
+    return out
+
+
 def toc_check(pages):
     toc = next((p for p in pages if p["role"] == "toc"), None)
     out = []
@@ -438,7 +477,7 @@ def run(file_url: str, blocks: list[dict], ignored: list[dict], meta: dict, them
     prog("Comparing with the doc…", 0.5)
     cmp_ = compare(blocks, ign, pages, meta)
     anoms = anomalies(pages, theme)
-    tocs = toc_check(pages)
+    tocs = toc_check(pages) + header_footer_check(pages) + numbering_check(pages)
     todos = build_todos(cmp_, anoms, tocs, pages, key_)
     if use_llm:
         try:

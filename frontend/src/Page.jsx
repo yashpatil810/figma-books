@@ -174,13 +174,13 @@ function Block({ b, T }) {
             <div style={{ display: 'flex', flexDirection: 'column', gap: 3, flex: 1 }}>{it.lines.map((l, j) => <div key={j} style={{ ...base, color: cardText(T, qs, T.text) }}><Runs runs={l} /></div>)}{it.pics?.length > 0 && <div style={{ display: 'flex', flexWrap: 'wrap', gap: 6 }}>{it.pics.map((q, j) => <Ph key={j} b={q} T={T} />)}</div>}</div>
           </div>))}
       </div>) }
-    case 'mcq': { const ms = comp('mcq'); const nc = b.columns || ms.columns || 2; return (
+    case 'mcq': { const ms = comp('mcq'); const nc = b.columns || (Number.isInteger(ms.columns) ? ms.columns : 2); return (
       <div style={{ background: colorOf(T, ms.fill, T.white), borderRadius: ms.radius ?? 8, padding: padCss(ms, 12, 2 / 3), display: 'flex', flexDirection: 'column', gap: 3 }}>
         <div style={{ ...base, fontWeight: 800, color: (ms.textColor || (ms.fill === 'none' && PAGE_ST.dark)) ? cardText(T, ms, T.strong) : T.strong }}><b style={{ fontWeight: 800 }}>{b.n} </b><Runs runs={b.stem} style={{ fontWeight: 800 }} /></div>
         {Array.from({ length: Math.ceil(b.options.length / nc) }).map((_, r) => (
           <div key={r} style={{ display: 'flex', gap: 12 }}>
             {b.options.slice(r * nc, r * nc + nc).map((o, i) => <div key={i} style={{ ...base, flex: 1, color: cardText(T, ms, T.text) }}><Runs runs={o.runs} /></div>)}
-            {nc === 2 && b.options.slice(r * 2, r * 2 + 2).length === 1 && <div style={{ flex: 1 }} />}
+            {Array.from({ length: nc - b.options.slice(r * nc, r * nc + nc).length }).map((_, i) => <div key={'s' + i} style={{ flex: 1 }} />)}
           </div>))}
       </div>) }
     case 'ans': { const as_ = comp('ans'); return (
@@ -196,7 +196,7 @@ function Block({ b, T }) {
         {!b.cont && <>
           {b.eyebrow && <div style={{ fontFamily: DIN, fontWeight: 700, ...TY('eyebrow'), color: T.primary, textTransform: cssCase('eyebrow') }}>{tc(b.eyebrow, 'eyebrow')}</div>}
           <div style={{ fontFamily: DIN, fontWeight: 700, ...TY('title'), color: T.onDark ? T.strong : '#000' }}>{tc(b.title)}</div>
-          <div style={{ fontFamily: DIN, fontWeight: 700, ...TY('eyebrow'), color: T.onDark ? T.strong : '#000' }}>{b.chapter_line ? tc(b.chapter_line, 'toc') : `Chapter ${b.chapter_no ? b.chapter_no + ' - ' : ''}${tc(b.chapter, 'toc')}`}</div>
+          {b.chapter_line !== '' && <div style={{ fontFamily: DIN, fontWeight: 700, ...TY('eyebrow'), color: T.onDark ? T.strong : '#000' }}>{b.chapter_line ? tc(b.chapter_line, 'toc') : `Chapter ${b.chapter_no ? b.chapter_no + ' - ' : ''}${tc(b.chapter, 'toc')}`}</div>}
         </>}
         {b.entries.map((e, i) => (
           <div key={i} style={{ borderBottom: `1px solid ${T.rule}`, padding: b.compact ? '4px 0' : '8px 0', display: 'flex', flexDirection: 'column', gap: 4 }}>

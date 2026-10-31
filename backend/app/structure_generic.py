@@ -53,14 +53,47 @@ def _idx_key(t: str) -> str:
 
 
 def split_topics(blocks: list[dict], breaks: dict, anchor: str) -> list[dict]:
-    """Cut a section's blocks into topics (forced page starts) wherever a heading was marked new_page."""
+    """Cut a section's blocks into topics (forced page starts) wherever a heading was marked new_page — or wherever the
+    author asked for a page to start before a particular line (a table, a paragraph, a list, a picture, a card: any block
+    whose first doc line carries a page_breaks override)."""
     topics: list[dict] = [{"blocks": [], "anchor": anchor}]
     for b in blocks:
         src0 = (b.get("src") or [None])[0]
-        if topics[-1]["blocks"] and src0 and breaks.get(src0) and b.get("t") in ("h", "title"):
+        if topics[-1]["blocks"] and src0 and breaks.get(src0):
             topics.append({"blocks": [], "anchor": None})
         topics[-1]["blocks"].append(b)
     return [t for t in topics if t["blocks"]] or [{"blocks": blocks, "anchor": anchor}]
+
+
+INDEX_HEADER_CELL_RE = re.compile(r"^(s\.?\s*no\.?|sr\.?\s*no\.?|sl\.?\s*no\.?|no\.?|#|contents?|topics?|titles?|chapters?|sections?|names?|description|page\s*(no\.?|numbers?)?|pg\.?\s*(no\.?)?|pages?)$", re.I)
+INDEX_CONTENT_CELL_RE = re.compile(r"^(contents?|topics?|titles?|chapters?|sections?|names?|description)$", re.I)
+NUMERAL_RE = re.compile(r"^\(?([0-9]+|[ivxlc]+|[a-z])[.)]?$", re.I)
+
+
+def index_table_entries(rows: list[list]) -> tuple[list[str], str | None]:
+    """An index written as a table -> (entry labels, caption). The caption is a first row with a single filled cell when
+    other rows have several (e.g. the chapter title above “S.NO / CONTENT / PAGE NO”). The content column comes from a
+    header row (CONTENT, TOPIC, TITLE…); without one, each row's first cell that is not a bare serial number is the entry.
+    Header rows, the caption and empty rows give no entry. Only whitespace is normalised; the words stay as typed."""
+    rows = [[" ".join(str(c).split()) for c in r] for r in rows]
+    caption, col, out = None, None, []
+    multi = any(len([c for c in r if c]) >= 2 for r in rows)
+    for i, r in enumerate(rows):
+        filled = [c for c in r if c]
+        if not filled:
+            continue
+        if i == 0 and multi and len(filled) == 1 and len(rows) > 1:
+            caption = filled[0]
+            continue
+        if all(INDEX_HEADER_CELL_RE.match(c) for c in filled):
+            for ci, c in enumerate(r):
+                if INDEX_CONTENT_CELL_RE.match(c):
+                    col = ci
+            continue
+        label = r[col] if col is not None and col < len(r) and r[col] else next((c for c in filled if not NUMERAL_RE.match(c)), "")
+        if label and not NUMERAL_RE.match(label):
+            out.append(label)
+    return out, caption
 
 
 def _title_core(t: str) -> str:
@@ -81,6 +114,8 @@ def build_book_generic(blocks: list[dict], meta: dict, fixes: list | None = None
     smap = meta.get("structure_map")
     strict = bool(smap and smap.get("sections"))
     index_entry_atoms: list[dict] = []
+    idx_tbl = None  # the doc's index written as a table (its CONTENT column becomes the index entries)
+    index_caption = None
 
     # ------------------------------------------------------------ front matter
     if strict:
@@ -96,12 +131,15 @@ def build_book_generic(blocks: list[dict], meta: dict, fixes: list | None = None
         idx_tbl = fr.get("index_table")
         if idx_tbl and not index_entry_atoms:
             tb = next((a for a in atoms if a["src"] == idx_tbl and a["k"] == "tbl"), None)
-            if tb:  # one pseudo-atom per row: the first non-empty cell is the entry
-                for r in tb["rows"]:
-                    label = next((c.strip() for c in r if str(c).strip()), "")
-                    if label and not re.fullmatch(r"\d+", label):
-                        index_entry_atoms.append({"k": "p", "src": idx_tbl, "runs": [{"t": label}], "bold": False})
+            if tb:  # one pseudo-atom per entry row
+                labels, index_caption = index_table_entries(tb["rows"])
+                for label in labels:
+                    index_entry_atoms.append({"k": "p", "src": idx_tbl, "runs": [{"t": label}], "bold": False})
                 entry_ids.add(idx_tbl)
+                # the serial numbers and column headers of the table are not shown; the verifier must not expect them
+                ign(idx_tbl, "index table: its entries are listed on the index page (serial numbers and column headers are not shown)")
+            else:
+                idx_tbl = None
         used_front = {a["src"] for a in (title_atom, eyebrow_atom, idx_atom) if a} | entry_ids
         last = max((i for i, a in enumerate(atoms) if a["src"] in used_front), default=-1)
         for a in atoms[: last + 1]:  # anything else before the first real content (decorative images, stray lines)
@@ -303,7 +341,7 @@ def build_book_generic(blocks: list[dict], meta: dict, fixes: list | None = None
 
     # ------------------------------------------------------------ index page + end page
     ordered: list[dict] = []
-    if idx_atom and strict and index_entry_atoms:
+    if strict and index_entry_atoms and (idx_atom or idx_tbl):
         targets = [(_idx_key(sc["text"]), f"sec{si}") for si, sc in enumerate(secs) if sc["role"] != "ignore"]
         targets += [(_idx_key(x["title"]), "h:" + x["src"]) for x in (smap or {}).get("headings", []) if x.get("title")]
         targets += [(_idx_key(x["title"]), "h:" + x["src"]) for x in (smap or {}).get("sections", []) if x["src"] in part_srcs]
@@ -326,15 +364,20 @@ def build_book_generic(blocks: list[dict], meta: dict, fixes: list | None = None
                     best, bj = r, j
             if bj is not None and best >= 0.66:
                 ref, cursor = targets[bj][1], bj + 1
-            if ref is None:  # lines that name a kind of section ("answer keys", "exercises") point at the first one of that kind
-                role_hit = "answers" if re.search(r"answer|solution", key) else "exercise" if re.search(r"exercise", key) else None
+            if ref is None:  # lines that name a kind of section ("answer keys", "practice questions") point at the first one of that kind
+                role_hit = "answers" if re.search(r"answer|solution|hint|explanation", key) else "exercise" if re.search(r"exercise|practice|question|problem|assignment|quiz", key) else None
                 for si, sc in enumerate(secs):
                     if role_hit and sc["role"] == role_hit and not (role_hit == "exercise" and re.search(r"worksheet", sc["text"], re.I)):
                         ref = f"sec{si}"
                         break
             unmatched += ref is None
             entries.append({"label": label, "title": None, "ref": ref, "kind": "section", "src": a["src"]})
-        toc = {"t": "toc", "title": atom_text(idx_atom).strip(), "chapter": title_text, "chapter_no": "", "chapter_line": title_text, "eyebrow": atom_text(eyebrow_atom).strip() if eyebrow_atom else None, "entries": entries, "src": [idx_atom["src"]] + [e["src"] for e in entries] + ([eyebrow_atom["src"]] if eyebrow_atom else []) + ([title_atom["src"]] if title_atom else [])}
+        # Title of the index page: the doc's index heading; without one, the index table's caption, else the chapter title.
+        # The chapter line under it is left out when it would only repeat the title.
+        toc_title = atom_text(idx_atom).strip() if idx_atom else (index_caption or chapter_short or title_text)
+        chapter_line = "" if (not idx_atom and norm(toc_title) in (norm(title_text), norm(chapter_short))) else title_text
+        toc = {"t": "toc", "title": toc_title, "chapter": title_text, "chapter_no": "", "chapter_line": chapter_line, "eyebrow": atom_text(eyebrow_atom).strip() if eyebrow_atom else None, "entries": entries,
+               "src": ([idx_atom["src"]] if idx_atom else []) + [e["src"] for e in entries] + ([eyebrow_atom["src"]] if eyebrow_atom else []) + ([title_atom["src"]] if title_atom else [])}
         ordered.append({"kind": "toc", "block": toc})
         if unmatched:
             issues.append({"code": "index-unmatched", "blocks": [], "severity": "info", "blocking": False, "message": f"{unmatched} of {len(entries)} lines of the doc's own index could not be matched to a heading in the chapter, so they have no page number."})

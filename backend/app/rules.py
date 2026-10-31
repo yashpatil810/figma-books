@@ -64,12 +64,98 @@ def layout_of(theme: dict | None) -> dict:
     return out
 
 
+LAYOUT_LABELS = {"page": "page size", "col": "text column", "header": "header", "footer": "footer", "type": "type", "gap": "spacing"}
+
+
+def _num(v):
+    v = float(v)
+    return int(v) if v.is_integer() else round(v, 2)
+
+
+def margins_of(layout: dict) -> dict:
+    """The page margins implied by the text column: left = col.x, right = page.w - col.x - col.w, top = col.top, bottom = page.h - col.bottom."""
+    pg, c = layout["page"], layout["col"]
+    return {"left": _num(c["x"]), "right": _num(pg["w"] - c["x"] - c["w"]), "top": _num(c["top"]), "bottom": _num(pg["h"] - c["bottom"])}
+
+
+def change_layout(theme: dict | None, change) -> tuple[dict | None, list[str], list[str]]:
+    """Apply a layout request (from the structure chat) to the theme's layout spec.
+    change = {"margins": {"left": 40, "right": 40, "top": .., "bottom": ..}, "col"|"header"|"footer"|"gap"|"page": {key: number},
+              "type": {role: {"size": .., "lh": ..}}}. Margins are the natural way to say where the text sits; the raw groups
+    allow anything else the spec holds. Returns (the new full layout or None when nothing valid was asked, what changed, problems)."""
+    import copy
+
+    cur = layout_of(theme)
+    new = copy.deepcopy(cur)
+    done: list[str] = []
+    problems: list[str] = []
+    if not isinstance(change, dict):
+        return None, done, ["layout must be an object"]
+
+    def number(v, lo, hi):
+        return isinstance(v, (int, float)) and not isinstance(v, bool) and lo <= v <= hi
+
+    m = change.get("margins")
+    if isinstance(m, dict):
+        pg = new["page"]
+        mg = margins_of(new)
+        asked = False
+        for k in ("left", "right", "top", "bottom"):
+            v = m.get(k)
+            if number(v, 0, min(pg["w"], pg["h"]) / 2):
+                mg[k] = float(v)
+                asked = True
+            elif v is not None:
+                problems.append(f"margin {k} = {v!r} is not usable")
+        col = {"x": mg["left"], "w": pg["w"] - mg["left"] - mg["right"], "top": mg["top"], "bottom": pg["h"] - mg["bottom"]}
+        if not asked:
+            pass
+        elif col["w"] < 150 or col["bottom"] - col["top"] < 200:
+            problems.append("those margins would leave too little room for text; the margins were not changed")
+        else:
+            new["col"].update({k: _num(v) for k, v in col.items()})
+            done.append("page margins: " + ", ".join(f"{k} {_num(mg[k])}" for k in ("left", "right", "top", "bottom")))
+    for group in ("page", "col", "header", "footer", "gap"):
+        vals = change.get(group)
+        if not isinstance(vals, dict):
+            continue
+        for k, v in vals.items():
+            if k in new[group] and number(v, -50, 3000):
+                new[group][k] = _num(v)
+                done.append(f"{LAYOUT_LABELS[group]} {k} = {_num(v)}")
+            else:
+                problems.append(f"{group}.{k} = {v!r} was not applied")
+    ty = change.get("type")
+    if isinstance(ty, dict):
+        for role, spec in ty.items():
+            if role not in new["type"] or not isinstance(spec, dict):
+                problems.append(f"type.{role} was not applied")
+                continue
+            ratio = cur["type"][role]["lh"] / cur["type"][role]["size"]
+            for f in ("size", "lh"):
+                v = spec.get(f)
+                if number(v, *_LIMITS[f]):
+                    new["type"][role][f] = float(v)
+                    done.append(f"{TYPE_LABELS[role]} {f} = {_num(v)}")
+            if number(spec.get("size"), *_LIMITS["size"]) and spec.get("lh") is None:  # keep the leading in proportion
+                new["type"][role]["lh"] = round(float(spec["size"]) * ratio, 1)
+    c, pg, f = new["col"], new["page"], new["footer"]
+    if not (0 <= c["x"] and c["x"] + c["w"] <= pg["w"] and 0 <= c["top"] < c["bottom"] <= pg["h"]):
+        return None, [], problems + ["the text column would not fit on the page, so the layout was left as it was"]
+    if c["bottom"] > f["ruleY"] - 6:  # text must stop above the footer rule
+        c["bottom"] = _num(f["ruleY"] - 8)
+        done.append(f"text column bottom kept above the footer rule (y {c['bottom']})")
+    if not done:
+        return None, [], problems
+    return new, done, problems
+
+
 # The look of the components. The structure chat can change these for the whole book (theme["components"]) or for one
 # section (theme["sectionStyles"][section id]). Colour values: a token (white, none = no fill, primary, tint, text, strong,
 # onPrimary) or a hex colour; both renderers resolve tokens against the theme.
 DEFAULT_COMPONENTS = {
     "qcard": {"fill": "white", "radius": 8, "numberColor": "primary", "pad": 7.5},   # textColor: automatic (page text colour when there is no fill)
-    "mcq": {"fill": "white", "radius": 8, "columns": 2, "pad": 12},
+    "mcq": {"fill": "white", "radius": 8, "columns": "auto", "pad": 12},   # auto: 4 options in a row when they are short, else 2 columns, else 1
     "ans": {"fill": "white", "tabFill": "primary", "radius": 8, "pad": 7.5},
     "table": {"headFill": "primary", "headText": "onPrimary", "zebra": True},
     "callout": {"radius": 8},
@@ -104,8 +190,8 @@ def clean_style(component: str, values) -> dict:
             out[k] = v.upper() if v.startswith("#") else v
         elif t == "num" and isinstance(v, (int, float)) and not isinstance(v, bool) and 0 <= v <= 40:
             out[k] = v
-        elif t == "cols" and v in (1, 2):
-            out[k] = int(v)
+        elif t == "cols" and (v in (1, 2, 3, 4) or v == "auto"):
+            out[k] = v if v == "auto" else int(v)
         elif t == "bool" and isinstance(v, bool):
             out[k] = v
     return out

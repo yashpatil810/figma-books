@@ -42,13 +42,18 @@ front matter, the doc's own index list, where each section really starts and its
 map…), heading levels, and **where a new page starts** (`new_page` on every section and heading; a change of page type
 always starts a page because the background changes). `structure_generic.py` builds the pages from those labels; a section
 Claude lets flow continues on the previous page (`layout.build_pages`). The Structure screen shows every decision with a
-checkbox. The Structure screen also has a chat: a request in plain language ("let Part 12 continue on page 57", "the
-worksheet is an exercise", "remove the box behind the questions in the worksheet") is turned by Claude into overrides —
-roles, page starts, and the look of components (`rules.DEFAULT_COMPONENTS`: question/MCQ/answer cards, tables, callouts,
-formula bars, bullet marks; for the whole book or for one section), and colours (the ten theme colours, the callout
-pairs, and each page kind's background / pill / line / text — or one section's own page colours) — never into text changes — with
-the pages it touched shown as thumbnails and an undo. Checks and chat lay the book out exactly as the Preview does, so page
-numbers match. The old synopsis template and keyword rules are only a fallback when Claude is unavailable (the screen says so).
+checkbox. The Structure screen also has a chat: a request in plain language ("let Part 12 continue on page 57", "move the
+table on page 8 to page 9 but keep the paragraph", "the worksheet is an exercise", "remove the box behind the questions in
+the worksheet", "40 pt margins on both sides") is turned by Claude into overrides — roles, page starts (before any line of
+the doc: a heading, a paragraph, a table, a picture, a card — the chat sees every block of every page with its id), the look of
+components (`rules.DEFAULT_COMPONENTS`: question/MCQ/answer cards, tables, callouts, formula bars, bullet marks; for the
+whole book or for one section), colours (the ten theme colours, the callout pairs, and each page kind's background / pill /
+line / text — or one section's own page colours), and the page layout (`rules.change_layout`: margins, header and footer
+positions, type sizes, gaps), and the front matter (which opening line is the eyebrow, the title, the index heading or the
+index table, and which lines are index entries) — never into text changes — with the pages it touched shown as thumbnails and
+an undo. Checks and chat lay the book out exactly as the Preview does, so page numbers match. An index written as a table
+(“S.NO / CONTENT / PAGE NO”) is read by its content column (`structure_generic.index_table_entries`); the index page is built
+even without an INDEX heading line, titled with the table's caption or the chapter title. The old synopsis template and keyword rules are only a fallback when Claude is unavailable (the screen says so).
 "Audit an existing Figma" runs the same review and report for a Figma you made yourself.
 
 ## Review export
@@ -66,6 +71,13 @@ Not every chapter has synopses, key ideas or tests. The app picks a reading prof
 Images become labelled placeholders (small equation pictures are grouped into rows). Superscripts and
 subscripts are written as real superscript/subscript characters (x², H₂O).
 
+## Worksheets
+In an exercise section, text between one numbered question and the next belongs to that question. Options typed with
+capital letters after a question (“A) …” lines, “A) … B) … C) … D) …” in one line, “(A) …”, or lettered list items) join it
+in one MCQ card (`structure.qstream`); lower-case “(a) …” lines stay lines of the question card. An MCQ card shows its
+options four in a row when they are short, else in two columns, else one per line (`mcq.columns` = auto; the chat can set
+1, 2 or 4).
+
 ## Pictures and diagrams
 Step "Images & diagrams": Claude looks at every picture and classifies it. Real **diagrams** (geometric figures, graphs,
 circuits, experiment set-ups…) are redrawn as clean SVG (Opus, with a render-and-compare check), shown next to the
@@ -77,6 +89,9 @@ superscripts in labels are kept as typed characters.
 ## Layout
 - `backend/app` FastAPI: `gdoc` parse, `structure` doc→components, `layout` pagination, `scan` review,
   `verify` comparison/score, `llm` Claude CLI provider, `rules` theme + rules prompt, `samples`.
+- `measure.py` measures text with the very font faces the renderers use: a family is matched by the face's own family name
+  (never by file-name prefix, so "Avenir" is not measured with Avenir Next Condensed) and a weight by its style name
+  (`STYLE_NAMES`, mirrored by `pickFont` in the plugin: Avenir 800 = Heavy, 900 = Black).
 - `frontend/` React UI (`Page.jsx` mirrors the plugin renderer).
 - `figma-plugin/` builds the pages from the spec. Text is only copied from the spec, never generated.
 - `docs/reference-analysis.md` what was learned from the reference book. `data/` projects, caches (git-ignored).

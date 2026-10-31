@@ -19,7 +19,7 @@ CALLOUTS = {
     "common misconceptions": ("misc", "Common Misconceptions"),
     "iit foundation understanding": ("iit", "IIT Foundation Understanding"),
 }
-Q_RE = re.compile(r"^\s*(\d+)\s*([.)])\s*")
+Q_RE = re.compile(r"^\s*(\d+)\s*([.)])(?!\d)\s*")  # "4. text" / "4.text" / "4) text", never a decimal number such as "0.5x + 2.8"
 MCQ_RE = re.compile(r"\(\s*([A-D])\s*\)")
 QNUM_RE = re.compile(r"^\s*(\d{1,3})\s{2,}\S")  # "01  Stem…" (number, then spaces, no punctuation)
 OPT_RE = re.compile(r"^\s*([A-D])[.)]\s+\S")      # "A. option" on its own line
@@ -342,6 +342,50 @@ def parse_mcq(runs):
 
 
 SUBLABEL_RE = re.compile(r"^\s*\(\s*([ivxlcIVXLC]+|[a-zA-Z])\s*\)")
+# MCQ options typed with capital letters: "A) text" / "A. text" / "(A) text" on its own line, or several in one line
+# ("A) 3/4<tab>B) −3/4<tab>C) 3<tab>D) −3"). Lower-case "(a)" lines are sub-parts or options and stay lines of the question.
+OPT_MARK_RE = re.compile(r"(?:^|(?<=\s))\(?([A-D])\s*[.)]\s*(?=\S|$)")  # a marker may have no text (a picture or an equation that is an image)
+REASON_RE = re.compile(r"^\s*reason\s*(\(\s*r\s*\))?\s*:", re.I)
+LETTER_LABEL_RE = re.compile(r"^\s*\(?\s*([A-Za-z])\s*[.)]?\s*$")
+
+
+def option_marks(runs, expect: str = "A"):
+    """The capital-letter option markers of a line, in order, when the line starts with the expected letter (A for a
+    fresh set, the next letter while a set is being collected) and the markers continue in sequence (so a stray "(c)"
+    inside a formula never counts). Returns the matches or []."""
+    text = rtext(runs)
+    ms = [m for m in OPT_MARK_RE.finditer(text)]
+    if not ms or ms[0].start() != len(text) - len(text.lstrip()) or expect not in "ABCD":
+        return []
+    letters = [m.group(1) for m in ms]
+    want = list("ABCD")[list("ABCD").index(expect):]
+    for n in range(min(len(letters), len(want)), 0, -1):  # the longest run expect, expect+1, …
+        if letters[:n] == want[:n]:
+            return ms[:n]
+    return []
+
+
+def split_options(runs, marks):
+    """Cut a line at its option markers into [{k, runs}] without altering the text (separating tabs/spaces are dropped)."""
+    text = rtext(runs)
+
+    def sub(a, b):
+        out, pos = [], 0
+        for r in runs:
+            s, e = pos, pos + len(r["t"])
+            lo, hi = max(a, s), min(b, e)
+            if lo < hi:
+                nr = dict(r)
+                nr["t"] = r["t"][lo - s : hi - s]
+                out.append(nr)
+            pos = e
+        return trim(out)
+
+    opts = []
+    for i, m in enumerate(marks):
+        end = marks[i + 1].start() if i + 1 < len(marks) else len(text)
+        opts.append({"k": m.group(1), "runs": unb(sub(m.start(), end))})
+    return opts
 
 
 def _item_has_text(item) -> bool:
@@ -360,12 +404,15 @@ def qstream(atoms, mode, issues):
     def flush():
         nonlocal cur, item
         if cur and cur["items"]:
+            for it in cur["items"]:
+                it.pop("_src", None)
             out.append(cur)
         cur = None
         item = None
 
     def start_item(label, runs, src, extra_kind):
-        nonlocal cur, item
+        nonlocal cur, item, mcq
+        mcq = None
         kind = "ans" if mode == "a" else "qcard"
         if cur is None or cur["t"] != kind:
             flush()
@@ -374,8 +421,24 @@ def qstream(atoms, mode, issues):
             item = {"label": label, "blocks": [para(runs, src)] if runs else [], "pics": []}
         else:
             item = {"label": label, "lines": [runs] if runs else [], "pics": []}
+        item["_src"] = [src]
         cur["items"].append(item)
         cur["src"].append(src)
+
+    mcq = None  # an MCQ card being assembled from a question line and the option lines typed after it
+
+    def to_mcq(marks, runs, src):
+        """The open question item becomes an MCQ card (stem = its lines) and these options are its first options."""
+        nonlocal cur, item, mcq
+        it = cur["items"].pop()
+        srcs = it.pop("_src")
+        cur["src"] = [x for x in cur["src"] if x not in srcs]
+        flush()
+        stem = []
+        for i, ln in enumerate(it["lines"]):
+            stem += ([{"t": "\n"}] if i else []) + list(ln)
+        mcq = {"t": "mcq", "n": it["label"], "stem": unb(trim(stem)), "options": split_options(runs, marks), "src": srcs + [src]}
+        out.append(mcq)
 
     skip_to = 0
     for idx, a in enumerate(atoms):
@@ -412,12 +475,43 @@ def qstream(atoms, mode, issues):
             label = txt.strip().replace(" ", "")
             runs = []
 
+        # capital-letter options ("A) …", or "A) … B) … C) … D) …" in one line, or a lettered list item) after a question
+        # line, or after options already collected: they belong to that question, in one MCQ card
+        opt_runs = None
+        if mode == "q" and k == "p" and label is None and not is_heading_atom(a):
+            opt_runs = a["runs"]
+        elif mode == "q" and k == "li" and not a["bullet"] and a["label"] and LETTER_LABEL_RE.match(a["label"]) and (item is not None or mcq is not None):
+            opt_runs = [{"t": a["label"] + " "}] + list(a["lines"][0])
+            label, runs = None, None  # not a question of its own
+        expect = chr(ord(mcq["options"][-1]["k"]) + 1) if mcq is not None and mcq["options"] else "A"
+        marks = option_marks(opt_runs, expect) if opt_runs is not None else []
+        if marks and mcq is not None:
+            mcq["options"] += split_options(opt_runs, marks)
+            mcq["src"].append(src)
+            continue
+        if marks and item is not None and cur is not None and cur["t"] == "qcard" and not item["pics"]:
+            to_mcq(marks, opt_runs, src)
+            continue
+        if mcq is not None and k == "p" and label is None and REASON_RE.match(txt):  # "Reason: …" of an assertion-reason MCQ
+            mcq["stem"] = mcq["stem"] + [{"t": "\n"}] + unb(trim(a["runs"]))
+            mcq["src"].append(src)
+            continue
+        if k != "img":
+            mcq = None  # anything else closes the MCQ being assembled (pictures inside it are handled below)
+
         if k == "img" and item is not None and cur is not None:
             item["pics"].append(dict(fit_image(a), src=a["src"]))
             cur["src"].append(a["src"])
-        elif k == "p" and label is None and item is not None and cur is not None and mode == "q" and (not _item_has_text(item) or SUBLABEL_RE.match(txt)) and not is_heading_atom(a) and not re.match(r"^directions\b", txt, re.I):
+            item["_src"].append(a["src"])
+        elif k == "p" and label is None and item is not None and cur is not None and mode == "q" and not is_heading_atom(a) and not re.match(r"^directions\b", txt, re.I) and not RANGE_RE.match(txt):
+            # text between a numbered question and the next one belongs to that question (its remaining lines, sub-parts, "Reason")
             item["lines"].append(a["runs"])
             cur["src"].append(src)
+            item["_src"].append(src)
+        elif opt_runs is not None and k == "li" and item is not None and cur is not None and mode == "q":  # "(a) …" list item under a question: a line of it
+            item["lines"].append(opt_runs)
+            cur["src"].append(src)
+            item["_src"].append(src)
         elif k == "img":
             flush()
             out.extend(group_lists([a], None))
@@ -461,9 +555,11 @@ def qstream(atoms, mode, issues):
         elif k == "p" and item is not None and mode == "a":
             item["blocks"].append(para(a["runs"], src))
             cur["src"].append(src)
+            item["_src"].append(src)
         elif k == "li" and item is not None and mode == "a":
             item["blocks"].append(para(a["lines"][0], src))
             cur["src"].append(src)
+            item["_src"].append(src)
         elif k == "p" and mode == "q":
             # typed "(a) ..." etc. or free text
             flush()

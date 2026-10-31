@@ -24,7 +24,7 @@ SCALE = 10
 
 _cfg: dict | None = None
 warnings: list[str] = []
-_found: dict[str, Path | None] = {}
+_found: dict[str, tuple[Path, int] | None] = {}
 DEFAULT_WEIGHTS = {"medium": 500, "heavy": 800, "black": 900, "din": 700}
 WEIGHT_STYLES = {100: "Thin", 200: "ExtraLight", 300: "Light", 400: "Regular", 500: "Medium", 600: "SemiBold", 700: "Bold", 800: "ExtraBold", 900: "Black"}
 SYSTEM_DIRS = ["/System/Library/Fonts", "/System/Library/Fonts/Supplemental", "/Library/Fonts", os.path.expanduser("~/Library/Fonts")]
@@ -45,8 +45,46 @@ def _slug(name: str) -> str:
     return re.sub(r"[^a-z0-9]", "", name.lower())
 
 
-def _font_file(family: str, weight: int) -> Path | None:
-    """A font file for this family: downloaded earlier, installed on the Mac, or fetched from Google Fonts once."""
+# weight -> style names that count as that weight, best first. Local fonts are picked by style name, exactly as the Figma
+# plugin does (Avenir has no "ExtraBold": its 800 is "Heavy", its 900 is "Black"), so the pages are measured with the face
+# that will really be used.
+STYLE_NAMES = {
+    100: ["Thin", "Hairline"], 200: ["ExtraLight", "Extra Light", "UltraLight", "Ultra Light"], 300: ["Light"],
+    400: ["Regular", "Book", "Roman", "Normal"], 500: ["Medium"], 600: ["SemiBold", "Semi Bold", "DemiBold", "Demi Bold"],
+    700: ["Bold"], 800: ["ExtraBold", "Extra Bold", "Heavy", "UltraBold", "Ultra Bold"], 900: ["Black", "Heavy", "ExtraBlack", "Extra Black", "UltraBlack"],
+}
+_STYLE_WEIGHT = {_slug(n): w for w, names in STYLE_NAMES.items() for n in names}
+
+
+def _faces(path: Path) -> list[tuple[int, str, str]]:
+    """(index, family, style) of every face in a font file (a .ttc holds several families and weights)."""
+    out = []
+    for i in range(64):
+        try:
+            fam, sty = ImageFont.truetype(str(path), 10, index=i).getname()
+        except Exception:
+            break
+        out.append((i, fam or "", sty or ""))
+    return out
+
+
+def _pick_face(path: Path, family: str, weight: int) -> int | None:
+    """The upright face of exactly this family whose style name fits the weight, else the nearest weight; None when the
+    file holds no face of this family ("Avenir" never matches "Avenir Next" or "Avenir Next Condensed")."""
+    slug = _slug(family)
+    faces = [(i, sty) for i, fam, sty in _faces(path) if _slug(fam) == slug and not re.search(r"italic|oblique", sty, re.I)]
+    if not faces:
+        return None
+    for want in STYLE_NAMES.get(weight, [WEIGHT_STYLES.get(weight, "Regular")]):
+        for i, sty in faces:
+            if _slug(sty) == _slug(want):
+                return i
+    return min(faces, key=lambda f: abs(_STYLE_WEIGHT.get(_slug(f[1]), 400) - weight))[0]
+
+
+def _font_file(family: str, weight: int) -> tuple[Path, int] | None:
+    """A font file and the face index in it for this family and weight: downloaded earlier, installed on the Mac, or
+    fetched from Google Fonts once. The face's own family name must match exactly; the file name only narrows the search."""
     slug = _slug(family)
     d = config.DATA / "fonts"
     d.mkdir(exist_ok=True)
@@ -54,20 +92,19 @@ def _font_file(family: str, weight: int) -> Path | None:
     if key in _found:
         return _found[key]
     style = WEIGHT_STYLES.get(weight, "Regular")
+    # downloaded files first (a variable "wght" file before static weights), then the fonts installed on this Mac
+    cands = sorted(list(d.glob("*.ttf")) + list(d.glob("*.otf")), key=lambda f: ("wght" not in _slug(f.stem), f.name))
+    for base in SYSTEM_DIRS:
+        if Path(base).exists():
+            cands += sorted(list(Path(base).glob("*.tt[fc]")) + list(Path(base).glob("*.otf")))
     found = None
-    for f in sorted(d.glob("*.ttf")):  # variable file first, then the static file for this weight
-        n = _slug(f.stem)
-        if n.startswith(slug) and "italic" not in n and ("wght" in n or n.endswith(_slug(style))):
-            found = f
+    for f in cands:
+        if not _slug(f.stem).startswith(slug):
+            continue
+        idx = _pick_face(f, family, weight)
+        if idx is not None:
+            found = (f, idx)
             break
-    if not found:
-        for base in SYSTEM_DIRS:
-            for f in Path(base).glob("*.tt[fc]") if Path(base).exists() else []:
-                if _slug(f.stem).startswith(slug):
-                    found = f
-                    break
-            if found:
-                break
     if not found:
         try:  # Google Fonts: the family folder lists its files
             r = httpx.get(f"https://api.github.com/repos/google/fonts/contents/ofl/{slug}", timeout=20)
@@ -75,8 +112,9 @@ def _font_file(family: str, weight: int) -> Path | None:
             pick = next((x for x in files if "[" in x["name"] and "Italic" not in x["name"]), None) or next((x for x in files if x["name"].endswith(f"-{style}.ttf")), None)
             if pick:
                 data = httpx.get(pick["download_url"], timeout=60).content
-                found = d / pick["name"].replace("[", "").replace("]", "").replace(",", "")
-                found.write_bytes(data)
+                path = d / pick["name"].replace("[", "").replace("]", "").replace(",", "")
+                path.write_bytes(data)
+                found = (path, _pick_face(path, family, weight) or 0)
         except Exception:
             found = None
     if not found:
@@ -92,10 +130,11 @@ def _cfg_font(kind: str, px: int):
     if not spec or not spec.get("family"):
         return None
     weight = int(spec.get("weight") if kind == "din" else spec.get(kind, DEFAULT_WEIGHTS[kind]))
-    path = _font_file(spec["family"], weight)
-    if not path:
+    found = _font_file(spec["family"], weight)
+    if not found:
         return None
-    f = ImageFont.truetype(str(path), px)
+    path, idx = found
+    f = ImageFont.truetype(str(path), px, index=idx)
     try:
         axes = f.get_variation_axes()
         if axes:
@@ -119,16 +158,43 @@ def _font(kind: str, size: float):
         return None
 
 
+@lru_cache(maxsize=64)
+def _notdef_w(kind: str, size: float) -> float:
+    """Advance of the font's missing-glyph box, to recognise characters the font does not have."""
+    f = _font(kind, size)
+    return f.getlength("\u0378") / SCALE if f is not None else 0.0
+
+
+def _fallback_em(ch: str) -> float:
+    """Width (in em) a renderer's fallback font gives a character the text font lacks: arrows are set wide (→ ⇒ ≈ 1 em),
+    other symbols around 0.65 em. Measured against Chrome's and Figma's substitutes for Avenir."""
+    o = ord(ch)
+    if 0x2190 <= o <= 0x21FF or 0x27F0 <= o <= 0x27FF or 0x2900 <= o <= 0x297F:
+        return 1.0
+    return 0.65
+
+
 @lru_cache(maxsize=20000)
 def _w(kind: str, size: float, s: str) -> float:
     f = _font(kind, size)
     if f is None:  # fonts missing: rough average-width fallback
         return len(s) * size * (0.42 if kind == "din" else 0.52)
-    return f.getlength(s) / SCALE
+    w = f.getlength(s) / SCALE
+    if any(ord(ch) > 0x7F for ch in s):  # characters the font lacks are drawn from a fallback font, usually wider than the .notdef box
+        nd = _notdef_w(kind, size)
+        for ch in s:
+            if ord(ch) > 0x7F and abs(f.getlength(ch) / SCALE - nd) < 1e-6:
+                w += max(0.0, _fallback_em(ch) * size - nd)
+    return w
 
 
 def fonts_available() -> dict:
     return {"avenir": os.path.exists(AVENIR), "din_condensed": os.path.exists(DIN), "custom": bool(_cfg), "warnings": list(warnings)}
+
+
+def text_width(s: str, size: float, kind: str = "medium") -> float:
+    """Width of one string in the given face (the renderers size number labels and bullet marks to their text)."""
+    return _w(kind, size, s)
 
 
 def count_lines(runs: list[dict], width: float, size: float = 11, base: str = "medium") -> int:

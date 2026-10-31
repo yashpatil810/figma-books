@@ -87,7 +87,7 @@ def block_h(b: dict) -> float:
     if t == "note":
         return p_h(b["runs"], CONTENT_W)
     if t in ("ul", "ol"):
-        return sum(_item_h(it, CONTENT_W - 18) for it in b["items"]) + 5 * (len(b["items"]) - 1)
+        return sum(_item_h(it, CONTENT_W - list_indent(b)) for it in b["items"]) + 5 * (len(b["items"]) - 1)
     if t == "table":
         return table_h(b)
     if t == "callout":
@@ -110,7 +110,7 @@ def block_h(b: dict) -> float:
     if t == "mcq":
         return mcq_h(b)
     if t == "ans":
-        return sum(ans_row_h(it, b.get("cardPad")) for it in b["items"])
+        return sum(ans_row_h(it, b.get("cardPad")) for it in b["items"]) + ANS_ROW_GAP * (len(b["items"]) - 1)
     if t in ("toc", "end"):
         return 0
     raise ValueError(t)
@@ -122,13 +122,32 @@ def _item_h(it, width):
     return p_h(it, width)
 
 
+def label_w(label: str, min_w: float = 18) -> float:
+    """A number label ("12.", "(iv)") set in the Heavy face, never narrower than 18 — as both renderers size it."""
+    return max(min_w, measure.text_width(str(label or ""), BODY, "heavy"))
+
+
+def list_indent(b: dict) -> float:
+    """Room taken left of a list item's text: the widest numbered label + 4, or the bullet mark + 6."""
+    if b["t"] == "ol":
+        return max(label_w(it.get("label") if isinstance(it, dict) else "") for it in b["items"]) + 4 if b["items"] else 22
+    mark = b.get("mark") or "•"
+    return (measure.text_width(mark, BODY, "medium") if mark == "✓" else measure.text_width(mark, TYPE["mark"]["size"], "heavy")) + 6
+
+
 def table_h(b):
+    """Cells have 9 x 6 padding and a 1px border (box-sizing border-box, so the text gets width - 20); rows overlap their
+    borders by 1px, so each row is its text plus 13 and the table ends with one more border line. The header row is set
+    in the Black face, which is wider, and can wrap like any other row."""
     ws = b["widths"]
-    h = text_box(1, LH) + 12 if b["head"] else 0
+    h = 0
+    if b["head"]:
+        lines = max(measure.text_lines(str(c), ws[i] - 20, BODY, "black") for i, c in enumerate(b["head"]))
+        h += text_box(max(1, lines), LH) + 13
     for r in b["rows"]:
-        lines = max(measure.text_lines(c, ws[i] - 18, BODY, "medium") for i, c in enumerate(r))
-        h += max(text_box(1, LH) + 12, text_box(lines, LH) + 12)
-    return h
+        lines = max(measure.text_lines(str(c), ws[i] - 20, BODY, "medium") for i, c in enumerate(r))
+        h += text_box(max(1, lines), LH) + 13
+    return h + 1
 
 
 def callout_h(b):
@@ -138,10 +157,8 @@ def callout_h(b):
     inner += LH + 5  # title
     for i, x in enumerate(b["blocks"]):
         inner += (3 if prev in ("p", "ul") else 5 if prev else 0)
-        if x["t"] == "ul":
-            inner += sum(_item_h(it, w - 18) for it in x["items"]) + 5 * (len(x["items"]) - 1)
-        elif x["t"] == "ol":
-            inner += sum(_item_h(it, w - 18) for it in x["items"]) + 5 * (len(x["items"]) - 1)
+        if x["t"] in ("ul", "ol"):
+            inner += sum(_item_h(it, w - list_indent(x)) for it in x["items"]) + 5 * (len(x["items"]) - 1)
         else:
             inner += p_h(x["runs"], w)
         prev = x["t"]
@@ -167,8 +184,9 @@ def _pad(pad, dflt, ratio=0.7):
 
 
 def row_h(it, pad=None):
+    """A question row: the number label (its own width, at least 18) + a 4 gap + the text column."""
     px, py = _pad(pad, 7.5)
-    w = CONTENT_W - 33 - 2 * px
+    w = CONTENT_W - 2 * px - label_w(it.get("label")) - 4
     lines = it["lines"]
     h = sum(p_h(l, w) for l in lines) + 3 * max(0, len(lines) - 1)
     pics = it.get("pics") or []
@@ -177,24 +195,52 @@ def row_h(it, pad=None):
     return max(LH + 2 * py, h + 2 * py)
 
 
+ANS_TAB_PAD = 5.25  # the number tab of an answer row: one line of body text with 5.25 above and below (Page.jsx / code.js)
+ANS_ROW_GAP = 1  # answer rows are separated by 1px (the card's item spacing)
+
+
 def ans_row_h(it, pad=None):
+    """An answer row is as tall as the taller of its number tab and its text column (the lines inside are 3 apart)."""
     px, py = _pad(pad, 7.5)
     w = CONTENT_W - 33 - 2 * px
     h = 0
     for i, x in enumerate(it["blocks"]):
-        h += p_h(x["runs"], w) + (GAP["para"] if i else 0)
+        h += p_h(x["runs"], w) + (3 if i else 0)
     pics = it.get("pics") or []
     if pics:
         h += (3 if it["blocks"] else 0) + pics_h(pics, w)
-    return max(LH + 2 * py, h + 2 * py)
+    tab = text_box(1, LH) + 2 * ANS_TAB_PAD
+    return max(tab, LH + 2 * py, h + 2 * py)
+
+
+MCQ_COL_GAP = 12  # between option columns (Page.jsx / code.js)
+
+
+def mcq_col_w(n: int, px: float) -> float:
+    return (CONTENT_W - 2 * px - MCQ_COL_GAP * (n - 1)) / n
+
+
+def mcq_columns(b: dict, style) -> int:
+    """How many options sit in a row: the style's 1-4, or auto = 4 when every option fits on one line in a quarter
+    of the card (short answers, as in the reference design), else 2 when every option fits in a half, else 1."""
+    if style in (1, 2, 3, 4):
+        return int(style)
+    px, _ = _pad(b.get("cardPad"), 12, 2 / 3)
+    opts = b.get("options") or []
+    for n in (4, 2):
+        if len(opts) >= 2 and all(measure.count_lines(_runs_of(o["runs"]), mcq_col_w(n, px), BODY, "medium") == 1 for o in opts):
+            return n
+    return 1
 
 
 def mcq_h(b):
-    n = 1 if b.get("columns") == 1 else 2
+    n = b.get("columns") if b.get("columns") in (1, 2, 3, 4) else 2
     px, py = _pad(b.get("cardPad"), 12, 2 / 3)
-    w = (CONTENT_W - 2 * px) if n == 1 else (CONTENT_W - 2 * px) / 2 - 8
+    w = mcq_col_w(n, px)
     rows = [b["options"][i : i + n] for i in range(0, len(b["options"]), n)]
-    h = 2 * py + p_h(b["stem"], CONTENT_W - 2 * px)
+    # the stem is set in the Heavy face with the question number in front of it ("12 " + stem), as both renderers do
+    stem = [{"t": f"{b.get('n', '')} "}] + [{k: v for k, v in r.items() if k != "b"} for r in b["stem"]]
+    h = 2 * py + p_h(stem, CONTENT_W - 2 * px, base="heavy")
     for r in rows:
         h += 3 + max(p_h(o["runs"], w) for o in r)
     return h
@@ -230,11 +276,11 @@ def split_block(b, room, first_gap=0):
     acc, n = 0.0, 0
     for i, it in enumerate(items):
         if b["t"] in ("ul", "ol"):
-            ih = _item_h(it, CONTENT_W - 18) + (5 if i else 0)
+            ih = _item_h(it, CONTENT_W - list_indent(b)) + (5 if i else 0)
         elif b["t"] == "qcard":
             ih = row_h(it, b.get("cardPad"))
         else:
-            ih = ans_row_h(it, b.get("cardPad"))
+            ih = ans_row_h(it, b.get("cardPad")) + (ANS_ROW_GAP if i else 0)
         if acc + ih > room:
             break
         acc += ih
@@ -253,7 +299,7 @@ def first_unit_h(b):
     if splittable(b):
         it = b["items"][0]
         if b["t"] in ("ul", "ol"):
-            return _item_h(it, CONTENT_W - 18)
+            return _item_h(it, CONTENT_W - list_indent(b))
         return row_h(it, b.get("cardPad")) if b["t"] == "qcard" else ans_row_h(it, b.get("cardPad"))
     return block_h(b)
 
@@ -381,10 +427,10 @@ def build_pages(book: dict) -> dict:
         comps = rules.components_of(book.get("theme"), sec.get("src"))
         for topic in sec["topics"]:
             for b in topic["blocks"]:
-                if b.get("t") == "mcq":
-                    b["columns"] = comps["mcq"]["columns"]
                 if b.get("t") in ("qcard", "mcq", "ans") and comps[b["t"]].get("pad") is not None:
                     b["cardPad"] = comps[b["t"]]["pad"]
+                if b.get("t") == "mcq":
+                    b["columns"] = mcq_columns(b, comps["mcq"].get("columns"))
         # a section may contain several "topics" (forced page starts); a section marked flow_on continues on the
         # previous page when that page is of the same kind (same background and pill)
         for ti, topic in enumerate(sec["topics"]):

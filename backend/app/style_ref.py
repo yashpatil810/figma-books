@@ -161,7 +161,7 @@ def _prompt(stats: dict, shots: list[str]) -> str:
 def collect_frames(key: str, node: str | None) -> tuple[str, list[dict]]:
     """Page frames of the reference: a frame, a section, or a whole Figma page (then a few of its largest sections)."""
     if node:
-        top = figma_api.nodes(key, [node], plugin_data=False)[node]["document"]
+        top = figma_api.nodes(key, [node], plugin_data=False, cache=True)[node]["document"]
         if top["type"] != "CANVAS":
             _, frames = figma_api.container_pages(key, node)
             return top.get("name", ""), frames
@@ -169,7 +169,7 @@ def collect_frames(key: str, node: str | None) -> tuple[str, list[dict]]:
         secs = [c for c in top.get("children", []) if c["type"] == "SECTION"]
         frames_direct = [c for c in top.get("children", []) if c["type"] == "FRAME"]
     else:
-        d = figma_api._get(f"/files/{key}", {"depth": 3})
+        d = figma_api._get_cached(f"/files/{key}", {"depth": 3})
         page = max(d["document"]["children"], key=lambda pg: sum(len(c.get("children", [])) for c in pg.get("children", [])))
         page_name = page.get("name", "")
         secs = [c for c in page.get("children", []) if c["type"] == "SECTION"]
@@ -179,7 +179,7 @@ def collect_frames(key: str, node: str | None) -> tuple[str, list[dict]]:
     ranked = sorted(secs, key=lambda c: -len([x for x in c.get("children", []) if x["type"] == "FRAME"]))[:3]
     frames: list[dict] = []
     for sec in ranked:
-        full = figma_api.nodes(key, [sec["id"]], plugin_data=False)[sec["id"]]["document"] if not sec.get("children") else sec
+        full = figma_api.nodes(key, [sec["id"]], plugin_data=False, cache=True)[sec["id"]]["document"] if not sec.get("children") else sec
         fr = [c for c in full.get("children", []) if c["type"] in ("FRAME", "COMPONENT", "INSTANCE")]
         frames += pick_frames(fr, 4)
     return page_name + " / " + " + ".join(c["name"] for c in ranked), frames
@@ -249,7 +249,7 @@ def read_reference(pid: str, url: str, models: dict, prog=None) -> dict:
     ids = [f["id"] for f in chosen]
     if prog:
         prog(f"Measuring {len(ids)} reference pages…", 0.25)
-    full = figma_api.nodes(key, ids, plugin_data=False)
+    full = figma_api.nodes(key, ids, plugin_data=False, cache=True)
     trees = [full[i]["document"] for i in ids if i in full]
     stats = measure(trees)
     import json

@@ -174,11 +174,13 @@ def get_structure(pid: str):
             for b in blocks if b["t"] == "h"
         ],
         "job": store.job_get(pid, "structure"),
-        "map": ({"front": {k: (gdoc.block_text(by[v]) if v in by else None) for k, v in (sm.get("front") or {}).items()},
+        "map": ({"front": {k: ((f"table ({len(by[v]['rows'])} rows)" if by[v]["t"] == "tbl" else gdoc.block_text(by[v])) if v in by else None) for k, v in (sm.get("front") or {}).items()},
                  "index_entries": len(sm.get("index_entries", [])), "headings": len(sm.get("headings", [])),
                  "sections": [{**x, "page": pages.get(x["src"]), "override": p.get("roles", {}).get(x["src"]), "new_page_eff": p.get("page_breaks", {}).get(x["src"], x.get("new_page"))} for x in sm.get("sections", [])],
                  "heading_breaks": [{"src": x["src"], "title": x["title"][:80], "level": x["level"], "page": pages.get(x["src"]), "new_page": p.get("page_breaks", {}).get(x["src"], bool(x.get("new_page")))} for x in sm.get("headings", [])]} if sm else None),
         "checks": structure_checks(pid, book, blocks, sm),
+        "block_breaks": [{"src": k, "on": bool(v), "text": gdoc.block_text(by[k])[:80], "page": pages.get(k)} for k, v in p.get("page_breaks", {}).items()
+                         if k in by and k not in {x["src"] for x in (sm or {}).get("sections", []) + (sm or {}).get("headings", [])}],
         "pages_est": None,
     }
 
@@ -367,20 +369,70 @@ def findings_csv(pid: str, severities: str = "", statuses: str = ""):
 
 
 # ------------------------------------------------------------------ structure chat (requests in plain language)
-CHAT_SYSTEM = ("You help the author of a school textbook adjust how a chapter is split into sections and pages, and how its components look. "
-               "You can change three things: (3) the look of components, for the whole book (scope 'all') or for one section (scope = that section's id): "
-               "qcard = question cards (fill, radius, numberColor), mcq = MCQ cards (fill, radius, columns 1 or 2), ans = answer cards (fill, tabFill, radius), "
-               "table (headFill, headText, zebra true/false), callout (radius), formula (fill, text), bullets (markColor), page (bg: the page background; with scope 'all' give kind = index|body|exercise|worksheet|answers|mindmap). "
-               "(4) the book's colours: theme colours primary (the accent: header pill, bullets, numbers, table header, answer tabs), text (body text), strong (headings), tint (tinted page background / key-ideas box), white (teaching page background / cards), rule (header line), footerRule, tableAlt (zebra rows), tableBorder, onPrimary (text on the accent); "
-               "the callout boxes misc (Common Misconceptions), iit (IIT Foundation), dyk (Did You Know) each with bg and fg; and per page kind (index, body, exercise, worksheet, answers, mindmap) the page's bg, pillBg, pillFg, rule and fg (text colour on that page) — use component 'page' for those (scope 'all' + kind, or a section id). "
-               "Colour values: white, none (= no fill, no box), primary, tint, text, strong, onPrimary, or a #hex; theme colours themselves must be #hex. (1) the role of any line — a section start of kind body (teaching content), exercise, answers (answer key), mindmap, references or glossary, "
-               "or 'inline' (not a section: just a heading inside the page) or 'ignore' (leave the line and everything up to the next section out of the book); "
-               "(2) whether a section or heading starts a new page (true/false). You never change, add or remove text: every word comes from the author's document. "
-               "A change of page type (teaching → exercise → answer key) always starts a page because the page background changes; say so if asked otherwise. "
-               "qcard/mcq/ans also take textColor (the text inside the card; when unset it is automatic: the page's text colour if the card has no fill) and pad (the card's inner padding in points; 0 = none). "
-               "Make the result look right, as a book designer would, not just the literal change: when you remove a box (fill none) also remove its padding (pad 0) unless the author wants it kept, and make sure every text stays readable on the page background — "
-               "on a dark page use light text (textColor / numberColor such as white or onPrimary), on a light page dark text. Think through what else the change affects (contrast, alignment, consistency with the other sections of the same kind) and adjust it; say in the reply what you adjusted beyond the literal request and why. "
-               "Refer to pages by their printed page numbers. Be brief and concrete.")
+CHAT_SYSTEM = (
+    "You help the author of a school textbook adjust how a chapter is split into sections and pages, how its components look, its colours and its page layout. "
+    "You never change, add or remove text: every word comes from the author's document. You can change five things.\n"
+    "(1) The role of any line: a section start of kind body (teaching content), exercise, answers (answer key), mindmap, references or glossary, "
+    "or 'inline' (not a section: just a heading inside the page) or 'ignore' (leave the line and everything up to the next section out of the book).\n"
+    "(2) Where pages start. page_breaks {id: true} makes the block with that id begin at the top of a new page; {id: false} removes a forced start. "
+    "Any id listed under a page in CURRENT PAGES can be used — a heading, a paragraph, a table, a list, a picture, a card — so 'move the table on page 8 to page 9 but keep the paragraph' is done with the table's own id. "
+    "Sections and headings have their new_page flag in the same map. A change of page type (teaching → exercise → answer key) always starts a page because the page background changes; say so if asked otherwise. "
+    "Pages are laid out with the real fonts and the current layout, so the pt used / free figures are exact and text never runs past the column: moving a block changes where it sits, never whether it fits.\n"
+    "(3) The look of components, for the whole book (scope 'all') or for one section (scope = that section's id): qcard = question cards (fill, radius, numberColor, textColor, pad), mcq = MCQ cards (fill, radius, columns 1|2|4|auto — auto puts 4 short options in a row like the reference design, else 2 columns — textColor, pad), "
+    "ans = answer cards (fill, tabFill, radius, textColor, pad), table (headFill, headText, zebra true/false), callout (radius), formula (fill, text), bullets (markColor), "
+    "page (bg, pillBg, pillFg, rule, fg = that kind of page's colours; with scope 'all' give kind = index|body|exercise|worksheet|answers|mindmap). "
+    "pad is a card's inner padding in points (0 = none); textColor unset = automatic (the page's text colour when the card has no fill). Colour values: white, none (= no fill, no box), primary, tint, text, strong, onPrimary, or a #hex.\n"
+    "(4) The book's colours (#hex only): primary (the accent: header pill, bullets, numbers, table header, answer tabs), text (body text), strong (headings), tint (tinted page background / key-ideas box), "
+    "white (teaching page background / cards), rule (header line), footerRule, tableAlt (zebra rows), tableBorder, onPrimary (text on the accent); the callout boxes misc (Common Misconceptions), iit (IIT Foundation), dyk (Did You Know) each with bg and fg.\n"
+    "(5) The page layout, in points (CURRENT LAYOUT shows it): margins left / right / top / bottom — the text column follows ('40 px padding on both sides' = margins left 40, right 40); "
+    "header (ruleX, ruleY, ruleW, pillX, pillY, pillW, pillH, pillSize), footer (ruleX, ruleY, ruleW, textX, textY, textSize, numX, numY, numSize), type (title, eyebrow, h2, h3, h4, h5, body, mark, toc: size and lh), "
+    "gap (para, afterHeading, beforeHeading, beforeLabel, block, image). Header and footer positions are independent of the margins: change them only when asked or clearly implied. "
+    "Changing margins or type re-flows the whole book, so page numbers move.\n"
+    "(6) The front matter, i.e. what the doc's opening lines are used for (FRONT MATTER lists them with ids): front {eyebrow: the small line above the title, title: the chapter title line, "
+    "index_heading: the INDEX/CONTENTS heading, index_table: the doc's index when it is a table} — each an id or null — and index_entries [ids of the lines of the doc's own contents list]. "
+    "The index page is built from these: it needs an index heading or an index table (or index entry lines); its title is the index heading, else the index table's caption, else the chapter title; "
+    "its entries get the printed page numbers automatically. 'index' is not a section role, so never use roles for it. Lines used as front matter are not repeated in the chapter.\n"
+    "Make the result look right, as a book designer would, not just the literal change: when you remove a box (fill none) also remove its padding (pad 0) unless the author wants it kept, and make sure every text stays readable on the page background — "
+    "on a dark page use light text (textColor / numberColor such as white or onPrimary), on a light page dark text. Think through what else the change affects (contrast, alignment, consistency with the other sections of the same kind) and adjust it; "
+    "say in the reply what you adjusted beyond the literal request and why. Refer to pages by their printed page numbers. Describe as done only what you put in the JSON; if a request is outside these five things, say so plainly. Be brief and concrete."
+)
+
+
+def _runs_text(runs) -> str:
+    return "".join(r.get("t", "") for r in (runs or []) if isinstance(r, dict))
+
+
+def _block_preview(b: dict) -> str:
+    """The first words of a laid-out block, so the chat can name it."""
+    t = b.get("t")
+    if t in ("title", "h", "formula"):
+        return b.get("text", "")
+    if t in ("p", "note"):
+        return _runs_text(b.get("runs"))
+    if t in ("ul", "ol"):
+        it = (b.get("items") or [None])[0]
+        return _runs_text(it["lines"][0] if isinstance(it, dict) and it.get("lines") else it if isinstance(it, list) else [])
+    if t == "table":
+        return " / ".join(str(c) for c in (b.get("head") or (b.get("rows") or [[]])[0]))
+    if t == "callout":
+        return b.get("title", "")
+    if t == "qcard":
+        it = (b.get("items") or [None])[0]
+        return f"{it.get('label', '')} {_runs_text(it['lines'][0]) if it.get('lines') else ''}".strip() if it else ""
+    if t == "mcq":
+        return f"{b.get('n', '')} {_runs_text(b.get('stem'))}".strip()
+    if t == "ans":
+        it = (b.get("items") or [None])[0]
+        return f"{it.get('label', '')} {_runs_text(it['blocks'][0].get('runs')) if it.get('blocks') else ''}".strip() if it else ""
+    return b.get("alt", "") or ""
+
+
+def _block_kind(b: dict) -> str:
+    t = b.get("t")
+    n = len(b.get("items") or [])
+    return {"title": "section title", "h": "heading", "p": "paragraph", "note": "note", "ul": f"bullet list ({n} items)", "ol": f"numbered list ({n} items)",
+            "table": f"table ({len(b.get('rows') or [])} rows)", "callout": "callout", "formula": "formula", "image": "picture", "imagerow": "pictures",
+            "qcard": f"question cards ({n})", "mcq": "MCQ", "ans": f"answer cards ({n})"}.get(t, str(t))
 
 
 def structure_context(pid: str, blocks) -> dict:
@@ -394,9 +446,12 @@ def structure_context(pid: str, blocks) -> dict:
     for pg in out["pages"]:
         if pg["kind"] in ("toc", "end"):
             continue
-        first = pg["blocks"][0] if pg["blocks"] else {}
-        ft = first.get("text") or (" ".join(r.get("t", "") for r in first.get("runs", [])) if first.get("runs") else first.get("t", ""))
-        pages.append(f"p{pg['pageNo']} [{pg['kind']}] {round(100 * layout.page_used(pg['blocks']) / layout.AVAIL)}% full · starts: {str(ft)[:60]}")
+        used = layout.page_used(pg["blocks"])
+        lines = [f"p{pg['pageNo']} [{pg['kind']}] {round(100 * used / layout.AVAIL)}% full ({round(layout.AVAIL - used)} pt free)"]
+        for b in pg["blocks"]:  # every block with its id: the chat may start a page before any of them
+            src0 = (b.get("src") or [None])[0]
+            lines.append(f"  {src0 or '-'} {_block_kind(b)}{' (continued)' if b.get('cont') else ''} h={round(layout.block_h(b))} “{_block_preview(b)[:48]}”")
+        pages.append("\n".join(lines))
     secs = []
     for i, d in enumerate(book.get("dividers", [])):
         start = anchors.get(f"sec{i}")
@@ -409,7 +464,38 @@ def structure_context(pid: str, blocks) -> dict:
               "components everywhere: " + "; ".join(f"{c} {v}" for c, v in comps.items())]
     for src, st in (p["theme"].get("sectionStyles") or {}).items():
         styles.append(f"section {src}: {st}")
-    return {"pages": pages, "sections": secs, "headings": heads, "styles": styles, "overrides": {"roles": p.get("roles", {}), "page_breaks": breaks}}
+    front = []
+    if sm:
+        first_sec = next((x["src"] for x in sm.get("sections", [])), None)
+        fr = sm.get("front") or {}
+        used_as = {v: k for k, v in fr.items() if v}
+        entry_ids = set(sm.get("index_entries") or [])
+        for b in blocks:
+            if b["id"] == first_sec or len(front) >= 40:
+                break
+            txt = gdoc.block_text(b).strip()
+            if b["t"] == "img" or not txt:
+                continue
+            flags = [f for f, on in (("bold", b["t"] != "tbl" and bool(b.get("runs")) and all(r.get("b") for r in b["runs"] if r["t"].strip())), ("centred", b.get("jc") == "center")) if on]
+            kind = f"table ({len(b['rows'])} rows)" if b["t"] == "tbl" else "heading" if b["t"] == "h" else "line"
+            use = used_as.get(b["id"]) or ("index entry" if b["id"] in entry_ids else None)
+            front.append(f"{b['id']} {kind}{' (' + ', '.join(flags) + ')' if flags else ''} “{txt[:90]}”" + (f" — used as {use.replace('_', ' ')}" if use else ""))
+        toc = next((pg for pg in out["pages"] if pg["kind"] == "toc"), None)
+        if toc:
+            tb = toc["blocks"][0]
+            front.append(f"An index page is built: eyebrow “{tb.get('eyebrow') or '-'}”, title “{tb.get('title')}”, {len(tb.get('entries') or [])} entries" + (f", chapter line “{tb['chapter_line']}”" if tb.get("chapter_line") else "") + ".")
+        else:
+            front.append("No index page is built (no index heading, index table or index entry lines are set).")
+    else:
+        front.append("(the document has not been read for meaning yet)")
+    L = rules.layout_of(p["theme"])
+    mg = rules.margins_of(L)
+    lay = [f"page {L['page']['w']} x {L['page']['h']} pt; margins left {mg['left']}, right {mg['right']}, top {mg['top']}, bottom {mg['bottom']} (text column x {L['col']['x']} w {L['col']['w']}, from y {L['col']['top']} to y {L['col']['bottom']})",
+           "header: " + ", ".join(f"{k} {v}" for k, v in L["header"].items()),
+           "footer: " + ", ".join(f"{k} {v}" for k, v in L["footer"].items()),
+           "type (size/lh): " + ", ".join(f"{k} {v['size']}/{v['lh']}" for k, v in L["type"].items()),
+           "gap: " + ", ".join(f"{k} {v}" for k, v in L["gap"].items())]
+    return {"pages": pages, "sections": secs, "headings": heads, "styles": styles, "layout": lay, "front": front, "overrides": {"roles": p.get("roles", {}), "page_breaks": breaks}}
 
 
 class ChatIn(BaseModel):
@@ -432,25 +518,68 @@ def post_chat(pid: str, body: ChatIn):
     ctx = structure_context(pid, blocks)
     history = "\n".join(f"{'Author' if t['role'] == 'user' else 'You'}: {t['text'][:400]}" for t in turns[-8:])
     prompt = (
-        "CURRENT PAGES (printed page numbers):\n" + "\n".join(ctx["pages"]) + "\n\nSECTIONS (id [role] title · start page · new_page):\n" + "\n".join(ctx["sections"])
+        "CURRENT PAGES (printed page numbers; under each page its blocks: id, kind, height in pt, first words):\n" + "\n".join(ctx["pages"])
+        + "\n\nSECTIONS (id [role] title · start page · new_page):\n" + "\n".join(ctx["sections"])
         + "\n\nHEADINGS INSIDE SECTIONS (id level page title):\n" + "\n".join(ctx["headings"])
         + "\n\nCURRENT COMPONENT STYLES:\n" + "\n".join(ctx["styles"])
+        + "\n\nCURRENT LAYOUT:\n" + "\n".join(ctx["layout"])
+        + "\n\nFRONT MATTER (the doc's opening lines before the first section, and what each is used as):\n" + "\n".join(ctx["front"])
         + (f"\n\nEARLIER CONVERSATION:\n{history}" if history else "")
         + f"\n\nAUTHOR'S REQUEST: {body.message.strip()}\n\n"
         'Reply with JSON only: {"reply": "one or two sentences to the author saying what you changed (with page numbers) or why you cannot", '
-        '"roles": {"<line id>": "body|exercise|answers|mindmap|references|glossary|inline|ignore"}, "page_breaks": {"<line id>": true|false}, '
+        '"roles": {"<line id>": "body|exercise|answers|mindmap|references|glossary|inline|ignore"}, "page_breaks": {"<block id>": true|false}, '
         '"styles": [{"scope": "all" or "<section id>", "component": "qcard|mcq|ans|table|callout|formula|bullets|page", "kind": "only for page with scope all", "set": {"property": value}}], '
         '"theme": {"primary|text|strong|tint|white|rule|footerRule|tableAlt|tableBorder|onPrimary": "#hex", "misc|iit|dyk": {"bg": "#hex", "fg": "#hex"}}, '
+        '"layout": {"margins": {"left": pt, "right": pt, "top": pt, "bottom": pt}, "header": {...}, "footer": {...}, "type": {"body": {"size": pt, "lh": pt}}, "gap": {...}}, '
+        '"front": {"eyebrow": "<id>|null", "title": "<id>|null", "index_heading": "<id>|null", "index_table": "<id>|null"}, "index_entries": ["<id>", ...], '
         '"show_pages": [printed page numbers worth looking at after the change, at most 4]}. '
-        "Use only ids from the lists above. Leave roles/page_breaks empty when nothing should change."
+        "Use only ids from the lists above. Give only the keys that should change (an empty object or omitted key = no change)."
     )
     r = llm.ask_json(prompt, model=config.settings()["models"].get("structure", "opus"), system=CHAT_SYSTEM, timeout=600)
     if not isinstance(r, dict):
         raise HTTPException(500, "Claude did not answer in the expected form.")
+    rejected: list[str] = []  # what the model asked for but the app could not apply (told to the author, so the reply never overstates)
     roles = {k: v for k, v in (r.get("roles") or {}).items() if k in ids and v in ("body", "exercise", "answers", "mindmap", "references", "glossary", "inline", "ignore")}
+    rejected += [f"role of {k}" for k in (r.get("roles") or {}) if k not in roles]
     breaks = {k: bool(v) for k, v in (r.get("page_breaks") or {}).items() if k in ids and isinstance(v, bool)}
-    sm = structure_map.load(pid, blocks) or {}
+    rejected += [f"page start at {k}" for k in (r.get("page_breaks") or {}) if k not in breaks]
+    smap = structure_map.load(pid, blocks)
+    sm = smap or {}
     section_ids = {x["src"] for x in sm.get("sections", [])} | set(p.get("roles", {}).keys())
+    by = {b["id"]: gdoc.block_text(b)[:50] for b in blocks}
+    blk = {b["id"]: b for b in blocks}
+    map_changes: list[str] = []  # front matter lives in the structure map (it is Claude's reading of the doc, corrected by the author)
+    before_map = None
+    fr_in, ent_in = r.get("front"), r.get("index_entries")
+    if (isinstance(fr_in, dict) and fr_in) or isinstance(ent_in, list):
+        if not smap:
+            rejected.append("front matter (the document has not been read for meaning yet)")
+        else:
+            before_map = {"front": dict(smap.get("front") or {}), "index_entries": list(smap.get("index_entries") or [])}
+            new_front = dict(before_map["front"])
+            for k, v in (fr_in or {}).items() if isinstance(fr_in, dict) else []:
+                if k not in ("eyebrow", "title", "index_heading", "index_table"):
+                    rejected.append(f"front.{k}")
+                elif v is None or (v in ids and (k != "index_table" or blk[v]["t"] == "tbl")):
+                    if new_front.get(k) != v:
+                        new_front[k] = v
+                        map_changes.append(f"{k.replace('_', ' ')} → " + (f"“{by[v]}”" if v else "none"))
+                else:
+                    rejected.append(f"front.{k} = {v}")
+            new_entries = before_map["index_entries"]
+            if isinstance(ent_in, list):
+                good = [x for x in ent_in if isinstance(x, str) and x in ids]
+                bad = [str(x) for x in ent_in if not (isinstance(x, str) and x in ids)]
+                if bad:
+                    rejected.append("index entries " + ", ".join(bad[:3]))
+                order = {b["id"]: i for i, b in enumerate(blocks)}
+                good.sort(key=order.get)
+                if good != before_map["index_entries"]:
+                    new_entries = good
+                    map_changes.append(f"index entries → {len(good)} lines")
+            if map_changes:
+                smap["front"], smap["index_entries"] = new_front, new_entries
+                structure_map.save(pid, smap)
     theme = json.loads(json.dumps(p["theme"]))
     style_changes = []
     for it in (llm.as_list(r.get("styles")) if r.get("styles") else []):
@@ -459,6 +588,7 @@ def post_chat(pid: str, body: ChatIn):
         comp, scope = it.get("component"), it.get("scope") or "all"
         vals = rules.clean_style(comp, it.get("set"))
         if comp not in rules.COMPONENT_SCHEMA or not vals or (scope != "all" and scope not in section_ids):
+            rejected.append(f"style of {comp} ({scope})")
             continue
         label = rules.COMPONENT_LABELS[comp]
         if comp == "page":
@@ -489,15 +619,26 @@ def post_chat(pid: str, body: ChatIn):
             if pair:
                 theme[k] = {**(theme.get(k) or {}), **pair}
                 style_changes.append(f"callout “{k}”: " + ", ".join(f"{kk} {vv}" for kk, vv in pair.items()))
-    before = {"roles": dict(p.get("roles", {})), "page_breaks": dict(p.get("page_breaks", {})), "theme": {k: json.loads(json.dumps(p["theme"].get(k))) for k in ("components", "sectionStyles", "pageTypes") + rules.THEME_COLOR_KEYS + rules.CALLOUT_KEYS}}
-    if roles or breaks or style_changes:
+    if isinstance(r.get("layout"), dict) and r["layout"]:  # margins, header/footer positions, type scale, gaps
+        new_layout, done, problems = rules.change_layout(theme, r["layout"])
+        if new_layout:
+            theme["layout"] = new_layout
+            style_changes += [f"layout: {d}" for d in done]
+        rejected += problems
+    before = {"roles": dict(p.get("roles", {})), "page_breaks": dict(p.get("page_breaks", {})), "map": before_map if map_changes else None,
+              "theme": {k: json.loads(json.dumps(p["theme"].get(k))) for k in ("components", "sectionStyles", "pageTypes", "layout") + rules.THEME_COLOR_KEYS + rules.CALLOUT_KEYS}}
+    if roles or breaks or style_changes or map_changes:
         store.update(pid, roles={**p.get("roles", {}), **roles}, page_breaks={**p.get("page_breaks", {}), **breaks}, theme=theme, structure_changed=time.time())
-    by = {b["id"]: gdoc.block_text(b)[:50] for b in blocks}
-    changes = [f"“{by.get(k, k)}” → {v}" for k, v in roles.items()] + [f"“{by.get(k, k)}” → {'new page' if v else 'continues on the previous page'}" for k, v in breaks.items()] + style_changes
+    changes = [f"“{by.get(k, k)}” → {v}" for k, v in roles.items()] + [f"“{by.get(k, k)}” → {'new page' if v else 'continues on the previous page'}" for k, v in breaks.items()] + map_changes + style_changes
+    reply = str(r.get("reply", "")).strip()
+    if rejected:
+        reply += " (Not applied: " + "; ".join(rejected[:4]) + (", …" if len(rejected) > 4 else "") + ".)"
+    elif not changes and re.search(r"\b(changed|set|added|moved|reduced|increased|updated)\b", reply, re.I) and not re.search(r"\b(cannot|can't|could not|not possible|unable|outside)\b", reply, re.I):
+        reply += " (Nothing was changed.)"
     turns.append({"role": "user", "text": body.message.strip(), "ts": time.time()})
-    turns.append({"role": "assistant", "text": str(r.get("reply", "")).strip(), "changes": changes, "before": before, "show_pages": [int(x) for x in (r.get("show_pages") or []) if isinstance(x, (int, float))][:4], "ts": time.time()})
+    turns.append({"role": "assistant", "text": reply, "changes": changes, "before": before, "show_pages": [int(x) for x in (r.get("show_pages") or []) if isinstance(x, (int, float))][:4], "ts": time.time()})
     store.write(pid, "structure_chat.json", turns)
-    return {"turns": turns, "applied": bool(roles or breaks or style_changes)}
+    return {"turns": turns, "applied": bool(roles or breaks or style_changes or map_changes)}
 
 
 @app.post("/api/projects/{pid}/structure/chat/undo")
@@ -516,6 +657,11 @@ def undo_chat(pid: str):
         else:
             theme[k] = v
     store.update(pid, roles=last["before"]["roles"], page_breaks=last["before"]["page_breaks"], theme=theme, structure_changed=time.time())
+    if last["before"].get("map"):
+        smap = structure_map.load(pid, store.read(pid, "blocks.json") or [])
+        if smap:
+            smap["front"], smap["index_entries"] = last["before"]["map"]["front"], last["before"]["map"]["index_entries"]
+            structure_map.save(pid, smap)
     last["changes"] = []
     last["undone"] = True
     store.write(pid, "structure_chat.json", turns)
@@ -1275,6 +1421,59 @@ def diagram_report(pid, rep, blocks, models, prog, use_llm):
 def get_report(pid: str):
     _p(pid)
     return {"report": store.read(pid, "report.json"), "history": store.read(pid, "reports.json", []), "job": store.job_get(pid, "verify")}
+
+
+@app.get("/api/projects/{pid}/report.xlsx")
+def report_xlsx(pid: str):
+    """The report tabs (To-do, Differences, Layout, Capitalisation, Accepted) as one Excel workbook."""
+    import io
+
+    from fastapi.responses import Response
+    from openpyxl import Workbook
+    from openpyxl.styles import Alignment, Font, PatternFill
+    from openpyxl.utils import get_column_letter
+
+    p = _p(pid)
+    r = store.read(pid, "report.json")
+    if not r:
+        raise HTTPException(404, "No report yet")
+    pg = lambda i: (r["pages"][i] if isinstance(i, int) and 0 <= i < len(r["pages"]) else {})
+    pname = lambda i: pg(i).get("name", "")
+    pno = lambda i: pg(i).get("page_no") or ""
+    open_ = [t for t in r["todos"] if not t.get("user_done") or t.get("still_open")]
+    sheets = [
+        (f"To-do ({len(open_)})", ["Type", "Severity", "Page", "Page no.", "Issue", "Done", "Figma link"],
+         [[t["type"], t["severity"], pname(t.get("page")), pno(t.get("page")), t["text"], "Yes" if t.get("user_done") and not t.get("still_open") else "No", t.get("link") or ""] for t in r["todos"]]),
+        (f"Differences ({len(r['diffs'])})", ["Type", "Page", "Page no.", "Doc says", "Figma has", "Explanation", "Fix"],
+         [[d["kind"], pname(d["page"]), pno(d["page"]), d["doc"], d["figma"], d.get("explanation", ""), d.get("fix", "")] for d in r["diffs"]]),
+        (f"Layout ({len(r['anomalies'])})", ["Type", "Page", "Page no.", "Issue"],
+         [[a["kind"], pname(a["page"]), pno(a["page"]), a["msg"]] for a in r["anomalies"]]),
+        (f"Capitalisation ({r['case_total']})", ["Page", "Page no.", "Doc says", "Figma has"],
+         [[pname(c["page"]), pno(c["page"]), c["doc"], c["figma"]] for c in r["case_warnings"]]),
+        (f"Accepted ({len(r['accepted'])})", ["Status", "Message", "Note"],
+         [[a["status"], a["message"], a.get("note", "")] for a in r["accepted"]]),
+    ]
+    wb = Workbook()
+    wb.remove(wb.active)
+    for title, head, rows in sheets:
+        ws = wb.create_sheet(title)
+        ws.append(head)
+        for c in ws[1]:
+            c.font, c.fill = Font(bold=True, color="FFFFFF"), PatternFill("solid", fgColor="333333")
+        for row in rows:
+            ws.append([("'" + v if isinstance(v, str) and v[:1] in "=+-@" else v) for v in row])
+        for i, h in enumerate(head, 1):
+            longest = max([len(str(h))] + [len(str(rw[i - 1])) for rw in rows])
+            ws.column_dimensions[get_column_letter(i)].width = min(max(longest + 2, 10), 70)
+        for rw in ws.iter_rows(min_row=2):
+            for c in rw:
+                c.alignment = Alignment(wrap_text=True, vertical="top")
+        ws.freeze_panes = "A2"
+        ws.auto_filter.ref = ws.dimensions
+    buf = io.BytesIO()
+    wb.save(buf)
+    name = re.sub(r"[^A-Za-z0-9]+", "-", p.get("name", "book")).strip("-")[:60] or "book"
+    return Response(buf.getvalue(), media_type="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", headers={"Content-Disposition": f'attachment; filename="{name}-report.xlsx"'})
 
 
 @app.patch("/api/projects/{pid}/todos/{tid}")

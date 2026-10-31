@@ -328,7 +328,7 @@ function StructureChat({ p, onChanged, version }) {
   return (
     <div style={{ marginTop: 16 }}>
       <h3 style={{ fontSize: 13, margin: '0 0 4px' }}>Ask for changes</h3>
-      <div className="muted small" style={{ marginBottom: 8 }}>Describe what you want in plain language and refer to pages by their numbers in the Preview — e.g. “let Part 10 continue on page 57”, “start each Topic on a new page”, “the worksheet is an exercise, not teaching content”. Claude applies it to the sections and page starts above (never to the text) and shows the pages it touched.</div>
+      <div className="muted small" style={{ marginBottom: 8 }}>Describe what you want in plain language and refer to pages by their numbers in the Preview — e.g. “let Part 10 continue on page 57”, “move the table on page 8 to page 9 but keep the paragraph”, “the worksheet is an exercise, not teaching content”, “40 pt margins on both sides”, “no box behind the MCQs”, “use CHAPTER- 1 as the line above the index title”. Claude turns it into page starts (before any line, not only headings), roles, the front matter (eyebrow, title, index), component looks, colours and the page layout (margins, header/footer, type sizes) — never into text changes — and shows the pages it touched.</div>
       <div style={{ maxHeight: 420, overflowY: 'auto', border: '1px solid var(--line)', borderRadius: 8, padding: 10, background: '#fff' }}>
         {turns.length === 0 && <div className="muted small">No requests yet.</div>}
         {turns.map((t, i) => t.role === 'user'
@@ -393,7 +393,7 @@ function StructureStep({ p, reload, goto }) {
       {err && <div className="banner err" style={{ marginTop: 8 }}>{err}</div>}
       {!m && !running && st.job?.state === 'failed' && <div className="banner warn" style={{ marginTop: 8 }}>Claude could not read the document, so sections are guessed from heading names for now. Try again, or continue with the guess.</div>}
       {m && <>
-        <div className="small" style={{ margin: '12px 0 4px' }}><b>Front matter:</b> {m.front.eyebrow ? `“${m.front.eyebrow}” · ` : ''}{m.front.title ? <>title “{m.front.title}”</> : 'no title found'}{m.front.index_heading ? <> · index “{m.front.index_heading}” with {m.index_entries} lines</> : ''}</div>
+        <div className="small" style={{ margin: '12px 0 4px' }}><b>Front matter:</b> {m.front.eyebrow ? `“${m.front.eyebrow}” · ` : ''}{m.front.title ? <>title “{m.front.title}”</> : 'no title found'}{m.front.index_heading ? <> · index “{m.front.index_heading}” with {m.index_entries} lines</> : ''}{m.front.index_table ? <> · index {m.front.index_table}</> : ''}</div>
         <h3 style={{ fontSize: 13, margin: '12px 0 6px' }}>Sections ({m.sections.length}) · {m.headings} headings inside them</h3>
         <div className="muted small" style={{ marginBottom: 6 }}>“New page” is Claude's decision for where a part begins at the top of a fresh page; untick it to let a part continue below the previous text. A part whose page type differs from the one before it (teaching content → exercise, exercise → answer key) always starts a page, because the page background changes.</div>
         {m.sections.map((x, i) => {
@@ -417,6 +417,12 @@ function StructureStep({ p, reload, goto }) {
           {showHeads && <table className="t" style={{ marginTop: 6 }}><thead><tr><th>Heading</th><th>Level</th><th>Doc page</th><th>New page</th></tr></thead><tbody>
             {m.heading_breaks.map(h => <tr key={h.src}><td>{h.title}</td><td>H{h.level}</td><td>{h.page || ''}</td><td><input type="checkbox" checked={breaks[h.src] ?? h.new_page} onChange={e => setBreaks({ ...breaks, [h.src]: e.target.checked })} /></td></tr>)}
           </tbody></table>}
+        </div>}
+        {st.block_breaks?.length > 0 && <div style={{ marginTop: 10 }}>
+          <div className="small"><b>Pages also start before these lines</b> <span className="muted">(asked for in the chat below; untick one to let that line flow on)</span></div>
+          <table className="t" style={{ marginTop: 6 }}><thead><tr><th>Line</th><th>Doc page</th><th>New page</th></tr></thead><tbody>
+            {st.block_breaks.map(b => <tr key={b.src}><td>{b.text}</td><td>{b.page || ''}</td><td><input type="checkbox" checked={breaks[b.src] ?? b.on} onChange={e => setBreaks({ ...breaks, [b.src]: e.target.checked })} /></td></tr>)}
+          </tbody></table>
         </div>}
         <div className="row" style={{ marginTop: 8 }}><button className="btn" disabled={!Object.keys(roles).length && !Object.keys(breaks).length} onClick={apply}>Apply changes</button><span className="muted small">Pages update straight away.</span></div>
       </>}
@@ -593,6 +599,7 @@ function Report({ p, reload }) {
               <div>{r.diffs.length} content difference{r.diffs.length === 1 ? '' : 's'} · {r.anomalies.length} layout warning{r.anomalies.length === 1 ? '' : 's'} · {r.case_total} capitalisation-only</div>
               <div>Images: {r.images.in_doc} in doc · {r.images.placeholders} placeholders left · {r.images.placed} images placed</div>
             </div>
+            <div><a className="btn" href={`/api/projects/${p.id}/report.xlsx`} download>⬇ Export to Excel</a></div>
             <div className="small muted" style={{ minWidth: 160 }}>{data.history.map(h => <div key={h.run}>Run {h.run}: {h.score}%</div>)}</div>
           </div>
           {r.score === 100 && imgTodos.length === 0 && r.anomalies.length === 0 && <div className="banner ok" style={{ marginTop: 10 }}>🎉 100% — the Figma matches the doc, with no outstanding items.</div>}
